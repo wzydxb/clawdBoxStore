@@ -1,0 +1,13 @@
+[
+  {
+    "skill_id": "302ai-api-integration",
+    "name": "302.AI API 集成",
+    "description": "一键集成 1400+ AI API，支持语言大模型、图片生成、视频生成、音频处理、文档处理等 9 大类别，自动搜索并生成即用代码",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": true,
+    "api_key_label": "302.AI API Key",
+    "api_key_hint": "请到 302.ai 注册获取 API Key",
+    "category": "AI 工具"
+  }
+]
