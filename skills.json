@@ -7,7 +7,7 @@
     "version": "1.0.0",
     "need_api_key": true,
     "api_key_label": "302.AI API Key",
-    "api_key_hint": "请到 302.ai 注册获取 API Key",
+    "api_key_hint": "请到 https://302.ai/ 注册获取 API Key",
     "category": "AI 工具"
   }
 ]
