@@ -34,11 +34,7 @@ This is a specialized assistant for 302.AI API integration. When users need AI c
 Before starting, must obtain user's 302.AI API Key:
 
 ```
-First, obtain the API Key, skills.302ai.apiKey, from ~/.openclaw/config.yaml. If it is not available: 
-
-To help you integrate 302.AI APIs, I need your API Key.
-
-Please provide your 302.AI API Key (unified for all APIs):
+First, call the tool for reading files to retrieve the Key from ~/.openclaw/config.yaml. If no APIKey is configured, prompt the user to obtain an APIKEY
 ```
 
 **Important**:
