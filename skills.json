@@ -9,5 +9,16 @@
     "api_key_label": "302.AI API Key",
     "api_key_hint": "请到 https://302.ai/ 注册获取 API Key",
     "category": "AI 工具"
+  },
+  {
+    "skill_id": "nano-banana-pro",
+    "name": "Nano Banana Pro 图片生成",
+    "description": "使用 Google Gemini 3 Pro 生成和编辑图片，支持文生图和图生图，支持 1K/2K/4K 分辨率",
+    "icon": "",
+    "version": "1.0.1",
+    "need_api_key": true,
+    "api_key_label": "Gemini API Key",
+    "api_key_hint": "请到 https://aistudio.google.com/apikey 获取 Gemini API Key",
+    "category": "图片生成"
   }
 ]
