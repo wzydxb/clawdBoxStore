@@ -33,49 +33,45 @@ def get_api_config():
     base_url = os.environ.get("CLAWDBOX_API_URL", "")
     api_key = os.environ.get("CLAWDBOX_API_KEY", "") or os.environ.get("X_AUTH_TOKEN", "")
 
-    # 从 openclaw.json 读取（主要配置文件）
+    # 从 ~/.openclaw/openclaw.json 读取
+    # token 路径: models.providers.clawdbox.headers["x-auth-token"]
+    # baseUrl 路径: models.providers.clawdbox.baseUrl
     if not api_key or not base_url:
         openclaw_json = Path.home() / ".openclaw" / "openclaw.json"
         if openclaw_json.exists():
             try:
                 config = json.loads(openclaw_json.read_text())
+
+                # 从 models.providers 中查找 clawdbox provider
+                providers = config.get("models", {}).get("providers", {})
+                for name, provider in providers.items():
+                    headers = provider.get("headers", {})
+                    if not api_key:
+                        api_key = headers.get("x-auth-token", "")
+                    if not base_url:
+                        base_url = provider.get("baseUrl", "")
+                    if api_key:
+                        break
+
+                # 也检查 agents.defaults.memorySearch.remote
                 if not api_key:
-                    # 尝试多种字段名
-                    api_key = (config.get("x-auth-token", "")
-                               or config.get("xAuthToken", "")
-                               or config.get("apiKey", "")
-                               or config.get("token", ""))
-                if not base_url:
-                    base_url = (config.get("baseUrl", "")
-                                or config.get("base_url", "")
-                                or config.get("apiBaseUrl", ""))
+                    remote = config.get("agents", {}).get("defaults", {}).get("memorySearch", {}).get("remote", {})
+                    api_key = remote.get("headers", {}).get("x-auth-token", "")
+                    if not base_url:
+                        base_url = remote.get("baseUrl", "")
+
             except Exception:
                 pass
-
-    # 回退：从 config.yaml 读取
-    if not api_key or not base_url:
-        for cp in [Path.home() / ".openclaw" / "config.yaml",
-                    Path.home() / ".openclaw" / "config.yml"]:
-            if cp.exists():
-                try:
-                    content = cp.read_text()
-                    for line in content.split("\n"):
-                        line = line.strip()
-                        if not base_url and ("baseUrl" in line or "base_url" in line):
-                            val = line.split(":", 1)[-1].strip().strip("'\"")
-                            if val:
-                                base_url = val
-                        if not api_key and ("apiKey" in line or "x-auth-token" in line):
-                            val = line.split(":", 1)[-1].strip().strip("'\"")
-                            if val and len(val) > 10:
-                                api_key = val
-                except Exception:
-                    pass
 
     if not base_url:
         base_url = "https://api.clawdbox.cn"
 
-    return base_url.rstrip("/"), api_key
+    # baseUrl 可能指向 /v1，图片接口也在 /v1 下，去掉尾部 /v1
+    base_url = base_url.rstrip("/")
+    if base_url.endswith("/v1"):
+        base_url = base_url[:-3]
+
+    return base_url, api_key
 
 
 def generate_image(base_url, api_key, prompt, model, size, n, watermark, extend):
@@ -99,6 +95,7 @@ def generate_image(base_url, api_key, prompt, model, size, n, watermark, extend)
     headers = {"Content-Type": "application/json"}
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
+        headers["x-auth-token"] = api_key
 
     req = urllib.request.Request(
         f"{base_url}/v1/images/generations",
@@ -127,6 +124,7 @@ def edit_image(base_url, api_key, image, prompt, model, size):
     headers = {"Content-Type": "application/json"}
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
+        headers["x-auth-token"] = api_key
 
     req = urllib.request.Request(
         f"{base_url}/v1/images/edits",
