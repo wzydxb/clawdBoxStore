@@ -29,34 +29,32 @@ def default_out_dir() -> Path:
 
 
 def get_api_config():
-    """获取 API 配置，优先从环境变量，然后从 openclaw.json 读取"""
+    """获取 API 配置，只使用 x-auth-token 认证（不使用 apiKey）"""
     base_url = os.environ.get("CLAWDBOX_API_URL", "")
-    api_key = os.environ.get("CLAWDBOX_API_KEY", "") or os.environ.get("X_AUTH_TOKEN", "")
+    token = os.environ.get("X_AUTH_TOKEN", "")
 
     # 从 ~/.openclaw/openclaw.json 读取
     # token 路径: models.providers.clawdbox.headers["x-auth-token"]
     # baseUrl 路径: models.providers.clawdbox.baseUrl
-    if not api_key or not base_url:
+    if not token or not base_url:
         openclaw_json = Path.home() / ".openclaw" / "openclaw.json"
         if openclaw_json.exists():
             try:
                 config = json.loads(openclaw_json.read_text())
 
-                # 从 models.providers 中查找 clawdbox provider
                 providers = config.get("models", {}).get("providers", {})
                 for name, provider in providers.items():
                     headers = provider.get("headers", {})
-                    if not api_key:
-                        api_key = headers.get("x-auth-token", "")
+                    if not token:
+                        token = headers.get("x-auth-token", "")
                     if not base_url:
                         base_url = provider.get("baseUrl", "")
-                    if api_key:
+                    if token:
                         break
 
-                # 也检查 agents.defaults.memorySearch.remote
-                if not api_key:
+                if not token:
                     remote = config.get("agents", {}).get("defaults", {}).get("memorySearch", {}).get("remote", {})
-                    api_key = remote.get("headers", {}).get("x-auth-token", "")
+                    token = remote.get("headers", {}).get("x-auth-token", "")
                     if not base_url:
                         base_url = remote.get("baseUrl", "")
 
@@ -66,12 +64,11 @@ def get_api_config():
     if not base_url:
         base_url = "https://api.clawdbox.cn"
 
-    # baseUrl 可能指向 /v1，图片接口也在 /v1 下，去掉尾部 /v1
     base_url = base_url.rstrip("/")
     if base_url.endswith("/v1"):
         base_url = base_url[:-3]
 
-    return base_url, api_key
+    return base_url, token
 
 
 def generate_image(base_url, api_key, prompt, model, size, n, watermark, extend):
@@ -94,7 +91,6 @@ def generate_image(base_url, api_key, prompt, model, size, n, watermark, extend)
     data = json.dumps(body).encode()
     headers = {"Content-Type": "application/json"}
     if api_key:
-        headers["Authorization"] = f"Bearer {api_key}"
         headers["x-auth-token"] = api_key
 
     req = urllib.request.Request(
@@ -123,7 +119,6 @@ def edit_image(base_url, api_key, image, prompt, model, size):
     data = json.dumps(body).encode()
     headers = {"Content-Type": "application/json"}
     if api_key:
-        headers["Authorization"] = f"Bearer {api_key}"
         headers["x-auth-token"] = api_key
 
     req = urllib.request.Request(
