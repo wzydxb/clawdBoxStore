@@ -29,16 +29,33 @@ def default_out_dir() -> Path:
 
 
 def get_api_config():
-    """获取 API 配置，优先从环境变量读取，否则从 openclaw 配置读取"""
+    """获取 API 配置，优先从环境变量，然后从 openclaw.json 读取"""
     base_url = os.environ.get("CLAWDBOX_API_URL", "")
     api_key = os.environ.get("CLAWDBOX_API_KEY", "") or os.environ.get("X_AUTH_TOKEN", "")
 
-    if not base_url or not api_key:
-        config_paths = [
-            Path.home() / ".openclaw" / "config.yaml",
-            Path.home() / ".openclaw" / "config.yml",
-        ]
-        for cp in config_paths:
+    # 从 openclaw.json 读取（主要配置文件）
+    if not api_key or not base_url:
+        openclaw_json = Path.home() / ".openclaw" / "openclaw.json"
+        if openclaw_json.exists():
+            try:
+                config = json.loads(openclaw_json.read_text())
+                if not api_key:
+                    # 尝试多种字段名
+                    api_key = (config.get("x-auth-token", "")
+                               or config.get("xAuthToken", "")
+                               or config.get("apiKey", "")
+                               or config.get("token", ""))
+                if not base_url:
+                    base_url = (config.get("baseUrl", "")
+                                or config.get("base_url", "")
+                                or config.get("apiBaseUrl", ""))
+            except Exception:
+                pass
+
+    # 回退：从 config.yaml 读取
+    if not api_key or not base_url:
+        for cp in [Path.home() / ".openclaw" / "config.yaml",
+                    Path.home() / ".openclaw" / "config.yml"]:
             if cp.exists():
                 try:
                     content = cp.read_text()
@@ -48,7 +65,7 @@ def get_api_config():
                             val = line.split(":", 1)[-1].strip().strip("'\"")
                             if val:
                                 base_url = val
-                        if not api_key and ("apiKey" in line or "x-auth-token" in line or "token" in line):
+                        if not api_key and ("apiKey" in line or "x-auth-token" in line):
                             val = line.split(":", 1)[-1].strip().strip("'\"")
                             if val and len(val) > 10:
                                 api_key = val
