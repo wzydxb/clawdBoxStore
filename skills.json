@@ -1,5 +1,16 @@
 [
   {
+    "skill_id": "clawdbox-image-gen",
+    "name": "龙虾智盒 AI 绘画",
+    "description": "使用内置千问图像模型生成和编辑图片，支持多种尺寸和风格，无需额外 API Key",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "图片生成"
+  },
+  {
     "skill_id": "302ai-api-integration",
     "name": "302.AI API 集成",
     "description": "一键集成 1400+ AI API，支持语言大模型、图片生成、视频生成、音频处理、文档处理等 9 大类别，自动搜索并生成即用代码",
