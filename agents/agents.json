@@ -1,0 +1,16 @@
+[
+  {
+    "agent_id": "lobster-secretary",
+    "name": "龙虾秘书",
+    "description": "默认身份，负责日常任务分发与状态跟进",
+    "icon": "🦞",
+    "is_default": true
+  },
+  {
+    "agent_id": "art-master",
+    "name": "绘图大师",
+    "description": "专注 AI 绘画创作，支持多种风格与构图指导",
+    "icon": "🎨",
+    "is_default": false
+  }
+]
