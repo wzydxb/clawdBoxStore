@@ -5,7 +5,12 @@
     "description": "默认身份，负责日常任务分发与状态跟进",
     "icon": "🦞",
     "is_default": true,
-    "files": ["AGENTS.md", "IDENTITY.md", "SOUL.md", "USER.md"]
+    "files": [
+      "AGENTS.md",
+      "IDENTITY.md",
+      "SOUL.md",
+      "USER.md"
+    ]
   },
   {
     "agent_id": "art-master",
@@ -13,6 +18,23 @@
     "description": "专注 AI 绘画创作，支持多种风格与构图指导",
     "icon": "🎨",
     "is_default": false,
-    "files": ["AGENTS.md", "IDENTITY.md", "SOUL.md", "USER.md"]
+    "files": [
+      "AGENTS.md",
+      "IDENTITY.md",
+      "SOUL.md",
+      "USER.md"
+    ]
+  },
+  {
+    "agent_id": "stockexpert",
+    "name": "股票分析师",
+    "description": "专注 A 股市场分析、公告跟踪与交易复盘",
+    "icon": "📈",
+    "is_default": false,
+    "files": [
+      "AGENTS.md",
+      "TOOLS.md",
+      ".clawbox-bot-metadata.json"
+    ]
   }
 ]
