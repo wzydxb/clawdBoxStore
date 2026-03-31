@@ -196,5 +196,49 @@
     "api_key_label": "",
     "api_key_hint": "",
     "category": "图片生成"
+  },
+  {
+    "skill_id": "stock-announcement-fetcher",
+    "name": "A股公告抓取",
+    "description": "抓取和筛选 A 股上市公司公告。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
+    "skill_id": "stock-deep-analyzer",
+    "name": "股票深度分析",
+    "description": "对股票进行多维度深度分析。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
+    "skill_id": "stock-info-explorer",
+    "name": "股票信息查询",
+    "description": "查询股票行情、指标和基础信息。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
+    "skill_id": "trading-coach",
+    "name": "交易复盘教练",
+    "description": "分析交易记录并生成复盘建议。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
   }
 ]
