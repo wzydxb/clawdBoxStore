@@ -200,7 +200,7 @@
   {
     "skill_id": "stock-announcement-fetcher",
     "name": "A股公告抓取",
-    "description": "抓取和筛选 A 股上市公司公告。",
+    "description": "抓取、筛选和分析 A 股上市公司公告。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -211,7 +211,7 @@
   {
     "skill_id": "stock-deep-analyzer",
     "name": "股票深度分析",
-    "description": "对股票进行多维度深度分析。",
+    "description": "从估值、技术面、成长性等维度分析股票。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -222,7 +222,7 @@
   {
     "skill_id": "stock-info-explorer",
     "name": "股票信息查询",
-    "description": "查询股票行情、指标和基础信息。",
+    "description": "查询股票行情、指标与基础资料。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -233,7 +233,7 @@
   {
     "skill_id": "trading-coach",
     "name": "交易复盘教练",
-    "description": "分析交易记录并生成复盘建议。",
+    "description": "分析交易记录并生成复盘与改进建议。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
