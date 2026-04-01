@@ -4,19 +4,19 @@ description: >-
   Collect candidate Bilibili videos, comments, and source clips for topic analysis and asset planning.
 ---
 
-# Bilibili Sourcing
+# Bilibili 选材
 
-Use this skill when the strategist needs to source Bilibili candidate videos, collect comments, and identify source clips.
+当 strategist 需要收集 Bilibili 候选视频、评论和源片段时，使用这个 skill。
 
-## Rules
-- Prefer real Bilibili videos and real comments when available.
-- For clip-heavy topics, produce canonical `asset_requirements[]` items with:
+## 规则
+- 在可用时，优先使用真实的 Bilibili 视频和真实评论。
+- 对于重素材选题，产出规范的 `asset_requirements[]` 条目，包含：
   - `type: "clip"`
   - `source: "BV..."`
   - `start_time`
   - `end_time`
   - `desc`
-- If comments are unavailable, record a structured degraded reason instead of pretending evidence exists.
+- 如果拿不到评论，记录结构化的 degraded reason，不要假装已经有证据。
 
-## Scripts
+## 脚本
 - `scripts/opencli-host-bridge.mjs`
