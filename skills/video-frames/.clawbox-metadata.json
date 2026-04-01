@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "视频抽帧",
+  "customDescription": "用 ffmpeg 从视频中提取封面帧、指定时间点画面或缩略图。",
+  "category": "视频处理",
+  "serviceId": "clawbox.video-frames"
+}

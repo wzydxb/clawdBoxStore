@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "FFmpeg 视频编辑器",
+  "customDescription": "把自然语言视频编辑需求转换成 FFmpeg 命令，覆盖裁剪、转码、压缩等场景。",
+  "category": "视频处理",
+  "serviceId": "clawbox.ffmpeg-video-editor"
+}
