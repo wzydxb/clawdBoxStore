@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "React 性能优化器",
+  "customDescription": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
+  "category": "前端开发",
+  "serviceId": "clawbox.react-performance-optimizer"
+}

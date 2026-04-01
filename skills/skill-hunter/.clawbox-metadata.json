@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "技能发现助手",
+  "customDescription": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
+  "category": "开发工具",
+  "serviceId": "clawbox.skill-hunter"
+}

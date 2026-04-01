@@ -110,17 +110,6 @@
     "category": "官方技能"
   },
   {
-    "skill_id": "pptx",
-    "name": "pptx",
-    "description": "创建、读取和编辑 PPT 演示文稿。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
     "skill_id": "skill-creator",
     "name": "skill-creator",
     "description": "创建、优化和测试技能。",
@@ -256,6 +245,114 @@
       "customDescription": "【三万同款】用AI一键生成白板板书风格PPT，马克笔手写质感，告别模板审美疲劳。",
       "category": "傅盛三万同款",
       "serviceId": "17730384061779727",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "skill-hunter",
+    "name": "技能发现助手",
+    "description": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "开发工具",
+    "metadata": {
+      "customTitle": "技能发现助手",
+      "customDescription": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
+      "category": "开发工具",
+      "serviceId": "clawbox.skill-hunter",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "react-performance-optimizer",
+    "name": "React 性能优化器",
+    "description": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "前端开发",
+    "metadata": {
+      "customTitle": "React 性能优化器",
+      "customDescription": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
+      "category": "前端开发",
+      "serviceId": "clawbox.react-performance-optimizer",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "web-design-guidelines",
+    "name": "Web 设计规范指南",
+    "description": "提供 Web 可访问性、响应式布局、表单与性能方面的设计规范与检查清单。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "设计规范",
+    "metadata": {
+      "customTitle": "Web 设计规范指南",
+      "customDescription": "提供 Web 可访问性、响应式布局、表单与性能方面的设计规范与检查清单。",
+      "category": "设计规范",
+      "serviceId": "clawbox.web-design-guidelines",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "programmatic-seo",
+    "name": "程序化 SEO 引擎",
+    "description": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "增长营销",
+    "metadata": {
+      "customTitle": "程序化 SEO 引擎",
+      "customDescription": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
+      "category": "增长营销",
+      "serviceId": "clawbox.programmatic-seo",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "writing-humanizer",
+    "name": "AI 文本润色",
+    "description": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
+    "icon": "",
+    "version": "2.1.1",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "内容优化",
+    "metadata": {
+      "customTitle": "AI 文本润色",
+      "customDescription": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
+      "category": "内容优化",
+      "serviceId": "clawbox.writing-humanizer",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "remotion-video-production",
+    "name": "Remotion 视频开发指南",
+    "description": "用 Remotion 规划分镜、组织素材并生成可编排的视频制作方案。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "视频制作",
+    "metadata": {
+      "customTitle": "Remotion 视频开发指南",
+      "customDescription": "用 Remotion 规划分镜、组织素材并生成可编排的视频制作方案。",
+      "category": "视频制作",
+      "serviceId": "clawbox.remotion-video-production",
       "metadataFile": ".clawbox-metadata.json"
     }
   }

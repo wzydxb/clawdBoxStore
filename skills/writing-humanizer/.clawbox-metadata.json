@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "AI 文本润色",
+  "customDescription": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
+  "category": "内容优化",
+  "serviceId": "clawbox.writing-humanizer"
+}
