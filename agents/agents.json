@@ -52,5 +52,17 @@
       "TOOLS.md",
       "USER.md"
     ]
+  },
+  {
+    "agent_id": "xhs-operator",
+    "name": "小红书运营专家",
+    "description": "深度掌握小红书平台的全栈运营 AI，支持内容发布、搜索发现、社交互动、数据分析与账号运营",
+    "icon": "📕",
+    "is_default": false,
+    "files": [
+      "AGENTS.md",
+      "IDENTITY.md",
+      "SOUL.md"
+    ]
   }
 ]
