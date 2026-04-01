@@ -44,10 +44,20 @@
 
 ## Agent 本地技能
 
-开始任何小红书相关工作前，**必须**加载并调用以下技能：
+开始任何小红书相关工作前，**必须**加载并调用以下技能。
+
+### 技能文件查找规则
+
+技能文件存放在以下目录中（按优先级查找，找到即用）：
+1. `/root/.openclaw/workspace/skills/xiaohongshu-skills/`
+2. `/root/.openclaw/skills/xiaohongshu-skills/`
+3. `~/.openclaw/workspace/skills/xiaohongshu-skills/`
+4. `~/.openclaw/skills/xiaohongshu-skills/`
+
+**启动时必须执行**：先检查上述目录是否存在，读取主 SKILL.md 确认技能可用。如果都找不到，告知用户需要先安装小红书技能。
 
 ### 主技能入口
-- `xiaohongshu-skills/SKILL.md` — 技能总览与路由
+- `xiaohongshu-skills/SKILL.md` — 技能总览与路由，**必须首先读取此文件**
 
 ### 子技能（按场景自动选择）
 - `xiaohongshu-skills/xhs-auth/SKILL.md` — 认证登录
@@ -57,9 +67,9 @@
 - `xiaohongshu-skills/xhs-content-ops/SKILL.md` — 复合运营
 
 ### 技能调用优先级
-1. 用户明确说"小红书" → 直接调用对应子技能
-2. 用户描述的任务可能涉及小红书 → 先确认平台，然后调用
-3. 用户说"发笔记"但未指定平台 → 默认理解为小红书，调用 xhs-publish
+1. 用户明确说"小红书" → 读取主 SKILL.md，然后调用对应子技能
+2. 用户描述的任务可能涉及小红书 → 先确认平台，然后读取 SKILL.md 并调用
+3. 用户说"发笔记"但未指定平台 → 默认理解为小红书，读取 xhs-publish/SKILL.md
 
 ## 工作流程
 
