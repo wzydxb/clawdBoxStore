@@ -272,6 +272,24 @@
     "category": "官方技能"
   },
   {
+    "skill_id": "opencli",
+    "name": "OpenCLI",
+    "description": "把网站或 Electron 应用变成可调用的 CLI，复用 Chrome 登录态，并支持适配器生成与浏览器自动化。",
+    "icon": "",
+    "version": "1.5.6",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "开发工具",
+    "metadata": {
+      "customTitle": "OpenCLI",
+      "customDescription": "把网站或 Electron 应用变成可调用的 CLI，复用 Chrome 登录态，并支持适配器生成与浏览器自动化。",
+      "category": "开发工具",
+      "serviceId": "clawbox.opencli",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "pdf",
     "name": "pdf",
     "description": "读取、编辑、拆分、合并 PDF 文件。",

@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "OpenCLI",
+  "customDescription": "把网站或 Electron 应用变成可调用的 CLI，复用 Chrome 登录态，并支持适配器生成与浏览器自动化。",
+  "category": "开发工具",
+  "serviceId": "clawbox.opencli"
+}
