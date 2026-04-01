@@ -2,7 +2,7 @@
   {
     "agent_id": "lobster-secretary",
     "name": "龙虾秘书",
-    "description": "默认身份，负责日常任务分发与状态跟进",
+    "description": "温柔知性的高能量秘书，擅长行程安排、演讲文案与高质量 PPT 产出，能把信息收敛成可执行方案。",
     "icon": "🦞",
     "is_default": true,
     "files": [
