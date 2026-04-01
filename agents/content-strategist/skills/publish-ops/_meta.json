@@ -1,0 +1,20 @@
+{
+  "id": "publish-ops",
+  "name": "Publish Ops",
+  "scope": "agent-local",
+  "owner": "content-strategist-1",
+  "description": "Define the publish, monitor, reply, and ledger rules for the strategist-owned closure path.",
+  "scripts": [
+    "scripts/bilibili-publisher-bridge.mjs",
+    "scripts/bilibili_api_ops.py"
+  ],
+  "inputs": [
+    "render_result",
+    "publish_metadata"
+  ],
+  "outputs": [
+    "publish_result",
+    "monitor_state",
+    "reply_state"
+  ]
+}

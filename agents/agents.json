@@ -36,5 +36,21 @@
       "TOOLS.md",
       ".clawbox-bot-metadata.json"
     ]
+  },
+  {
+    "agent_id": "content-strategist",
+    "name": "内容策略师",
+    "description": "负责选题分析、素材筹备、渲染交接与发布运营的内容生产策略代理",
+    "icon": "🧠",
+    "is_default": false,
+    "files": [
+      "AGENTS.md",
+      "BOOTSTRAP.md",
+      "HEARTBEAT.md",
+      "IDENTITY.md",
+      "SOUL.md",
+      "TOOLS.md",
+      "USER.md"
+    ]
   }
 ]
