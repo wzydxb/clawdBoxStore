@@ -29,7 +29,27 @@ If user declines, work freeform. If user accepts, proceed to Stage 1.
 
 **Goal:** Close the gap between what the user knows and what Claude knows, enabling smart guidance later.
 
+### Fast Track / 秘书模式
+
+当任务属于以下类型时，默认启用 Fast Track：
+- 汇报材料
+- 演讲稿
+- 市场分析
+- PPT 文案
+- 需要“先出一版再改”的文档型任务
+
+Fast Track 规则：
+1. 最多只发起一轮提问，而且问题合并成一条短消息
+2. 如果用户没有回复，也先按合理假设直接产出 v0.1
+3. 把缺失信息写进“假设”或“待确认项”，不要阻塞草稿输出
+4. 默认先给结构、提纲、页面框架或文案骨架，而不是先做长时间的上下文访谈
+
 ### Initial Questions
+
+如果启用了 Fast Track：
+- 把问题压缩成一条短消息
+- 只问最影响成稿质量的 1-3 个点
+- 若用户未回复，直接按默认假设继续
 
 Start by asking the user for meta-context about the document:
 
