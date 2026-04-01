@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "B站素材搜集",
+  "customDescription": "采集 B 站候选视频、评论证据与素材需求，用于选题分析和内容规划。",
+  "category": "内容生产",
+  "serviceId": "clawbox.bilibili-sourcing"
+}

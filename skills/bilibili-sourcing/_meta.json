@@ -1,0 +1,19 @@
+{
+  "id": "bilibili-sourcing",
+  "name": "Bilibili Sourcing",
+  "scope": "agent-local",
+  "owner": "content-strategist-1",
+  "description": "Collect candidate Bilibili videos, comments, and source clips for topic analysis and asset planning.",
+  "scripts": [
+    "scripts/opencli-host-bridge.mjs"
+  ],
+  "inputs": [
+    "topic_input",
+    "signal_source"
+  ],
+  "outputs": [
+    "candidate_videos",
+    "comment_evidence",
+    "asset_requirements"
+  ]
+}

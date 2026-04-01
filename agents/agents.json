@@ -39,7 +39,7 @@
   },
   {
     "agent_id": "content-strategist",
-    "name": "内容策略师",
+    "name": "b站爆款专家",
     "description": "负责选题分析、素材筹备、渲染交接与发布运营的内容生产策略代理",
     "icon": "🧠",
     "is_default": false,

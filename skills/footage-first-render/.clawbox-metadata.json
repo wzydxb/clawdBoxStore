@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "素材优先渲染",
+  "customDescription": "围绕真实素材优先、原声优先的策略生成渲染交付与合成约束。",
+  "category": "内容生产",
+  "serviceId": "clawbox.footage-first-render"
+}

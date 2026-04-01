@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "发布运营",
+  "customDescription": "定义发布、监控、评论回复与台账记录流程，承接内容生产闭环。",
+  "category": "内容生产",
+  "serviceId": "clawbox.publish-ops"
+}

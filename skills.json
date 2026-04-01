@@ -11,352 +11,6 @@
     "category": "官方技能"
   },
   {
-    "skill_id": "brand-guidelines",
-    "name": "brand-guidelines",
-    "description": "应用 Anthropic 品牌规范与视觉风格。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "canvas-design",
-    "name": "canvas-design",
-    "description": "生成海报、图片等静态视觉设计。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "claude-api",
-    "name": "claude-api",
-    "description": "用于 Claude API 与 Anthropic SDK 开发。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "doc-coauthoring",
-    "name": "doc-coauthoring",
-    "description": "协助共创文档、方案和技术说明。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "docx",
-    "name": "docx",
-    "description": "创建、读取和编辑 Word 文档。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "frontend-design",
-    "name": "frontend-design",
-    "description": "设计并生成高质量前端界面。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "internal-comms",
-    "name": "internal-comms",
-    "description": "撰写内部汇报、通知和沟通文案。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "mcp-builder",
-    "name": "mcp-builder",
-    "description": "构建 MCP 服务与相关工具。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "pdf",
-    "name": "pdf",
-    "description": "读取、编辑、拆分、合并 PDF 文件。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "skill-creator",
-    "name": "skill-creator",
-    "description": "创建、优化和测试技能。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "slack-gif-creator",
-    "name": "slack-gif-creator",
-    "description": "制作适合 Slack 使用的 GIF 动图。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "theme-factory",
-    "name": "theme-factory",
-    "description": "为文档、页面和产物应用主题风格。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "web-artifacts-builder",
-    "name": "web-artifacts-builder",
-    "description": "构建复杂的 Web 前端产物。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "webapp-testing",
-    "name": "webapp-testing",
-    "description": "测试本地 Web 应用并检查前端行为。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "xlsx",
-    "name": "xlsx",
-    "description": "创建、读取和编辑表格文件。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "官方技能"
-  },
-  {
-    "skill_id": "clawdbox-image-gen",
-    "name": "龙虾智盒 AI 绘画",
-    "description": "使用内置千问图像模型生成和编辑图片，支持多种尺寸和风格，无需额外 API Key",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "图片生成"
-  },
-  {
-    "skill_id": "stock-announcement-fetcher",
-    "name": "A股公告抓取",
-    "description": "抓取、筛选和分析 A 股上市公司公告。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "股票分析"
-  },
-  {
-    "skill_id": "stock-deep-analyzer",
-    "name": "股票深度分析",
-    "description": "从估值、技术面、成长性等维度分析股票。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "股票分析"
-  },
-  {
-    "skill_id": "stock-info-explorer",
-    "name": "股票信息查询",
-    "description": "查询股票行情、指标与基础资料。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "股票分析"
-  },
-  {
-    "skill_id": "trading-coach",
-    "name": "交易复盘教练",
-    "description": "分析交易记录并生成复盘与改进建议。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "股票分析"
-  },
-  {
-    "skill_id": "ppt-nano-master",
-    "name": "PPT 多风格生成",
-    "description": "根据文案和参考风格生成多风格 PPT 页面，并合成为 .pptx 文件。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "PPT生成",
-    "metadata": {
-      "customTitle": "白板风PPT【三万同款】",
-      "customDescription": "【三万同款】用AI一键生成白板板书风格PPT，马克笔手写质感，告别模板审美疲劳。",
-      "category": "傅盛三万同款",
-      "serviceId": "17730384061779727",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "skill-hunter",
-    "name": "技能发现助手",
-    "description": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "开发工具",
-    "metadata": {
-      "customTitle": "技能发现助手",
-      "customDescription": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
-      "category": "开发工具",
-      "serviceId": "clawbox.skill-hunter",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "react-performance-optimizer",
-    "name": "React 性能优化器",
-    "description": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "前端开发",
-    "metadata": {
-      "customTitle": "React 性能优化器",
-      "customDescription": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
-      "category": "前端开发",
-      "serviceId": "clawbox.react-performance-optimizer",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "web-design-guidelines",
-    "name": "Web 设计规范指南",
-    "description": "提供 Web 可访问性、响应式布局、表单与性能方面的设计规范与检查清单。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "设计规范",
-    "metadata": {
-      "customTitle": "Web 设计规范指南",
-      "customDescription": "提供 Web 可访问性、响应式布局、表单与性能方面的设计规范与检查清单。",
-      "category": "设计规范",
-      "serviceId": "clawbox.web-design-guidelines",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "programmatic-seo",
-    "name": "程序化 SEO 引擎",
-    "description": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "增长营销",
-    "metadata": {
-      "customTitle": "程序化 SEO 引擎",
-      "customDescription": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
-      "category": "增长营销",
-      "serviceId": "clawbox.programmatic-seo",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "writing-humanizer",
-    "name": "AI 文本润色",
-    "description": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
-    "icon": "",
-    "version": "2.1.1",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "内容优化",
-    "metadata": {
-      "customTitle": "AI 文本润色",
-      "customDescription": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
-      "category": "内容优化",
-      "serviceId": "clawbox.writing-humanizer",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "remotion-video-production",
-    "name": "Remotion 视频开发指南",
-    "description": "用 Remotion 规划分镜、组织素材并生成可编排的视频制作方案。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "视频制作",
-    "metadata": {
-      "customTitle": "Remotion 视频开发指南",
-      "customDescription": "用 Remotion 规划分镜、组织素材并生成可编排的视频制作方案。",
-      "category": "视频制作",
-      "serviceId": "clawbox.remotion-video-production",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
     "skill_id": "autoglm-browser-agent",
     "name": "浏览器自动化代理",
     "description": "执行网页搜索、表单填写、社媒操作、截图和页面内容采集等浏览器自动化任务。",
@@ -465,6 +119,90 @@
     }
   },
   {
+    "skill_id": "bilibili-sourcing",
+    "name": "B站素材搜集",
+    "description": "采集 B 站候选视频、评论证据与素材需求，用于选题分析和内容规划。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "内容生产",
+    "metadata": {
+      "customTitle": "B站素材搜集",
+      "customDescription": "采集 B 站候选视频、评论证据与素材需求，用于选题分析和内容规划。",
+      "category": "内容生产",
+      "serviceId": "clawbox.bilibili-sourcing",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "brand-guidelines",
+    "name": "brand-guidelines",
+    "description": "应用 Anthropic 品牌规范与视觉风格。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "canvas-design",
+    "name": "canvas-design",
+    "description": "生成海报、图片等静态视觉设计。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "claude-api",
+    "name": "claude-api",
+    "description": "用于 Claude API 与 Anthropic SDK 开发。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "clawdbox-image-gen",
+    "name": "龙虾智盒 AI 绘画",
+    "description": "使用内置千问图像模型生成和编辑图片，支持多种尺寸和风格，无需额外 API Key",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "图片生成"
+  },
+  {
+    "skill_id": "doc-coauthoring",
+    "name": "doc-coauthoring",
+    "description": "协助共创文档、方案和技术说明。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "docx",
+    "name": "docx",
+    "description": "创建、读取和编辑 Word 文档。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
     "skill_id": "ffmpeg-video-editor",
     "name": "FFmpeg 视频编辑器",
     "description": "把自然语言视频编辑需求转换成 FFmpeg 命令，覆盖裁剪、转码、压缩等场景。",
@@ -483,6 +221,253 @@
     }
   },
   {
+    "skill_id": "footage-first-render",
+    "name": "素材优先渲染",
+    "description": "围绕真实素材优先、原声优先的策略生成渲染交付与合成约束。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "内容生产",
+    "metadata": {
+      "customTitle": "素材优先渲染",
+      "customDescription": "围绕真实素材优先、原声优先的策略生成渲染交付与合成约束。",
+      "category": "内容生产",
+      "serviceId": "clawbox.footage-first-render",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "frontend-design",
+    "name": "frontend-design",
+    "description": "设计并生成高质量前端界面。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "internal-comms",
+    "name": "internal-comms",
+    "description": "撰写内部汇报、通知和沟通文案。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "mcp-builder",
+    "name": "mcp-builder",
+    "description": "构建 MCP 服务与相关工具。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "pdf",
+    "name": "pdf",
+    "description": "读取、编辑、拆分、合并 PDF 文件。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "ppt-nano-master",
+    "name": "PPT 多风格生成",
+    "description": "根据文案和参考风格生成多风格 PPT 页面，并合成为 .pptx 文件。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "PPT生成",
+    "metadata": {
+      "customTitle": "白板风PPT【三万同款】",
+      "customDescription": "【三万同款】用AI一键生成白板板书风格PPT，马克笔手写质感，告别模板审美疲劳。",
+      "category": "傅盛三万同款",
+      "serviceId": "17730384061779727",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "programmatic-seo",
+    "name": "程序化 SEO 引擎",
+    "description": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "增长营销",
+    "metadata": {
+      "customTitle": "程序化 SEO 引擎",
+      "customDescription": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
+      "category": "增长营销",
+      "serviceId": "clawbox.programmatic-seo",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "publish-ops",
+    "name": "发布运营",
+    "description": "定义发布、监控、评论回复与台账记录流程，承接内容生产闭环。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "内容生产",
+    "metadata": {
+      "customTitle": "发布运营",
+      "customDescription": "定义发布、监控、评论回复与台账记录流程，承接内容生产闭环。",
+      "category": "内容生产",
+      "serviceId": "clawbox.publish-ops",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "react-performance-optimizer",
+    "name": "React 性能优化器",
+    "description": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "前端开发",
+    "metadata": {
+      "customTitle": "React 性能优化器",
+      "customDescription": "定位 React 渲染慢、列表卡顿和包体积过大的问题，并给出优化方案。",
+      "category": "前端开发",
+      "serviceId": "clawbox.react-performance-optimizer",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "remotion-video-production",
+    "name": "Remotion 视频开发指南",
+    "description": "用 Remotion 规划分镜、组织素材并生成可编排的视频制作方案。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "视频制作",
+    "metadata": {
+      "customTitle": "Remotion 视频开发指南",
+      "customDescription": "用 Remotion 规划分镜、组织素材并生成可编排的视频制作方案。",
+      "category": "视频制作",
+      "serviceId": "clawbox.remotion-video-production",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "skill-creator",
+    "name": "skill-creator",
+    "description": "创建、优化和测试技能。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "skill-hunter",
+    "name": "技能发现助手",
+    "description": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "开发工具",
+    "metadata": {
+      "customTitle": "技能发现助手",
+      "customDescription": "从 GitHub 等仓库发现、筛选和整理可复用的技能方案与实现模式。",
+      "category": "开发工具",
+      "serviceId": "clawbox.skill-hunter",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "slack-gif-creator",
+    "name": "slack-gif-creator",
+    "description": "制作适合 Slack 使用的 GIF 动图。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "stock-announcement-fetcher",
+    "name": "A股公告抓取",
+    "description": "抓取、筛选和分析 A 股上市公司公告。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
+    "skill_id": "stock-deep-analyzer",
+    "name": "股票深度分析",
+    "description": "从估值、技术面、成长性等维度分析股票。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
+    "skill_id": "stock-info-explorer",
+    "name": "股票信息查询",
+    "description": "查询股票行情、指标与基础资料。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
+    "skill_id": "theme-factory",
+    "name": "theme-factory",
+    "description": "为文档、页面和产物应用主题风格。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "trading-coach",
+    "name": "交易复盘教练",
+    "description": "分析交易记录并生成复盘与改进建议。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "股票分析"
+  },
+  {
     "skill_id": "video-frames",
     "name": "视频抽帧",
     "description": "用 ffmpeg 从视频中提取封面帧、指定时间点画面或缩略图。",
@@ -499,5 +484,74 @@
       "serviceId": "clawbox.video-frames",
       "metadataFile": ".clawbox-metadata.json"
     }
+  },
+  {
+    "skill_id": "web-artifacts-builder",
+    "name": "web-artifacts-builder",
+    "description": "构建复杂的 Web 前端产物。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "web-design-guidelines",
+    "name": "Web 设计规范指南",
+    "description": "提供 Web 可访问性、响应式布局、表单与性能方面的设计规范与检查清单。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "设计规范",
+    "metadata": {
+      "customTitle": "Web 设计规范指南",
+      "customDescription": "提供 Web 可访问性、响应式布局、表单与性能方面的设计规范与检查清单。",
+      "category": "设计规范",
+      "serviceId": "clawbox.web-design-guidelines",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "webapp-testing",
+    "name": "webapp-testing",
+    "description": "测试本地 Web 应用并检查前端行为。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
+    "skill_id": "writing-humanizer",
+    "name": "AI 文本润色",
+    "description": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
+    "icon": "",
+    "version": "2.1.1",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "内容优化",
+    "metadata": {
+      "customTitle": "AI 文本润色",
+      "customDescription": "识别并去除 AI 味表达，让文字更自然、更像真实人写出来的内容。",
+      "category": "内容优化",
+      "serviceId": "clawbox.writing-humanizer",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "xlsx",
+    "name": "xlsx",
+    "description": "创建、读取和编辑表格文件。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
   }
 ]

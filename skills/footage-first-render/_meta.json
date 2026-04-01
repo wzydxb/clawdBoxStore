@@ -1,0 +1,17 @@
+{
+  "id": "footage-first-render",
+  "name": "Footage-First Render",
+  "scope": "agent-local",
+  "owner": "content-strategist-1",
+  "description": "Render clip-heavy topics with real footage first, original audio first, and cards only as fallback.",
+  "scripts": [
+    "scripts/video-synth-bridge.mjs"
+  ],
+  "inputs": [
+    "production_package"
+  ],
+  "outputs": [
+    "render_policy",
+    "render_result"
+  ]
+}
