@@ -1,16 +1,5 @@
 [
   {
-    "skill_id": "xiaohongshu-skills",
-    "name": "小红书自动化",
-    "description": "小红书自动化技能集合。支持认证登录、内容发布、搜索发现、社交互动、复合运营。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "浏览器自动化"
-  },
-  {
     "skill_id": "algorithmic-art",
     "name": "algorithmic-art",
     "description": "生成算法艺术与创意图形。",
@@ -330,6 +319,17 @@
     }
   },
   {
+    "skill_id": "pptx",
+    "name": "pptx",
+    "description": "创建、读取和编辑 PPT 演示文稿。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "官方技能"
+  },
+  {
     "skill_id": "programmatic-seo",
     "name": "程序化 SEO 引擎",
     "description": "围绕模板化页面、数据驱动页面和批量落地页，设计程序化 SEO 策略与实施框架。",
@@ -571,6 +571,17 @@
       "serviceId": "clawbox.writing-humanizer",
       "metadataFile": ".clawbox-metadata.json"
     }
+  },
+  {
+    "skill_id": "xiaohongshu-skills",
+    "name": "小红书自动化",
+    "description": "小红书自动化技能集合。支持认证登录、内容发布、搜索发现、社交互动、复合运营。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "浏览器自动化"
   },
   {
     "skill_id": "xlsx",
