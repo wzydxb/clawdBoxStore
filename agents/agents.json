@@ -24,7 +24,13 @@
       "TOOLS.md",
       ".clawbox-bot-metadata.json"
     ],
-    "avatar": "agents/stockexpert/avatar.png"
+    "avatar": "agents/stockexpert/avatar.png",
+    "skills": [
+      "stock-info-explorer",
+      "stock-deep-analyzer",
+      "stock-announcement-fetcher",
+      "trading-coach"
+    ]
   },
   {
     "agent_id": "content-strategist",
@@ -41,7 +47,12 @@
       "TOOLS.md",
       "USER.md"
     ],
-    "avatar": "agents/content-strategist/avatar.png"
+    "avatar": "agents/content-strategist/avatar.png",
+    "skills": [
+      "bilibili-sourcing",
+      "footage-first-render",
+      "publish-ops"
+    ]
   },
   {
     "agent_id": "xhs-operator",
@@ -54,6 +65,9 @@
       "IDENTITY.md",
       "SOUL.md"
     ],
-    "avatar": "agents/xhs-operator/avatar.png"
+    "avatar": "agents/xhs-operator/avatar.png",
+    "skills": [
+      "xiaohongshu-skills"
+    ]
   }
 ]
