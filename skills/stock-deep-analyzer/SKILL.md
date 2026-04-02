@@ -106,6 +106,16 @@ Python packages (auto-installed by uv):
 
 When user requests stock analysis:
 
+### Optional Card Output
+
+If the agent decides the result should be delivered as a session card image, use:
+
+```powershell
+python scripts/render_result_card.py --title "农业银行深度分析" --conclusion "估值偏低，可中线关注" --numbers "PE 8.3|PB 0.83|股息率 3.8%" --risk "中" --action "分批关注" --supports "估值低于历史中位数|股息稳定|技术面接近支撑" --output result-card.png
+```
+
+The decision to use a card belongs to the agent. The script only handles rendering.
+
 1. **Identify ticker symbol**
    - User may provide company name → use web_search to find ticker
    - Extract ticker from Yahoo Finance format (e.g., "601288.SS" → "601288.SS")
