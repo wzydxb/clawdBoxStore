@@ -10,7 +10,8 @@
       "IDENTITY.md",
       "SOUL.md",
       "USER.md"
-    ]
+    ],
+    "avatar": "agents/lobster-secretary/avatar.png"
   },
   {
     "agent_id": "stockexpert",
@@ -22,7 +23,8 @@
       "AGENTS.md",
       "TOOLS.md",
       ".clawbox-bot-metadata.json"
-    ]
+    ],
+    "avatar": "agents/stockexpert/avatar.png"
   },
   {
     "agent_id": "content-strategist",
@@ -38,7 +40,8 @@
       "SOUL.md",
       "TOOLS.md",
       "USER.md"
-    ]
+    ],
+    "avatar": "agents/content-strategist/avatar.png"
   },
   {
     "agent_id": "xhs-operator",
@@ -50,6 +53,7 @@
       "AGENTS.md",
       "IDENTITY.md",
       "SOUL.md"
-    ]
+    ],
+    "avatar": "agents/xhs-operator/avatar.png"
   }
 ]
