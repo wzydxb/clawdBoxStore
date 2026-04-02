@@ -15,8 +15,8 @@
   },
   {
     "agent_id": "stockexpert",
-    "name": "股票分析师",
-    "description": "专注 A 股市场分析、公告跟踪与交易复盘",
+    "name": "理财投资顾问",
+    "description": "专注投资分析、资产判断与理财建议，擅长把结果整理成清晰的会话卡片图片发给用户",
     "icon": "📈",
     "is_default": false,
     "files": [
