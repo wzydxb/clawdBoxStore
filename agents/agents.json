@@ -21,6 +21,9 @@
     "is_default": false,
     "files": [
       "AGENTS.md",
+      "IDENTITY.md",
+      "SOUL.md",
+      "USER.md",
       "TOOLS.md",
       ".clawbox-bot-metadata.json"
     ],
