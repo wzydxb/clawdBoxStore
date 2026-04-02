@@ -50,84 +50,6 @@ def test_choose_output_resolution_table(
 
 
 @pytest.mark.parametrize(
-    ("home", "expected"),
-    [
-        (Path("C:/Users/alice"), Path("C:/Users/alice/.clawbox")),
-        (Path("/Users/alice"), Path("/Users/alice/.clawbox")),
-        (Path("/home/alice"), Path("/home/alice/.clawbox")),
-    ],
-)
-def test_resolve_state_dir_uses_clawbox_hidden_folder(home, expected):
-    assert MODULE.resolve_state_dir(home_dir=home) == expected
-
-
-@pytest.mark.parametrize(
-    ("raw_base_url", "expected"),
-    [
-        ("https://aibot-srv.clawbox.com", "https://aibot-srv.clawbox.com"),
-        ("https://aibot-srv.clawbox.cn/v1", "https://aibot-srv.clawbox.cn/v1"),
-        (" https://aibot-srv.clawbox.com/ ", "https://aibot-srv.clawbox.com"),
-    ],
-)
-def test_normalize_base_url_trims_without_forcing_v1(raw_base_url, expected):
-    assert MODULE.normalize_base_url(raw_base_url) == expected
-
-
-@pytest.mark.parametrize(
-    ("config_data", "expected"),
-    [
-        (
-            {"models": {"providers": {"clawbox": {"baseUrl": "https://aibot-srv.clawbox.com"}}}},
-            "https://aibot-srv.clawbox.com",
-        ),
-    ],
-)
-def test_extract_base_url_from_config_table(config_data, expected):
-    assert MODULE.extract_base_url_from_config(config_data) == expected
-
-
-@pytest.mark.parametrize(
-    "config_data",
-    [
-        {},
-        {"models": {}},
-        {"models": {"providers": {}}},
-        {"models": {"providers": {"clawbox": {}}}},
-        {"models": {"providers": {"clawbox": {"baseUrl": "   "}}}},
-    ],
-)
-def test_extract_base_url_from_config_rejects_missing_or_blank(config_data):
-    with pytest.raises(MODULE.ConfigError):
-        MODULE.extract_base_url_from_config(config_data)
-
-
-@pytest.mark.parametrize(
-    ("userinfo_data", "expected"),
-    [
-        ({"uid": "uid-123", "token": "token-456"}, ("uid-123", "token-456")),
-        ({"uid": " uid-123 ", "token": " token-456 "}, ("uid-123", "token-456")),
-    ],
-)
-def test_extract_auth_from_userinfo_table(userinfo_data, expected):
-    assert MODULE.extract_auth_from_userinfo(userinfo_data) == expected
-
-
-@pytest.mark.parametrize(
-    "userinfo_data",
-    [
-        {},
-        {"uid": "uid-only"},
-        {"token": "token-only"},
-        {"uid": "", "token": "token"},
-        {"uid": "uid", "token": "   "},
-    ],
-)
-def test_extract_auth_from_userinfo_rejects_invalid_payload(userinfo_data):
-    with pytest.raises(MODULE.ConfigError):
-        MODULE.extract_auth_from_userinfo(userinfo_data)
-
-
-@pytest.mark.parametrize(
     ("width", "height", "expect_resized", "expected_size"),
     [
         (1600, 1599, False, (1600, 1599)),
@@ -146,24 +68,33 @@ def test_resize_image_if_needed_table(width, height, expect_resized, expected_si
     assert resized.size[0] * resized.size[1] <= MODULE.MAX_INPUT_PIXELS
 
 
-def test_build_openai_client_uses_placeholder_key_and_clawbox_headers(monkeypatch):
-    captured = {}
+def test_map_size_uses_aspect_ratio_mapping():
+    assert MODULE.map_size("2K", "16:9") == "1536x1024"
+    assert MODULE.map_size("2K", "9:16") == "1024x1536"
+    assert MODULE.map_size("2K", "1:1") == "1024x1024"
 
-    class FakeOpenAI:
-        def __init__(self, **kwargs):
-            captured.update(kwargs)
 
-    monkeypatch.setattr(MODULE, "OpenAI", FakeOpenAI)
+def test_map_size_defaults_to_square_for_unknown_pair():
+    assert MODULE.map_size("2K", None) == "1024x1024"
+    assert MODULE.map_size("3K", "21:9") == "1024x1024"
 
-    MODULE.build_openai_client(
-        base_url="https://aibot-srv.clawbox.com",
-        uid="uid-abc",
-        token="token-def",
-    )
 
-    assert captured["api_key"] == MODULE.PLACEHOLDER_API_KEY
-    assert captured["base_url"] == "https://aibot-srv.clawbox.com"
-    assert captured["default_headers"] == {
-        "X-Auth-Uid": "uid-abc",
-        "X-Auth-Token": "token-def",
+def test_resolve_tool_paths_uses_expected_defaults(monkeypatch):
+    existing = {
+        MODULE.DEFAULT_LOCAL_PYTHON,
+        MODULE.DEFAULT_LOCAL_IMAGE_TOOL,
     }
+
+    monkeypatch.setattr(MODULE.Path, "exists", lambda self: str(self) in existing)
+
+    python_bin, tool_script = MODULE.resolve_tool_paths()
+
+    assert python_bin == MODULE.DEFAULT_LOCAL_PYTHON
+    assert tool_script == MODULE.DEFAULT_LOCAL_IMAGE_TOOL
+
+
+def test_resolve_tool_paths_rejects_missing_runtime(monkeypatch):
+    monkeypatch.setattr(MODULE.Path, "exists", lambda self: False)
+
+    with pytest.raises(MODULE.ConfigError):
+        MODULE.resolve_tool_paths()

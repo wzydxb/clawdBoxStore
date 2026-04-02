@@ -1,29 +1,24 @@
 #!/usr/bin/env python3
 """
-Generate images using Clawbox Seedream 5.0 Lite via OpenAI-compatible API.
+Generate images for PPT pages using the local clawdbox-image-gen tool.
 
 Usage:
-    python generate_image.py --prompt "your image description" --filename "output.jpg" [--resolution 1K|2K|4K]
+    python generate_image.py --prompt "your image description" --filename "output.jpg" [--resolution 2K|3K]
 
 Multi-image editing (up to 14 images):
-    python generate_image.py --prompt "combine these images" --filename "output.jpg" -i img1.png -i img2.png -i img3.png
+    python generate_image.py --prompt "combine these images" --filename "output.jpg" -i img1.png -i img2.png
 """
 
 from __future__ import annotations
 
 import argparse
-import base64
-import json
+import shutil
+import subprocess
 import sys
-import urllib.error
-import urllib.request
 from pathlib import Path
 
-from openai import OpenAI
 from PIL import Image as PILImage
 
-MODEL_NAME = "bytepluses.seedream-5.0-lite"
-PLACEHOLDER_API_KEY = "clawbox-placeholder"
 MAX_INPUT_IMAGES = 14
 MAX_INPUT_PIXELS = 2_560_000
 SUPPORTED_OUTPUT_RESOLUTIONS = ["2K", "3K"]
@@ -37,93 +32,23 @@ SUPPORTED_ASPECT_RATIOS = [
     "16:9",
     "21:9",
 ]
+DEFAULT_LOCAL_IMAGE_TOOL = "/root/.openclaw/workspace/skills/clawdbox-image-gen/scripts/gen.py"
+DEFAULT_LOCAL_PYTHON = "/root/.openclaw/venvs/ppt/bin/python"
+SIZE_MAP = {
+    ("2K", "16:9"): "1536x1024",
+    ("3K", "16:9"): "1536x1024",
+    ("2K", "9:16"): "1024x1536",
+    ("3K", "9:16"): "1024x1536",
+    ("2K", "1:1"): "1024x1024",
+    ("3K", "1:1"): "1024x1024",
+}
 
 
 class ConfigError(RuntimeError):
-    """Raised when required Clawbox configuration is missing or invalid."""
-
-
-def resolve_state_dir(home_dir: Path | None = None) -> Path:
-    return (home_dir or Path.home()) / ".clawbox"
-
-
-def load_json_file(path: Path) -> object:
-    try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except FileNotFoundError as error:
-        raise ConfigError(f"Missing required file: {path}") from error
-    except json.JSONDecodeError as error:
-        raise ConfigError(f"Invalid JSON in file: {path}") from error
-
-
-def normalize_non_empty_string(value: object) -> str:
-    if not isinstance(value, str):
-        return ""
-    return value.strip()
-
-
-def normalize_base_url(value: str) -> str:
-    trimmed = value.strip().rstrip("/")
-    if not trimmed:
-        raise ConfigError("clawbox baseUrl must be a non-empty string")
-    return trimmed
-
-
-def extract_base_url_from_config(config_data: object) -> str:
-    if not isinstance(config_data, dict):
-        raise ConfigError("clawbox config must be a JSON object")
-
-    models = config_data.get("models")
-    if not isinstance(models, dict):
-        raise ConfigError("clawbox config missing models.providers.clawbox.baseUrl")
-
-    providers = models.get("providers")
-    if not isinstance(providers, dict):
-        raise ConfigError("clawbox config missing models.providers.clawbox.baseUrl")
-
-    clawbox = providers.get("clawbox")
-    if not isinstance(clawbox, dict):
-        raise ConfigError("clawbox config missing models.providers.clawbox.baseUrl")
-
-    base_url = normalize_non_empty_string(clawbox.get("baseUrl"))
-    if not base_url:
-        raise ConfigError("clawbox config missing models.providers.clawbox.baseUrl")
-
-    return normalize_base_url(base_url)
-
-
-def extract_auth_from_userinfo(userinfo_data: object) -> tuple[str, str]:
-    if not isinstance(userinfo_data, dict):
-        raise ConfigError("clawbox userinfo must be a JSON object")
-
-    uid = normalize_non_empty_string(userinfo_data.get("uid"))
-    token = normalize_non_empty_string(userinfo_data.get("token"))
-    if not uid or not token:
-        raise ConfigError("clawbox userinfo invalid: uid/token must be non-empty strings")
-    return uid, token
-
-
-def load_clawbox_runtime_config(state_dir: Path) -> tuple[str, str, str]:
-    config_path = state_dir / "clawbox.json"
-    userinfo_path = state_dir / "identity" / "clawbox-userinfo.json"
-    base_url = extract_base_url_from_config(load_json_file(config_path))
-    uid, token = extract_auth_from_userinfo(load_json_file(userinfo_path))
-    return base_url, uid, token
-
-
-def build_openai_client(base_url: str, uid: str, token: str) -> OpenAI:
-    return OpenAI(
-        api_key=PLACEHOLDER_API_KEY,
-        base_url=normalize_base_url(base_url),
-        default_headers={
-            "X-Auth-Uid": uid,
-            "X-Auth-Token": token,
-        },
-    )
+    """Raised when the local image generation tool is missing or invalid."""
 
 
 def auto_detect_resolution(max_input_dim: int) -> str:
-    """Return the default output resolution for Seedream 5.0 Lite."""
     return "2K"
 
 
@@ -132,10 +57,8 @@ def choose_output_resolution(
     max_input_dim: int,
     has_input_images: bool,
 ) -> tuple[str, bool]:
-    """Choose final resolution for Seedream 5.0 Lite."""
     if requested_resolution is not None:
         return requested_resolution, False
-
     return auto_detect_resolution(max_input_dim), False
 
 
@@ -152,103 +75,86 @@ def resize_image_if_needed(image: PILImage.Image) -> tuple[PILImage.Image, bool]
     return resized, True
 
 
-def encode_image_path(image_path: str) -> tuple[str, int]:
+def prepare_input_image(image_path: str) -> tuple[str, int]:
     try:
         with PILImage.open(image_path) as image:
             copied = image.copy()
-            image_format = (copied.format or "PNG").lower()
     except Exception as error:
         raise ConfigError(f"Error loading input image '{image_path}': {error}") from error
 
     processed_image, resized = resize_image_if_needed(copied)
     width, height = processed_image.size
-
     if resized:
+        processed_image.save(image_path)
         print(
             f"Resized input image: {image_path} -> {width}x{height} "
             f"({width * height} pixels)"
         )
-
-    mime_type = "image/png" if image_format == "png" else f"image/{image_format}"
-    from io import BytesIO
-
-    buffer = BytesIO()
-    save_format = "PNG" if image_format == "png" else (processed_image.format or image_format).upper()
-    processed_image.save(buffer, format=save_format)
-    encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
-    return f"data:{mime_type};base64,{encoded}", max(width, height)
+    return image_path, max(width, height)
 
 
-def build_image_request_args(args: argparse.Namespace, output_resolution: str) -> dict:
-    request_args: dict[str, object] = {
-        "model": MODEL_NAME,
-        "prompt": args.prompt,
-        "size": output_resolution,
-        "output_format": "jpeg",
-        "response_format": "b64_json",
-    }
-
-    extra_body: dict[str, object] = {
-        "watermark": False,
-        "sequential_image_generation": "disabled",
-        "stream": False,
-    }
-    if args.aspect_ratio:
-        extra_body["aspect_ratio"] = args.aspect_ratio
-
-    if args.input_images:
-        images: list[str] = []
-        for image_path in args.input_images:
-            encoded, _ = encode_image_path(image_path)
-            images.append(encoded)
-        extra_body["image"] = images[0] if len(images) == 1 else images
-    request_args["extra_body"] = extra_body
-    return request_args
+def resolve_tool_paths() -> tuple[str, str]:
+    python_bin = DEFAULT_LOCAL_PYTHON
+    tool_script = DEFAULT_LOCAL_IMAGE_TOOL
+    if not Path(python_bin).exists():
+        raise ConfigError(f"Missing local python runtime: {python_bin}")
+    if not Path(tool_script).exists():
+        raise ConfigError(f"Missing local image tool: {tool_script}")
+    return python_bin, tool_script
 
 
-def save_image_from_response(response: object, output_path: Path) -> bool:
-    data = getattr(response, "data", None)
-    if not isinstance(data, list) or not data:
-        return False
-
-    for item in data:
-        image_b64 = getattr(item, "b64_json", None)
-        image_url = getattr(item, "url", None)
-        if isinstance(image_b64, str) and image_b64.strip():
-            output_path.write_bytes(base64.b64decode(image_b64))
-            return True
-        if isinstance(image_url, str) and image_url.strip():
-            download_file(image_url, output_path)
-            return True
-    return False
+def map_size(resolution: str, aspect_ratio: str | None) -> str:
+    if aspect_ratio is None:
+        return "1024x1024"
+    return SIZE_MAP.get((resolution, aspect_ratio), "1024x1024")
 
 
-def download_file(url: str, output_path: Path) -> None:
-    request = urllib.request.Request(url, method="GET")
-    try:
-        with urllib.request.urlopen(request, timeout=300) as response:
-            output_path.write_bytes(response.read())
-    except urllib.error.HTTPError as error:
-        payload = error.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"Download failed ({error.code}): {payload}") from error
+def run_local_image_tool(
+    prompt: str,
+    output_path: Path,
+    resolution: str,
+    aspect_ratio: str | None,
+    input_images: list[str] | None,
+) -> None:
+    python_bin, tool_script = resolve_tool_paths()
+    temp_dir = output_path.parent / f".{output_path.stem}-gen"
+    temp_dir.mkdir(parents=True, exist_ok=True)
+
+    size = map_size(resolution, aspect_ratio)
+    command = [
+        python_bin,
+        tool_script,
+        "--prompt",
+        prompt,
+        "--size",
+        size,
+        "--out-dir",
+        str(temp_dir),
+        "--no-watermark",
+    ]
+
+    if input_images:
+        command.extend(["--edit", "--image", input_images[0]])
+
+    result = subprocess.run(command, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or result.stdout.strip() or "local image tool failed")
+
+    png_files = sorted(temp_dir.glob("*.png"))
+    if not png_files:
+        raise RuntimeError("local image tool produced no image files")
+
+    generated = png_files[0]
+    with PILImage.open(generated) as image:
+        image.convert("RGB").save(output_path, format="JPEG", quality=95)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Generate images using Clawbox Seedream 5.0 Lite"
+        description="Generate images using the local clawdbox image generation tool"
     )
-    parser.add_argument(
-        "--prompt",
-        "-p",
-        required=True,
-        help="Image description/prompt",
-    )
-    parser.add_argument(
-        "--filename",
-        "-f",
-        required=True,
-        help="Output filename (e.g., sunset-mountains.jpg)",
-    )
+    parser.add_argument("--prompt", "-p", required=True, help="Image description/prompt")
+    parser.add_argument("--filename", "-f", required=True, help="Output filename (e.g., output.jpg)")
     parser.add_argument(
         "--input-image",
         "-i",
@@ -269,20 +175,16 @@ def main() -> int:
         "-a",
         choices=SUPPORTED_ASPECT_RATIOS,
         default=None,
-        help=f"Output aspect ratio (default: model decides). Options: {', '.join(SUPPORTED_ASPECT_RATIOS)}",
+        help=f"Output aspect ratio (default: square). Options: {', '.join(SUPPORTED_ASPECT_RATIOS)}",
     )
 
     args = parser.parse_args()
-
     output_path = Path(args.filename)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        state_dir = resolve_state_dir()
-        base_url, uid, token = load_clawbox_runtime_config(state_dir)
-        client = build_openai_client(base_url, uid, token)
-
         max_input_dim = 0
+        prepared_inputs: list[str] = []
         if args.input_images:
             if len(args.input_images) > MAX_INPUT_IMAGES:
                 print(
@@ -291,7 +193,8 @@ def main() -> int:
                 )
                 return 1
             for image_path in args.input_images:
-                _, current_dim = encode_image_path(image_path)
+                prepared, current_dim = prepare_input_image(image_path)
+                prepared_inputs.append(prepared)
                 max_input_dim = max(max_input_dim, current_dim)
                 print(f"Loaded input image: {image_path}")
 
@@ -303,25 +206,26 @@ def main() -> int:
         if auto_detected:
             print(f"Auto-detected resolution: {output_resolution}")
 
-        if args.input_images:
-            img_count = len(args.input_images)
+        if prepared_inputs:
+            img_count = len(prepared_inputs)
             print(
                 f"Processing {img_count} image{'s' if img_count > 1 else ''} with resolution {output_resolution}..."
             )
         else:
             print(f"Generating image with resolution {output_resolution}...")
 
-        request_args = build_image_request_args(args, output_resolution)
-        response = client.images.generate(**request_args)
+        run_local_image_tool(
+            prompt=args.prompt,
+            output_path=output_path,
+            resolution=output_resolution,
+            aspect_ratio=args.aspect_ratio,
+            input_images=prepared_inputs or None,
+        )
 
-        if save_image_from_response(response, output_path):
-            full_path = output_path.resolve()
-            print(f"\nImage saved: {full_path}")
-            print(f"MEDIA:{full_path}")
-            return 0
-
-        print("Error: No image was generated in the response.", file=sys.stderr)
-        return 1
+        full_path = output_path.resolve()
+        print(f"\nImage saved: {full_path}")
+        print(f"MEDIA:{full_path}")
+        return 0
     except ConfigError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
