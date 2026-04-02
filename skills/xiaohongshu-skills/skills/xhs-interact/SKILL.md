@@ -50,11 +50,11 @@ metadata:
 3. 用户要求"点赞 / 取消点赞"：执行点赞流程。
 4. 用户要求"收藏 / 取消收藏"：执行收藏流程。
 
-## 浏览器截图
+## 浏览器截图（强制）
 
-本技能使用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）在以下节点截取浏览器画面发送给用户：
+**以下节点必须调用**桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户，不可省略：
 
-1. **评论发送成功后**：`post-comment` / `reply-comment` 执行后，截图让用户确认评论已出现在页面上。
+1. **评论发送成功后** — `post-comment` / `reply-comment` 执行后，必须截图让用户确认评论已出现在页面上。
 
 ## 必做约束
 

@@ -50,12 +50,12 @@ metadata:
 3. 用户要求"首页推荐 / 浏览首页"：执行首页 Feed 获取。
 4. 用户要求"查看用户主页 / 看看这个博主"：执行用户资料获取。
 
-## 浏览器截图
+## 浏览器截图（强制）
 
-本技能使用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）在以下节点截取浏览器画面发送给用户：
+**以下节点必须调用**桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户，不可省略：
 
-1. **搜索结果返回后**：`search-feeds` 执行后，截图让用户直观看到搜索结果页面。
-2. **笔记详情加载后**：`get-feed-detail` 执行后，截图展示笔记的实际图片和排版效果（JSON 无法传达视觉信息）。
+1. **搜索结果返回后** — `search-feeds` 执行后，必须截图让用户直观看到搜索结果页面。
+2. **笔记详情加载后** — `get-feed-detail` 执行后，必须截图展示笔记的实际图片和排版效果（JSON 无法传达视觉信息）。
 
 ## 必做约束
 
