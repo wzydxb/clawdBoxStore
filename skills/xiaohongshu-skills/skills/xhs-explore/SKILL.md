@@ -109,7 +109,7 @@ python scripts/cli.py search-feeds \
 
 #### 搜索后截图（必须执行）
 
-`search-feeds` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器搜索结果页面发送给用户。截图完成前禁止向用户汇报搜索结果或执行其他命令。
+`search-feeds` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）只截取浏览器窗口（不要截整个桌面）发送给用户。截图完成前禁止向用户汇报搜索结果或执行其他命令。
 
 ### 获取笔记详情
 
@@ -147,7 +147,7 @@ python scripts/cli.py get-feed-detail \
 
 #### 详情加载后截图（必须执行）
 
-`get-feed-detail` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器笔记详情页面发送给用户。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。截图完成前禁止向用户汇报详情或执行其他命令。
+`get-feed-detail` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）只截取浏览器窗口（不要截整个桌面）发送给用户。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。截图完成前禁止向用户汇报详情或执行其他命令。
 
 ### 获取用户主页
 

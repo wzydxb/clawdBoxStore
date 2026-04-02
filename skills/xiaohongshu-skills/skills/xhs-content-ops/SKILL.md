@@ -69,7 +69,7 @@ metadata:
 - **控制整体频率**：即使使用真实账号和浏览器，频繁的自动化操作仍可能触发风控，建议分批、间隔执行，不要一次性处理大量任务。
 - 所有数据分析结果使用 markdown 表格结构化呈现。
 - **知识库**：任务开始前先读 `knowledge-base/README.md`，任务结束后把有价值的结论沉淀到对应目录。
-- **浏览器截图**：每次执行 `search-feeds`、`get-feed-detail`、`post-comment`、`reply-comment`、`fill-publish`、`click-publish`、`publish` 成功后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户。截图完成前禁止执行后续命令或向用户汇报结果。这条规则与"发布前必须用户确认"同级，不可省略。
+- **浏览器截图**：每次执行 `search-feeds`、`get-feed-detail`、`post-comment`、`reply-comment`、`fill-publish`、`click-publish`、`publish` 成功后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）只截取浏览器窗口（不要截整个桌面）发送给用户。截图完成前禁止执行后续命令或向用户汇报结果。这条规则与"发布前必须用户确认"同级，不可省略。
 
 ---
 
