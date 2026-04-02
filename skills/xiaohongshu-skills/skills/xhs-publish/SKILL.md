@@ -54,6 +54,15 @@ metadata:
 4. 用户只提供网页 URL：先用 WebFetch 提取内容和图片，再给出可发布草稿等待确认。
 5. 信息不全：先补齐缺失信息，不要直接发布。
 
+## 浏览器截图
+
+本技能使用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）在以下节点截取浏览器画面发送给用户：
+
+1. **填写表单后**：`fill-publish` / `fill-publish-video` 完成后，截图让用户预览排版效果再决定是否发布。
+2. **发布成功后**：`publish` / `click-publish` 成功后，截图让用户确认内容已发布。
+3. **长文排版后**：`long-article` 一键排版完成后，截图展示排版效果。
+4. **选择模板后**：`select-template` 应用模板后，截图展示模板效果。
+
 ## 必做约束
 
 - **控制发布频率**：建议每次发布间隔不少于数分钟，避免短时间内批量发布触发风控。
@@ -153,10 +162,13 @@ python scripts/cli.py fill-publish \
   [--schedule-at "2026-03-10T12:00:00"] \
   [--original] [--visibility "公开可见"]
 
+# 步骤 1.5: 截图浏览器预览画面，发送给用户
+
 # 步骤 2: 通过 AskUserQuestion 让用户确认浏览器中的预览
 
 # 步骤 3a: 用户确认发布
 python scripts/cli.py click-publish
+# 发布成功后：截图浏览器页面，让用户确认已发布
 
 # 步骤 3b: 用户取消 → 必须先保存草稿！
 python scripts/cli.py save-draft
@@ -176,10 +188,13 @@ python scripts/cli.py fill-publish-video \
   [--tags "标签1" "标签2"] \
   [--visibility "公开可见"]
 
+# 步骤 1.5: 截图浏览器预览画面，发送给用户
+
 # 步骤 2: 用户确认
 
 # 步骤 3a: 用户确认发布
 python scripts/cli.py click-publish
+# 发布成功后：截图浏览器页面，让用户确认已发布
 
 # 步骤 3b: 用户取消 → 必须先保存草稿！
 python scripts/cli.py save-draft
@@ -242,6 +257,8 @@ python scripts/cli.py long-article \
 5. 点击"一键排版"
 6. 返回 JSON 包含 `templates` 列表
 
+**截图**：排版完成后，截图浏览器页面展示排版效果。
+
 ### Step B.4: 选择排版模板
 
 通过 `AskUserQuestion` 展示可用模板列表，让用户选择：
@@ -249,6 +266,8 @@ python scripts/cli.py long-article \
 ```bash
 python scripts/cli.py select-template --name "用户选择的模板名"
 ```
+
+**截图**：模板应用后，截图浏览器页面展示模板效果。
 
 ### Step B.5: 进入发布页
 
@@ -265,6 +284,7 @@ python scripts/cli.py next-step \
 ```bash
 # 用户在浏览器中确认预览后
 python scripts/cli.py click-publish
+# 发布成功后：截图浏览器页面，让用户确认已发布
 ```
 
 ## 处理输出

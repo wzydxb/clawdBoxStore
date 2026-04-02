@@ -50,6 +50,22 @@ metadata:
 - CLI 输出为 JSON 格式，结构化呈现给用户。
 - 操作频率不宜过高，保持合理间隔。
 
+## 浏览器截图能力
+
+本技能集成了桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`），在关键操作节点自动截取浏览器画面发送给用户，让用户直观看到操作结果。
+
+**截图时机（各子技能会在以下节点调用截图）：**
+
+| 环节 | 截图时机 |
+|------|----------|
+| 登录 | 二维码展示后、登录成功后 |
+| 发布预览 | `fill-publish` / `fill-publish-video` 填写完成后 |
+| 发布完成 | `publish` / `click-publish` 成功后 |
+| 长文排版 | `long-article` 排版后、`select-template` 选择模板后 |
+| 搜索结果 | `search-feeds` 返回结果后 |
+| 笔记详情 | `get-feed-detail` 加载后 |
+| 互动确认 | 评论发送成功后 |
+
 ## 子技能概览
 
 ### xhs-auth — 认证管理
