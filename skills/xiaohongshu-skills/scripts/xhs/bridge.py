@@ -175,6 +175,13 @@ class BridgePage:
 
     # ─── 截图 ────────────────────────────────────────────────────
 
+    def screenshot(self) -> bytes:
+        """截取当前浏览器可视区域，返回 PNG 字节。"""
+        result = self._call("screenshot_element", {})
+        if result and result.get("data"):
+            return base64.b64decode(result["data"])
+        return b""
+
     def screenshot_element(self, selector: str, padding: int = 0) -> bytes:
         result = self._call("screenshot_element", {"selector": selector, "padding": padding})
         if result and result.get("data"):

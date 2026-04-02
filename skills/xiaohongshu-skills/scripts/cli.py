@@ -14,6 +14,8 @@ import json
 import logging
 import os
 import sys
+import tempfile
+import time
 
 # Windows 控制台默认编码（如 cp1252）不支持中文，强制 UTF-8
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
@@ -31,7 +33,35 @@ logger = logging.getLogger("xhs-cli")
 # ─── 输出工具 ────────────────────────────────────────────────────────────────
 
 
+_SCREENSHOT_DIR = os.path.join(tempfile.gettempdir(), "xhs")
+
+
+def _take_screenshot() -> str | None:
+    """尝试截取浏览器可视区域，返回截图文件路径。失败返回 None。"""
+    try:
+        from xhs.bridge import BridgePage
+
+        page = BridgePage()
+        png_bytes = page.screenshot()
+        if not png_bytes:
+            return None
+        os.makedirs(_SCREENSHOT_DIR, exist_ok=True)
+        filename = f"screenshot_{int(time.time())}.png"
+        filepath = os.path.join(_SCREENSHOT_DIR, filename)
+        with open(filepath, "wb") as f:
+            f.write(png_bytes)
+        return filepath
+    except Exception:
+        logger.debug("自动截图失败")
+        return None
+
+
 def _output(data: dict, exit_code: int = 0) -> None:
+    # 成功时自动截取浏览器画面
+    if exit_code == 0:
+        screenshot_path = _take_screenshot()
+        if screenshot_path:
+            data["browser_screenshot"] = screenshot_path
     print(json.dumps(data, ensure_ascii=False, indent=2))
     sys.exit(exit_code)
 

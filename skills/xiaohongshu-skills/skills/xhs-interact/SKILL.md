@@ -74,7 +74,7 @@ python scripts/cli.py post-comment \
   --content "写得很实用，感谢分享"
 ```
 
-4. 调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）只截取浏览器窗口（不要截整个桌面）发送给用户，让用户确认评论已出现在页面上。截图完成前禁止向用户汇报评论结果或执行其他命令。
+4. post-comment 返回的 JSON 包含 `browser_screenshot` 字段。**必须用 Read 工具读取该截图文件并展示给用户**，让用户确认评论已出现在页面上。
 
 ### 回复评论
 
@@ -96,7 +96,7 @@ python scripts/cli.py reply-comment \
   --user-id USER_ID
 ```
 
-回复成功后，调用桌面截图技能只截取浏览器窗口（不要截整个桌面）发送给用户，让用户确认回复已出现。截图完成前禁止继续。
+reply-comment 返回的 JSON 包含 `browser_screenshot` 字段。**必须用 Read 工具读取该截图文件并展示给用户**，让用户确认回复已出现。
 
 ### 点赞 / 取消点赞
 

@@ -107,9 +107,9 @@ python scripts/cli.py search-feeds \
 - `feeds`：笔记列表，每项包含 `id`、`xsec_token`、`note_card`（标题、封面、用户信息、互动数据）
 - `count`：结果数量
 
-#### 搜索后截图（必须执行）
+#### 搜索结果截图
 
-`search-feeds` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）只截取浏览器窗口（不要截整个桌面）发送给用户。截图完成前禁止向用户汇报搜索结果或执行其他命令。
+search-feeds 返回的 JSON 包含 `browser_screenshot` 字段（浏览器搜索结果页面的截图路径）。**必须用 Read 工具读取该截图文件并展示给用户**，让用户直观看到搜索结果页面。
 
 ### 获取笔记详情
 
@@ -145,9 +145,9 @@ python scripts/cli.py get-feed-detail \
 
 输出包含：笔记完整内容、图片列表、互动数据、评论列表。
 
-#### 详情加载后截图（必须执行）
+#### 笔记详情截图
 
-`get-feed-detail` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）只截取浏览器窗口（不要截整个桌面）发送给用户。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。截图完成前禁止向用户汇报详情或执行其他命令。
+get-feed-detail 返回的 JSON 包含 `browser_screenshot` 字段（浏览器笔记详情页面的截图路径）。**必须用 Read 工具读取该截图文件并展示给用户**。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。
 
 ### 获取用户主页
 
