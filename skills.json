@@ -577,7 +577,7 @@
     "name": "小红书自动化",
     "description": "小红书自动化技能集合。支持认证登录、内容发布、搜索发现、社交互动、复合运营。",
     "icon": "",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "need_api_key": false,
     "api_key_label": "",
     "api_key_hint": "",

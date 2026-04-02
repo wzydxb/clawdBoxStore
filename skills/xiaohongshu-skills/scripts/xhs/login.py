@@ -144,11 +144,18 @@ def fetch_qrcode(page: Page) -> tuple[bytes, str, bool]:
     return png_bytes, b64_str, False
 
 
-def _decode_qr_content(png_bytes: bytes) -> str | None:
+def _decode_qr_content(png_bytes: bytes, retries: int = 3) -> str:
     """通过 goqr.me read API 解码二维码内容。
 
+    Args:
+        png_bytes: 二维码 PNG 图片字节。
+        retries: 最大重试次数。
+
     Returns:
-        解码后的文本（通常是登录 URL），失败返回 None。
+        解码后的文本（通常是登录 URL）。
+
+    Raises:
+        RuntimeError: 重试耗尽仍无法解码。
     """
     import http.client
 
@@ -160,34 +167,41 @@ def _decode_qr_content(png_bytes: bytes) -> str | None:
         f"Content-Type: image/png\r\n\r\n"
     ).encode() + png_bytes + f"\r\n--{boundary}--\r\n".encode()
 
-    try:
-        conn = http.client.HTTPSConnection(
-            "api.qrserver.com", timeout=5
-        )
-        conn.request(
-            "POST",
-            "/v1/read-qr-code/",
-            body=body,
-            headers={
-                "Content-Type": (
-                    f"multipart/form-data; boundary={boundary}"
-                ),
-            },
-        )
-        resp = conn.getresponse()
-        if resp.status != 200:
-            return None
-        result = json.loads(resp.read().decode())
-        data = result[0]["symbol"][0].get("data")
-        return data if data else None
-    except Exception:
-        logger.debug("goqr.me 解码失败，将使用 base64 fallback")
-        return None
+    last_err: Exception | None = None
+    for attempt in range(retries):
+        try:
+            conn = http.client.HTTPSConnection(
+                "api.qrserver.com", timeout=10
+            )
+            conn.request(
+                "POST",
+                "/v1/read-qr-code/",
+                body=body,
+                headers={
+                    "Content-Type": (
+                        f"multipart/form-data; boundary={boundary}"
+                    ),
+                },
+            )
+            resp = conn.getresponse()
+            if resp.status != 200:
+                last_err = RuntimeError(f"HTTP {resp.status}")
+                continue
+            result = json.loads(resp.read().decode())
+            data = result[0]["symbol"][0].get("data")
+            if data:
+                return data
+            last_err = RuntimeError("API 返回空数据")
+        except Exception as exc:
+            last_err = exc
+            logger.debug("二维码解码第 %d 次失败: %s", attempt + 1, exc)
+
+    raise RuntimeError(f"二维码解码失败，已重试 {retries} 次: {last_err}")
 
 
 def make_qrcode_url(
     png_bytes: bytes,
-) -> tuple[str, str | None]:
+) -> tuple[str, str]:
     """生成二维码展示 URL 和登录链接。
 
     通过 goqr.me read API 解码 QR 内容，构造 API 图片 URL
@@ -196,23 +210,20 @@ def make_qrcode_url(
     Returns:
         (image_url, login_url)
         - image_url: 可用于 markdown 图片的 URL
-        - login_url: 小红书官方登录链接（解码失败时为 None）
+        - login_url: 小红书官方登录链接
+
+    Raises:
+        RuntimeError: 无法解码二维码内容。
     """
-    import base64
     import urllib.parse
 
     qr_content = _decode_qr_content(png_bytes)
-    if qr_content:
-        image_url = (
-            "https://api.qrserver.com/v1/create-qr-code/"
-            "?size=300x300&data="
-            + urllib.parse.quote(qr_content, safe="")
-        )
-        return image_url, qr_content
-
-    # fallback: base64 data URL
-    b64 = base64.b64encode(png_bytes).decode()
-    return "data:image/png;base64," + b64, None
+    image_url = (
+        "https://api.qrserver.com/v1/create-qr-code/"
+        "?size=300x300&data="
+        + urllib.parse.quote(qr_content, safe="")
+    )
+    return image_url, qr_content
 
 
 def save_qrcode_to_file(png_bytes: bytes) -> str:

@@ -36,22 +36,6 @@ def _output(data: dict, exit_code: int = 0) -> None:
     sys.exit(exit_code)
 
 
-def _open_file_if_display(path: str) -> None:
-    """有桌面时用系统默认程序打开文件。"""
-    import platform
-    import subprocess
-
-    try:
-        system = platform.system()
-        if system == "Windows":
-            os.startfile(path)
-        elif system == "Darwin":
-            subprocess.Popen(["open", path])
-        else:
-            subprocess.Popen(["xdg-open", path])
-    except Exception:
-        logger.debug("无法自动打开文件: %s", path)
-
 
 # ─── Bridge 连接 ──────────────────────────────────────────────────────────────
 
@@ -175,8 +159,7 @@ def _qrcode_fallback(browser, page, args: argparse.Namespace) -> None:
         "qrcode_image_url": image_url,
         "message": "验证码发送受限，已切换为二维码登录，请扫码。扫码后运行 wait-login 等待登录结果。",
     }
-    if login_url:
-        result["qr_login_url"] = login_url
+    result["qr_login_url"] = login_url
     _output(result, exit_code=1)
 
 
@@ -193,7 +176,6 @@ def cmd_check_login(args: argparse.Namespace) -> None:
 
         qrcode_path = save_qrcode_to_file(png_bytes)
         image_url, login_url = make_qrcode_url(png_bytes)
-        _open_file_if_display(qrcode_path)
 
         result: dict = {
             "logged_in": False,
@@ -202,8 +184,7 @@ def cmd_check_login(args: argparse.Namespace) -> None:
             "qrcode_image_url": image_url,
             "hint": "未登录，二维码已自动生成。扫码后运行 wait-login 等待登录结果",
         }
-        if login_url:
-            result["qr_login_url"] = login_url
+        result["qr_login_url"] = login_url
         _output(result, exit_code=1)
     finally:
         browser.close()
@@ -222,11 +203,9 @@ def cmd_login(args: argparse.Namespace) -> None:
 
         qrcode_path = save_qrcode_to_file(png_bytes)
         image_url, login_url = make_qrcode_url(png_bytes)
-        _open_file_if_display(qrcode_path)
 
         result: dict = {"qrcode_path": qrcode_path, "qrcode_image_url": image_url}
-        if login_url:
-            result["qr_login_url"] = login_url
+        result["qr_login_url"] = login_url
         logger.info("二维码已生成，等待扫码...")
 
         success = wait_for_login(page, timeout=120)
@@ -253,7 +232,6 @@ def cmd_get_qrcode(args: argparse.Namespace) -> None:
 
         qrcode_path = save_qrcode_to_file(png_bytes)
         image_url, login_url = make_qrcode_url(png_bytes)
-        _open_file_if_display(qrcode_path)
         browser.close()
 
         result: dict = {
@@ -261,8 +239,7 @@ def cmd_get_qrcode(args: argparse.Namespace) -> None:
             "qrcode_image_url": image_url,
             "message": "二维码已生成，请扫码登录。扫码后运行 wait-login 等待登录结果。",
         }
-        if login_url:
-            result["qr_login_url"] = login_url
+        result["qr_login_url"] = login_url
         _output(result)
     finally:
         pass
