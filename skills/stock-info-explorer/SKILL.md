@@ -78,6 +78,7 @@ uv run --script scripts/yf.py report 000660.KS 6mo
 ## Notes / Limitations
 - Indicators are **computed locally** from price data (Yahoo does not reliably provide precomputed indicator series).
 - Data quality may vary by ticker/market (e.g., missing volume for some symbols).
+- This is a no-key path and should be preferred before any token-based market data route.
 - ⚠️ **PNG图表功能已禁用** - 所有输出均为文本格式，适合命令行环境。
 - 中文输出在Windows PowerShell中可能显示为乱码（GBK编码问题），但数据准确。
 

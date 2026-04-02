@@ -23,6 +23,9 @@ description: |
 
 ## 🚀 快速开始
 
+> 注意：这个 skill 依赖外部 GitHub 仓库，不属于免 key 内置数据链路；只有在用户明确要做交易复盘，并接受这套外部依赖时再使用。
+
+
 ```bash
 # 首次安装
 git clone https://github.com/BENZEMA216/tradingcoach.git ~/tradingcoach

@@ -15,6 +15,7 @@ description: >-
 - **更新频率：** 实时（当日公告）
 - **覆盖范围：** 全部A股上市公司
 - **数据质量：** 官方权威数据
+- **默认路径：** 优先使用 AkShare / 东方财富这条免 key 路径，只有用户明确提供 Tushare token 或要求增强模式时，才走 Tushare
 
 ## When to Use This Skill
 

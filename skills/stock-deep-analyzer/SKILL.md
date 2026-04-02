@@ -167,6 +167,7 @@ Key Risks:
 - Use English variable names in Python scripts
 - Data source: Yahoo Finance via yfinance
 - No API key required
+- Default to this no-key route before considering any token-based data source
 - Analysis period affects technical indicators accuracy
 
 ## Limitations
