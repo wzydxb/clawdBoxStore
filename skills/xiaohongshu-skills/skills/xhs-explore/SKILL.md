@@ -50,13 +50,6 @@ metadata:
 3. 用户要求"首页推荐 / 浏览首页"：执行首页 Feed 获取。
 4. 用户要求"查看用户主页 / 看看这个博主"：执行用户资料获取。
 
-## 浏览器截图（强制）
-
-**以下节点必须调用**桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户，不可省略：
-
-1. **搜索结果返回后** — `search-feeds` 执行后，必须截图让用户直观看到搜索结果页面。
-2. **笔记详情加载后** — `get-feed-detail` 执行后，必须截图展示笔记的实际图片和排版效果（JSON 无法传达视觉信息）。
-
 ## 必做约束
 
 - **控制查询频率**：避免频繁、连续地搜索或加载大量内容，操作之间保持适当间隔。
@@ -114,6 +107,10 @@ python scripts/cli.py search-feeds \
 - `feeds`：笔记列表，每项包含 `id`、`xsec_token`、`note_card`（标题、封面、用户信息、互动数据）
 - `count`：结果数量
 
+#### 搜索后截图（必须执行）
+
+`search-feeds` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器搜索结果页面发送给用户。截图完成前禁止向用户汇报搜索结果或执行其他命令。
+
 ### 获取笔记详情
 
 从搜索结果或首页 Feed 中取 `id` 和 `xsec_token`，获取完整内容：
@@ -147,6 +144,10 @@ python scripts/cli.py get-feed-detail \
 ```
 
 输出包含：笔记完整内容、图片列表、互动数据、评论列表。
+
+#### 详情加载后截图（必须执行）
+
+`get-feed-detail` 成功返回后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器笔记详情页面发送给用户。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。截图完成前禁止向用户汇报详情或执行其他命令。
 
 ### 获取用户主页
 

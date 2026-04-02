@@ -50,12 +50,6 @@ metadata:
 3. 用户要求"点赞 / 取消点赞"：执行点赞流程。
 4. 用户要求"收藏 / 取消收藏"：执行收藏流程。
 
-## 浏览器截图（强制）
-
-**以下节点必须调用**桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户，不可省略：
-
-1. **评论发送成功后** — `post-comment` / `reply-comment` 执行后，必须截图让用户确认评论已出现在页面上。
-
 ## 必做约束
 
 - **控制互动频率**：避免短时间内批量点赞、评论或收藏，建议每次操作之间保持间隔，以免触发风控。
@@ -71,7 +65,7 @@ metadata:
 
 1. 确认已有 `feed_id` 和 `xsec_token`（如没有，先搜索或获取详情）。
 2. 向用户确认评论内容。
-3. 执行发送。
+3. 执行发送：
 
 ```bash
 python scripts/cli.py post-comment \
@@ -79,6 +73,8 @@ python scripts/cli.py post-comment \
   --xsec-token XSEC_TOKEN \
   --content "写得很实用，感谢分享"
 ```
+
+4. 调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器页面发送给用户，让用户确认评论已出现在页面上。截图完成前禁止向用户汇报评论结果或执行其他命令。
 
 ### 回复评论
 
@@ -99,6 +95,8 @@ python scripts/cli.py reply-comment \
   --content "谢谢你的分享" \
   --user-id USER_ID
 ```
+
+回复成功后，调用桌面截图技能截取浏览器页面发送给用户，让用户确认回复已出现。截图完成前禁止继续。
 
 ### 点赞 / 取消点赞
 

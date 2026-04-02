@@ -61,15 +61,6 @@ metadata:
 7. 用户要求"创作发布 / 研究话题后发布 / 一键创作"：执行 **内容创作**。
 8. 用户要求"互动管理 / 批量互动 / 评论策略"：执行 **互动管理**。
 
-## 浏览器截图（强制）
-
-**必须调用**桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户。以下节点不可省略：
-
-- **搜索结果返回后** — 必须截图搜索页面（同 xhs-explore）。
-- **笔记详情加载后** — 必须截图笔记页面，辅助分析（同 xhs-explore）。
-- **发布预览 / 发布完成后** — 必须截图发布页面（同 xhs-publish）。
-- **评论发送成功后** — 必须截图确认评论已出现（同 xhs-interact）。
-
 ## 必做约束
 
 - 复合流程中每一步都应向用户报告进度。
@@ -78,6 +69,7 @@ metadata:
 - **控制整体频率**：即使使用真实账号和浏览器，频繁的自动化操作仍可能触发风控，建议分批、间隔执行，不要一次性处理大量任务。
 - 所有数据分析结果使用 markdown 表格结构化呈现。
 - **知识库**：任务开始前先读 `knowledge-base/README.md`，任务结束后把有价值的结论沉淀到对应目录。
+- **浏览器截图**：每次执行 `search-feeds`、`get-feed-detail`、`post-comment`、`reply-comment`、`fill-publish`、`click-publish`、`publish` 成功后，下一个动作必须是调用桌面截图技能（`/root/.openclaw/workspace/skills/desktop-screenshot.md`）截取浏览器画面发送给用户。截图完成前禁止执行后续命令或向用户汇报结果。这条规则与"发布前必须用户确认"同级，不可省略。
 
 ---
 
