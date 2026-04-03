@@ -9,7 +9,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PYTHON_BIN = "/root/.openclaw/venvs/ppt/bin/python"
-MAX_PAGE_RENDER_RETRIES = 1
+MAX_PAGE_RENDER_RETRIES = 2
 
 
 def write_state(path: Path, stage: str, status: str, **extra: object) -> None:

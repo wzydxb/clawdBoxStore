@@ -8,10 +8,24 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 USER_AGENT = "clawdbox-ppt-nano/1.0"
+MAX_WEB_RETRIES = 2
+
+
+def classify_theme(query: str) -> str:
+    text = query.lower()
+    if any(word in text for word in ["ai", "agent", "模型", "科技", "技术", "平台", "数字化"]):
+        return "tech"
+    if any(word in text for word in ["医疗", "医院", "健康", "药"]):
+        return "medical"
+    if any(word in text for word in ["教育", "学校", "课程", "开学"]):
+        return "education"
+    if any(word in text for word in ["环保", "森林", "自然", "绿"]):
+        return "nature"
+    return "business"
 
 
 def search_commons_image(query: str) -> str:
@@ -21,7 +35,7 @@ def search_commons_image(query: str) -> str:
         "generator": "search",
         "gsrsearch": query,
         "gsrnamespace": "6",
-        "gsrlimit": "5",
+        "gsrlimit": "8",
         "prop": "imageinfo",
         "iiprop": "url",
     }
@@ -50,18 +64,57 @@ def download_and_convert(url: str, output_path: Path) -> None:
     tmp_path.unlink(missing_ok=True)
 
 
+def create_theme_background(theme_kind: str, output_path: Path) -> None:
+    size = (1536, 1024)
+    palettes = {
+        "tech": ((8, 18, 42), (34, 74, 160)),
+        "medical": ((231, 243, 255), (147, 197, 253)),
+        "education": ((249, 250, 251), (253, 224, 71)),
+        "nature": ((22, 101, 52), (134, 239, 172)),
+        "business": ((24, 24, 27), (96, 165, 250)),
+    }
+    start, end = palettes.get(theme_kind, palettes["business"])
+    image = Image.new("RGB", size, start)
+    draw = ImageDraw.Draw(image)
+    w, h = size
+    for y in range(h):
+        ratio = y / max(1, h - 1)
+        color = tuple(int(start[i] * (1 - ratio) + end[i] * ratio) for i in range(3))
+        draw.line((0, y, w, y), fill=color)
+    for i in range(0, w, 120):
+        draw.line((i, 0, i, h), fill=(255, 255, 255, 18), width=1)
+    for i in range(0, h, 120):
+        draw.line((0, i, w, i), fill=(255, 255, 255, 12), width=1)
+    draw.rounded_rectangle((80, 80, w - 80, h - 80), radius=42, outline=(255, 255, 255), width=2)
+    image.save(output_path, format="JPEG", quality=95)
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Fetch a strong related fallback background image from the web")
+    parser = argparse.ArgumentParser(description="Fetch or synthesize a fallback background image")
     parser.add_argument("--query", required=True)
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
     output_path = Path(args.output).resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    image_url = search_commons_image(args.query)
-    download_and_convert(image_url, output_path)
+
+    last_error: str | None = None
+    for _ in range(MAX_WEB_RETRIES):
+        try:
+            image_url = search_commons_image(args.query)
+            download_and_convert(image_url, output_path)
+            print(f"MEDIA:{output_path}")
+            print(f"SOURCE_URL:{image_url}")
+            return 0
+        except Exception as exc:
+            last_error = str(exc)
+
+    theme_kind = classify_theme(args.query)
+    create_theme_background(theme_kind, output_path)
     print(f"MEDIA:{output_path}")
-    print(f"SOURCE_URL:{image_url}")
+    print(f"FALLBACK_THEME:{theme_kind}")
+    if last_error:
+        print(f"FALLBACK_REASON:{last_error}")
     return 0
 
 
