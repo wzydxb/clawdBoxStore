@@ -102,27 +102,30 @@ def create_cover_page(theme_kind: str, title: str, output_path: Path) -> None:
         draw.line((i, 0, i, h), fill=(255, 255, 255, 18), width=1)
     for i in range(0, h, 120):
         draw.line((0, i, w, i), fill=(255, 255, 255, 12), width=1)
-    draw.rounded_rectangle((80, 80, w - 80, h - 80), radius=42, outline=(255, 255, 255), width=2)
+    draw.rounded_rectangle((72, 72, w - 72, h - 72), radius=42, outline=(255, 255, 255), width=2)
+    draw.rounded_rectangle((96, 128, 820, 520), radius=28, fill=(0, 0, 0, 65))
 
     # stronger theme motifs
     if theme_kind == "tech":
-        for x in range(180, 1320, 180):
-            draw.ellipse((x, 520, x + 18, 538), fill=accent)
-            draw.line((x + 9, 529, x + 160, 420), fill=accent, width=4)
-            draw.line((x + 9, 529, x + 160, 638), fill=accent, width=4)
+        for x in range(860, 1320, 160):
+            draw.ellipse((x, 530, x + 20, 550), fill=accent)
+            draw.line((x + 10, 540, x + 140, 430), fill=accent, width=4)
+            draw.line((x + 10, 540, x + 140, 650), fill=accent, width=4)
         draw.rectangle((980, 180, 1260, 360), outline=accent, width=3)
         draw.line((1010, 220, 1230, 220), fill=accent, width=2)
         draw.line((1010, 260, 1180, 260), fill=accent, width=2)
+        draw.line((1010, 300, 1200, 300), fill=accent, width=2)
     elif theme_kind == "medical":
         draw.ellipse((1040, 180, 1260, 400), outline=accent, width=4)
         draw.line((1150, 200, 1150, 380), fill=accent, width=8)
         draw.line((1060, 290, 1240, 290), fill=accent, width=8)
     elif theme_kind == "business":
-        bars = [220, 300, 380, 460]
-        heights = [180, 250, 330, 420]
-        for x, top in zip(bars, heights):
-            draw.rounded_rectangle((1040 + x - 220, top, 1090 + x - 220, 520), radius=8, fill=accent)
-        draw.line((1060, 520, 1310, 360), fill=(255,255,255), width=5)
+        bars = [0, 80, 160, 240]
+        heights = [220, 300, 380, 460]
+        for dx, top in zip(bars, heights):
+            draw.rounded_rectangle((980 + dx, top, 1035 + dx, 540), radius=8, fill=accent)
+        draw.line((1000, 540, 1270, 360), fill=(255,255,255), width=5)
+        draw.line((996, 536, 1270, 360), fill=(255,255,255), width=2)
     elif theme_kind == "education":
         draw.rectangle((1020, 180, 1280, 360), outline=accent, width=4)
         draw.line((1035, 210, 1265, 210), fill=accent, width=2)
@@ -135,23 +138,22 @@ def create_cover_page(theme_kind: str, title: str, output_path: Path) -> None:
         draw.line((1155, 360, 1200, 410), fill=accent, width=4)
 
     font_path = choose_font()
-    title_font = ImageFont.truetype(font_path, 86) if font_path else ImageFont.load_default()
+    title_font = ImageFont.truetype(font_path, 88) if font_path else ImageFont.load_default()
     sub_font = ImageFont.truetype(font_path, 34) if font_path else ImageFont.load_default()
     chip_font = ImageFont.truetype(font_path, 24) if font_path else ImageFont.load_default()
 
     draw.text((120, 180), title, font=title_font, fill=text_color)
-    draw.text((124, 300), "市场分析 / 方案汇报 / 趋势判断", font=sub_font, fill=accent)
+    draw.text((124, 314), "市场分析 / 方案汇报 / 趋势判断", font=sub_font, fill=accent)
 
     keywords = derive_keywords(title)
     x = 126
-    y = 410
+    y = 404
     for kw in keywords:
         bbox = draw.textbbox((x, y), kw, font=chip_font)
-        draw.rounded_rectangle((bbox[0]-18, bbox[1]-10, bbox[2]+18, bbox[3]+10), radius=18, fill=(*accent[:3], 180) if isinstance(accent, tuple) else (99,179,237,180))
+        draw.rounded_rectangle((bbox[0]-18, bbox[1]-10, bbox[2]+18, bbox[3]+10), radius=18, fill=(accent[0], accent[1], accent[2], 180) if isinstance(accent, tuple) else (99, 179, 237, 180))
         draw.text((x, y), kw, font=chip_font, fill=(255,255,255))
         x = bbox[2] + 48
 
-    draw.text((120, 860), "Clawdbox PPT fallback cover", font=chip_font, fill=(230,230,230))
     image.save(output_path, format="JPEG", quality=95)
 
 
