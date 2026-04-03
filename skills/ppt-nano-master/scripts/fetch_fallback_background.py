@@ -8,11 +8,23 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 USER_AGENT = "clawdbox-ppt-nano/1.0"
 MAX_WEB_RETRIES = 2
+FONT_CANDIDATES = [
+    "/System/Library/Fonts/PingFang.ttc",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",
+]
+
+
+def choose_font() -> str | None:
+    for path in FONT_CANDIDATES:
+        if Path(path).exists():
+            return path
+    return None
 
 
 def classify_theme(query: str) -> str:
@@ -64,16 +76,21 @@ def download_and_convert(url: str, output_path: Path) -> None:
     tmp_path.unlink(missing_ok=True)
 
 
-def create_theme_background(theme_kind: str, output_path: Path) -> None:
+def derive_keywords(query: str) -> list[str]:
+    parts = [part.strip() for part in re.split(r"[，,、；;\s]+", query) if part.strip()]
+    return parts[:4]
+
+
+def create_cover_page(theme_kind: str, title: str, output_path: Path) -> None:
     size = (1536, 1024)
     palettes = {
-        "tech": ((8, 18, 42), (34, 74, 160)),
-        "medical": ((231, 243, 255), (147, 197, 253)),
-        "education": ((249, 250, 251), (253, 224, 71)),
-        "nature": ((22, 101, 52), (134, 239, 172)),
-        "business": ((24, 24, 27), (96, 165, 250)),
+        "tech": ((8, 18, 42), (34, 74, 160), (255, 255, 255), (99, 179, 237)),
+        "medical": ((231, 243, 255), (147, 197, 253), (18, 52, 86), (59, 130, 246)),
+        "education": ((249, 250, 251), (253, 224, 71), (17, 24, 39), (217, 119, 6)),
+        "nature": ((22, 101, 52), (134, 239, 172), (255, 255, 255), (190, 242, 100)),
+        "business": ((24, 24, 27), (96, 165, 250), (255, 255, 255), (251, 191, 36)),
     }
-    start, end = palettes.get(theme_kind, palettes["business"])
+    start, end, text_color, accent = palettes.get(theme_kind, palettes["business"])
     image = Image.new("RGB", size, start)
     draw = ImageDraw.Draw(image)
     w, h = size
@@ -86,11 +103,30 @@ def create_theme_background(theme_kind: str, output_path: Path) -> None:
     for i in range(0, h, 120):
         draw.line((0, i, w, i), fill=(255, 255, 255, 12), width=1)
     draw.rounded_rectangle((80, 80, w - 80, h - 80), radius=42, outline=(255, 255, 255), width=2)
+
+    font_path = choose_font()
+    title_font = ImageFont.truetype(font_path, 86) if font_path else ImageFont.load_default()
+    sub_font = ImageFont.truetype(font_path, 34) if font_path else ImageFont.load_default()
+    chip_font = ImageFont.truetype(font_path, 24) if font_path else ImageFont.load_default()
+
+    draw.text((120, 180), title, font=title_font, fill=text_color)
+    draw.text((124, 300), "市场分析 / 方案汇报 / 趋势判断", font=sub_font, fill=accent)
+
+    keywords = derive_keywords(title)
+    x = 126
+    y = 410
+    for kw in keywords:
+        bbox = draw.textbbox((x, y), kw, font=chip_font)
+        draw.rounded_rectangle((bbox[0]-18, bbox[1]-10, bbox[2]+18, bbox[3]+10), radius=18, fill=(*accent[:3], 180) if isinstance(accent, tuple) else (99,179,237,180))
+        draw.text((x, y), kw, font=chip_font, fill=(255,255,255))
+        x = bbox[2] + 48
+
+    draw.text((120, 860), "Clawdbox PPT fallback cover", font=chip_font, fill=(230,230,230))
     image.save(output_path, format="JPEG", quality=95)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Fetch or synthesize a fallback background image")
+    parser = argparse.ArgumentParser(description="Fetch or synthesize a fallback cover/background image")
     parser.add_argument("--query", required=True)
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
@@ -110,7 +146,7 @@ def main() -> int:
             last_error = str(exc)
 
     theme_kind = classify_theme(args.query)
-    create_theme_background(theme_kind, output_path)
+    create_cover_page(theme_kind, args.query, output_path)
     print(f"MEDIA:{output_path}")
     print(f"FALLBACK_THEME:{theme_kind}")
     if last_error:
