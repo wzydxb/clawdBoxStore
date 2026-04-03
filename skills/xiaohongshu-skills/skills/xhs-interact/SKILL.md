@@ -74,7 +74,7 @@ python scripts/cli.py post-comment \
   --content "写得很实用，感谢分享"
 ```
 
-4. post-comment 返回的 JSON 包含 `browser_screenshot` 字段。**必须用 Read 工具读取该截图文件并展示给用户**，让用户确认评论已出现在页面上。
+4. post-comment 返回的 JSON 包含 `browser_screenshot` 字段。**必须用 message 工具的 media 参数将该截图文件发送给用户**，让用户确认评论已出现在页面上。
 
 ### 回复评论
 
@@ -96,7 +96,7 @@ python scripts/cli.py reply-comment \
   --user-id USER_ID
 ```
 
-reply-comment 返回的 JSON 包含 `browser_screenshot` 字段。**必须用 Read 工具读取该截图文件并展示给用户**，让用户确认回复已出现。
+reply-comment 返回的 JSON 包含 `browser_screenshot` 字段。**必须用 message 工具的 media 参数将该截图文件发送给用户**，让用户确认回复已出现。
 
 ### 点赞 / 取消点赞
 

@@ -103,7 +103,7 @@ python scripts/cli.py wait-login
 - 连接已有浏览器 tab，内部阻塞等待（最多 120 秒）。
 - 超时则提示用户重新运行 `get-qrcode` 刷新二维码。
 
-> CLI 命令成功后会自动截取浏览器画面，JSON 输出包含 `browser_screenshot` 字段。**必须用 Read 工具读取该截图文件并展示给用户**，让用户看到浏览器实际状态。
+> CLI 命令成功后会自动截取浏览器画面，JSON 输出包含 `browser_screenshot` 字段。**必须用 message 工具的 media 参数将该截图文件发送给用户**，让用户看到浏览器实际状态。
 
 > **二维码过期刷新**：如需单独刷新二维码（如超时后），可运行 `get-qrcode`，它仍作为独立命令保留。
 

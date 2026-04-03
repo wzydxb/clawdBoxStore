@@ -35,25 +35,53 @@ logger = logging.getLogger("xhs-cli")
 
 _SCREENSHOT_DIR = os.path.join(tempfile.gettempdir(), "xhs")
 
+# 全局 page 引用，供自动截图复用（由各 cmd_ 函数设置）
+_current_page = None
+
 
 def _take_screenshot() -> str | None:
-    """尝试截取浏览器可视区域，返回截图文件路径。失败返回 None。"""
-    try:
-        from xhs.bridge import BridgePage
+    """截取浏览器窗口，返回截图文件路径。
 
-        page = BridgePage()
-        png_bytes = page.screenshot()
-        if not png_bytes:
-            return None
-        os.makedirs(_SCREENSHOT_DIR, exist_ok=True)
-        filename = f"screenshot_{int(time.time())}.png"
-        filepath = os.path.join(_SCREENSHOT_DIR, filename)
-        with open(filepath, "wb") as f:
-            f.write(png_bytes)
-        return filepath
-    except Exception:
-        logger.debug("自动截图失败")
-        return None
+    优先用扩展 bridge 截图，失败则 fallback 到系统命令（import/xwd）。
+    """
+    os.makedirs(_SCREENSHOT_DIR, exist_ok=True)
+    filepath = os.path.join(_SCREENSHOT_DIR, f"screenshot_{int(time.time())}.png")
+
+    # 方法 1: 通过扩展 bridge 截图
+    if _current_page is not None:
+        try:
+            png_bytes = _current_page.screenshot()
+            if png_bytes:
+                with open(filepath, "wb") as f:
+                    f.write(png_bytes)
+                return filepath
+        except Exception as exc:
+            logger.debug("扩展截图失败: %s", exc)
+
+    # 方法 2: VNC 桌面截图（xwd + convert，参考 desktop-screenshot.md）
+    import subprocess
+
+    env = {**os.environ, "DISPLAY": ":1", "XAUTHORITY": "/root/.Xauthority"}
+    xwd_path = filepath.replace(".png", ".xwd")
+
+    try:
+        subprocess.run(
+            ["xwd", "-root", "-silent", "-out", xwd_path],
+            capture_output=True, timeout=10, env=env,
+        )
+        if os.path.exists(xwd_path):
+            subprocess.run(
+                ["convert", xwd_path, filepath],
+                capture_output=True, timeout=10,
+            )
+            os.remove(xwd_path)
+            if os.path.exists(filepath) and os.path.getsize(filepath) > 0:
+                return filepath
+    except Exception as exc:
+        logger.debug("VNC 桌面截图失败: %s", exc)
+
+    logger.warning("自动截图失败: 所有方式均不可用")
+    return None
 
 
 def _output(data: dict, exit_code: int = 0) -> None:
@@ -63,6 +91,13 @@ def _output(data: dict, exit_code: int = 0) -> None:
         if screenshot_path:
             data["browser_screenshot"] = screenshot_path
     print(json.dumps(data, ensure_ascii=False, indent=2))
+    # 截图提示：直接输出到 stderr，Agent 一定能看到
+    if data.get("browser_screenshot"):
+        print(
+            f"\n⚠️ 浏览器截图已保存: {data['browser_screenshot']}\n"
+            f"请立即使用 message 工具的 media 参数将此截图发送给用户。发送截图后你只需要回复'好了'，不要说其他多余的话。\n",
+            file=sys.stderr,
+        )
     sys.exit(exit_code)
 
 
@@ -150,11 +185,14 @@ def _open_chrome() -> None:
 
 def _connect(args: argparse.Namespace):
     """返回 (browser, page)，browser 为空对象，page 通过 Extension Bridge 操作浏览器。"""
+    global _current_page
     from xhs.bridge import BridgePage
 
     bridge_url = getattr(args, "bridge_url", "ws://localhost:9333")
     _ensure_bridge_ready(bridge_url)
-    return _DummyBrowser(), BridgePage(bridge_url)
+    page = BridgePage(bridge_url)
+    _current_page = page
+    return _DummyBrowser(), page
 
 
 # _connect_saved_tab / _connect_existing 在 bridge 模式下与 _connect 等价

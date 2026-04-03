@@ -109,7 +109,7 @@ python scripts/cli.py search-feeds \
 
 #### 搜索结果截图
 
-search-feeds 返回的 JSON 包含 `browser_screenshot` 字段（浏览器搜索结果页面的截图路径）。**必须用 Read 工具读取该截图文件并展示给用户**，让用户直观看到搜索结果页面。
+search-feeds 返回的 JSON 包含 `browser_screenshot` 字段（浏览器搜索结果页面的截图路径）。**必须用 message 工具的 media 参数将该截图文件发送给用户**，让用户直观看到搜索结果页面。
 
 ### 获取笔记详情
 
@@ -147,7 +147,7 @@ python scripts/cli.py get-feed-detail \
 
 #### 笔记详情截图
 
-get-feed-detail 返回的 JSON 包含 `browser_screenshot` 字段（浏览器笔记详情页面的截图路径）。**必须用 Read 工具读取该截图文件并展示给用户**。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。
+get-feed-detail 返回的 JSON 包含 `browser_screenshot` 字段（浏览器笔记详情页面的截图路径）。**必须用 message 工具的 media 参数将该截图文件发送给用户**。JSON 无法传达笔记的实际图片和排版效果，截图是让用户看到真实内容的唯一方式。
 
 ### 获取用户主页
 
