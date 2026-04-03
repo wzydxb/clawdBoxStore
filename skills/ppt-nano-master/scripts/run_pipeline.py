@@ -67,6 +67,17 @@ def render_page(slide: dict, slides_dir: Path) -> str:
     raise RuntimeError(last_error or "page render failed")
 
 
+def render_cover_fallback(theme: str, slides_dir: Path, slide_index: int) -> str:
+    output_file = slides_dir / f"slide-{slide_index:02d}.jpg"
+    stdout = run([
+        sys.executable,
+        str(SCRIPT_DIR / "fetch_fallback_background.py"),
+        "--query", theme,
+        "--output", str(output_file),
+    ])
+    return parse_media_path(stdout)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the full PPT-Nano pipeline")
     parser.add_argument("--theme", required=True)
@@ -145,6 +156,23 @@ def main() -> int:
                     media_path=media_path,
                 )
             except Exception as exc:
+                if slide.get("page_type") == "cover":
+                    try:
+                        media_path = render_cover_fallback(render_plan.get("theme") or args.theme, slides_dir, slide["index"])
+                        slide_images.append(media_path)
+                        write_state(
+                            state_path,
+                            f"PAGE_RENDER_{slide['index']}",
+                            "done",
+                            slide_index=slide["index"],
+                            media_path=media_path,
+                            fallback_applied=True,
+                            fallback_type="web_background",
+                            original_error=str(exc),
+                        )
+                        continue
+                    except Exception as fallback_exc:
+                        exc = RuntimeError(f"cover fallback failed: {fallback_exc}; original: {exc}")
                 write_state(
                     state_path,
                     f"PAGE_RENDER_{slide['index']}",
