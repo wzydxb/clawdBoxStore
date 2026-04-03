@@ -104,6 +104,36 @@ def create_cover_page(theme_kind: str, title: str, output_path: Path) -> None:
         draw.line((0, i, w, i), fill=(255, 255, 255, 12), width=1)
     draw.rounded_rectangle((80, 80, w - 80, h - 80), radius=42, outline=(255, 255, 255), width=2)
 
+    # stronger theme motifs
+    if theme_kind == "tech":
+        for x in range(180, 1320, 180):
+            draw.ellipse((x, 520, x + 18, 538), fill=accent)
+            draw.line((x + 9, 529, x + 160, 420), fill=accent, width=4)
+            draw.line((x + 9, 529, x + 160, 638), fill=accent, width=4)
+        draw.rectangle((980, 180, 1260, 360), outline=accent, width=3)
+        draw.line((1010, 220, 1230, 220), fill=accent, width=2)
+        draw.line((1010, 260, 1180, 260), fill=accent, width=2)
+    elif theme_kind == "medical":
+        draw.ellipse((1040, 180, 1260, 400), outline=accent, width=4)
+        draw.line((1150, 200, 1150, 380), fill=accent, width=8)
+        draw.line((1060, 290, 1240, 290), fill=accent, width=8)
+    elif theme_kind == "business":
+        bars = [220, 300, 380, 460]
+        heights = [180, 250, 330, 420]
+        for x, top in zip(bars, heights):
+            draw.rounded_rectangle((1040 + x - 220, top, 1090 + x - 220, 520), radius=8, fill=accent)
+        draw.line((1060, 520, 1310, 360), fill=(255,255,255), width=5)
+    elif theme_kind == "education":
+        draw.rectangle((1020, 180, 1280, 360), outline=accent, width=4)
+        draw.line((1035, 210, 1265, 210), fill=accent, width=2)
+        draw.line((1035, 250, 1200, 250), fill=accent, width=2)
+        draw.line((1035, 290, 1220, 290), fill=accent, width=2)
+    elif theme_kind == "nature":
+        draw.ellipse((1080, 180, 1230, 330), outline=accent, width=4)
+        draw.line((1155, 330, 1155, 430), fill=accent, width=6)
+        draw.line((1155, 360, 1110, 410), fill=accent, width=4)
+        draw.line((1155, 360, 1200, 410), fill=accent, width=4)
+
     font_path = choose_font()
     title_font = ImageFont.truetype(font_path, 86) if font_path else ImageFont.load_default()
     sub_font = ImageFont.truetype(font_path, 34) if font_path else ImageFont.load_default()
