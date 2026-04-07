@@ -69,13 +69,13 @@ def training_page_payload(role: str, theme: str) -> dict:
     mapping = {
         'cover': [theme, '员工培训指南', '内部培训 / 制度宣导'],
         'toc': ['目录', '培训目的\n关键知识点\n流程规范', '案例示例\n风险提醒\n培训总结'],
-        'training-goal': ['培训目的', '统一认知 / 建立规则 / 降低风险'],
-        'key-point-1': ['关键知识点一', '核心概念\n行为要求\n常见误区'],
-        'key-point-2': ['关键知识点二', '重点规则\n执行边界\n检查方式'],
-        'process': ['流程与规范', '步骤一 → 步骤二 → 步骤三 → 步骤四'],
-        'example': ['案例示例', '正确示例 / 错误示例 / 改进方式'],
-        'risk': ['风险提醒', '高风险行为\n必须避免的错误'],
-        'summary': ['培训总结', '回顾关键点 / 明确执行要求'],
+        'training-goal': ['培训目的', '统一认知 / 建立规则 / 降低风险', '为什么要做这次培训'],
+        'key-point-1': ['关键知识点一', '核心概念\n行为要求\n常见误区', '先讲规则，再讲案例'],
+        'key-point-2': ['关键知识点二', '重点规则\n执行边界\n检查方式', '明确什么能做、什么不能做'],
+        'process': ['流程与规范', '步骤一 → 步骤二 → 步骤三 → 步骤四', '按流程执行，减少偏差'],
+        'example': ['案例示例', '正确示例 / 错误示例 / 改进方式', '用真实案例帮助理解'],
+        'risk': ['风险提醒', '高风险行为\n必须避免的错误', '出现问题时的处理方式'],
+        'summary': ['培训总结', '回顾关键点 / 明确执行要求', '培训后立即可执行'],
         'closing': ['感谢聆听'],
     }
     return {'texts': mapping.get(role, ['感谢聆听'])}
@@ -89,22 +89,22 @@ def fill_text_shapes(slide, texts: list[str]) -> None:
 
 
 def scrub_placeholders_in_pptx(path: Path) -> None:
-    replacements = {
-        '描述相关的信息以解释你的标题。现在就开始打字吧。写任何你想表达的内容': '',
-        '输入相关的描述信息以解释你的标题。': '',
-        '请在此处编辑文字': '',
-        '公司名字': '',
-        '主讲人：李天天 \n资深研究员，创业公司CEO': '',
-        '主讲人：李天天': '',
-    }
+    replacements = [
+        '描述相关的信息以解释你的标题。现在就开始打字吧。写任何你想表达的内容',
+        '输入相关的描述信息以解释你的标题。',
+        '请在此处编辑文字',
+        '公司名字',
+        '主讲人：李天天',
+        '资深研究员，创业公司CEO',
+    ]
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         with zipfile.ZipFile(path, 'r') as zin:
             zin.extractall(tmp_path)
         for xml_path in (tmp_path / 'ppt' / 'slides').glob('slide*.xml'):
             text = xml_path.read_text(encoding='utf-8', errors='ignore')
-            for old, new in replacements.items():
-                text = text.replace(old, new)
+            for old in replacements:
+                text = text.replace(old, '')
             xml_path.write_text(text, encoding='utf-8')
         backup = path.with_suffix('.bak')
         shutil.copy2(path, backup)
