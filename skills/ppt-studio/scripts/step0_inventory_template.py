@@ -5,6 +5,14 @@ import argparse
 import json
 from pathlib import Path
 
+PLACEHOLDER_PATTERNS = [
+    '描述相关的信息以解释你的标题',
+    '输入相关的描述信息以解释你的标题',
+    '请在此处编辑文字',
+    '公司名字',
+    '主讲人：李天天',
+]
+
 
 def inventory_template(template_path: Path) -> dict:
     from pptx import Presentation
@@ -24,6 +32,8 @@ def inventory_template(template_path: Path) -> dict:
                 'width': int(getattr(shape, 'width', 0)),
                 'height': int(getattr(shape, 'height', 0)),
                 'text': text,
+                'placeholder_hit': any(pattern in text for pattern in PLACEHOLDER_PATTERNS),
+                'has_text_frame': bool(getattr(shape, 'has_text_frame', False)),
             })
         slides.append({
             'slide_number': idx,

@@ -1,0 +1,16 @@
+{
+  "template_id": "employee-training",
+  "scene": "employee-training",
+  "pages": [
+    {"slide_number": 1, "role": "cover"},
+    {"slide_number": 2, "role": "toc"},
+    {"slide_number": 3, "role": "training-goal"},
+    {"slide_number": 4, "role": "key-point-1"},
+    {"slide_number": 5, "role": "key-point-2"},
+    {"slide_number": 6, "role": "process"},
+    {"slide_number": 7, "role": "example"},
+    {"slide_number": 8, "role": "risk"},
+    {"slide_number": 9, "role": "summary"},
+    {"slide_number": 10, "role": "closing"}
+  ]
+}
