@@ -11,7 +11,8 @@
       "SOUL.md",
       "USER.md"
     ],
-    "avatar": "agents/lobster-secretary/avatar.png"
+    "avatar": "agents/lobster-secretary/avatar.png",
+    "version": "1.0.0"
   },
   {
     "agent_id": "stockexpert",
@@ -33,7 +34,8 @@
       "stock-deep-analyzer",
       "stock-announcement-fetcher",
       "trading-coach"
-    ]
+    ],
+    "version": "1.0.0"
   },
   {
     "agent_id": "xhs-operator",
@@ -49,6 +51,7 @@
     "avatar": "agents/xhs-operator/avatar.png",
     "skills": [
       "xiaohongshu-skills"
-    ]
+    ],
+    "version": "1.0.0"
   }
 ]
