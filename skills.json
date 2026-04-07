@@ -319,6 +319,24 @@
     }
   },
   {
+    "skill_id": "ppt-studio",
+    "name": "PPT Studio 一体化生成",
+    "description": "模板优先的一体化 PPT 生成技能，按内容规划、视觉组件、PPTX 组装三步生成高质量演示文稿。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "PPT生成",
+    "metadata": {
+      "customTitle": "PPT Studio 一体化生成",
+      "customDescription": "整合内容规划、视觉风格和 PPTX 组装能力，模板优先生成高质量演示文稿。",
+      "category": "PPT生成",
+      "serviceId": "clawbox.ppt-studio",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "pptx",
     "name": "pptx",
     "description": "创建、读取和编辑 PPT 演示文稿。",
