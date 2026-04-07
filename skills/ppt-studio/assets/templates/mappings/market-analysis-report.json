@@ -1,0 +1,17 @@
+{
+  "template_id": "market-analysis-report",
+  "scene": "market-analysis",
+  "pages": [
+    {"slide_number": 1, "role": "cover"},
+    {"slide_number": 2, "role": "toc"},
+    {"slide_number": 3, "role": "section-market"},
+    {"slide_number": 4, "role": "market-segments"},
+    {"slide_number": 5, "role": "region-data"},
+    {"slide_number": 6, "role": "competition"},
+    {"slide_number": 7, "role": "section-customer"},
+    {"slide_number": 8, "role": "persona"},
+    {"slide_number": 9, "role": "core-data"},
+    {"slide_number": 10, "role": "recommendation"},
+    {"slide_number": 11, "role": "closing"}
+  ]
+}

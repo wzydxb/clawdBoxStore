@@ -29,12 +29,32 @@ def main() -> int:
 
     out_dir = Path(args.output_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
+    import json
+    templates_path = SCRIPT_DIR.parent / 'assets' / 'templates' / 'templates.json'
+    selected_template_id = None
+    if templates_path.exists():
+        templates = json.loads(templates_path.read_text(encoding='utf-8'))
+        text = (args.theme + ' ' + (args.research_text or '')).lower()
+        scored = []
+        for template in templates:
+            score = 0
+            for kw in template.get('best_for', []):
+                if kw.lower() in text:
+                    score += 2
+            category = template.get('category', '')
+            if category in text:
+                score += 1
+            scored.append((score, template.get('id')))
+        scored.sort(reverse=True)
+        if scored and scored[0][0] > 0:
+            selected_template_id = scored[0][1]
     run([
         sys.executable, str(SCRIPT_DIR / 'step1_plan.py'),
         '--theme', args.theme,
         '--audience', args.audience,
         '--slides', str(args.slides),
         '--output-dir', str(out_dir),
+        *( ['--template-id', selected_template_id] if selected_template_id else [] ),
         *( ['--research-text', args.research_text] if args.research_text else [] ),
         *( ['--research-file', args.research_file] if args.research_file else [] ),
     ])
