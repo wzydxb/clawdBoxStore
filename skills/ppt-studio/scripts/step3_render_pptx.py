@@ -58,6 +58,15 @@ def add_scratch_slide(prs, spec: dict, theme: str) -> None:
         add_textbox(slide, spec.get('purpose', ''), 0.8, 1.4, 10.5, 0.8, font_size=18, color=(71, 85, 105))
 
 
+def delete_slide(prs, index: int) -> None:
+    slide_id_list = prs.slides._sldIdLst
+    slides = list(slide_id_list)
+    slide = slides[index]
+    rel_id = slide.rId
+    prs.part.drop_rel(rel_id)
+    slide_id_list.remove(slide)
+
+
 def build_pptx(plan: dict, specs: list[dict], output: Path, selected_template: dict | None, template_dir: Path) -> str:
     from pptx import Presentation
     template_path = template_dir / selected_template['file'] if selected_template else None
@@ -69,6 +78,7 @@ def build_pptx(plan: dict, specs: list[dict], output: Path, selected_template: d
         prs = Presentation()
 
     theme = plan.get('theme', '未命名主题')
+    original_slide_count = len(prs.slides)
     for idx, spec in enumerate(specs):
         body = spec.get('purpose', '')
         if idx < len(prs.slides):
@@ -76,6 +86,9 @@ def build_pptx(plan: dict, specs: list[dict], output: Path, selected_template: d
             if ok:
                 continue
         add_scratch_slide(prs, spec, theme)
+
+    while len(prs.slides) > len(specs):
+        delete_slide(prs, len(prs.slides) - 1)
 
     prs.save(output)
     return mode
