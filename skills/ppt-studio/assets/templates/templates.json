@@ -1,47 +1,20 @@
 [
   {
-    "id": "business-annual-report-2",
-    "name": "Business Annual Report 2",
-    "file": "business-annual-report-2.pptx",
+    "id": "employee-training",
+    "name": "员工培训",
+    "file": "employee-training.pptx",
+    "category": "training",
+    "best_for": ["员工培训", "课程讲解", "教学课件", "内部培训"],
+    "source": "/Users/joey/clawdbox-gateway/员工培训.pptx",
+    "license_note": "本地指定模板，优先使用。"
+  },
+  {
+    "id": "market-analysis-report",
+    "name": "市场分析报告",
+    "file": "market-analysis-report.pptx",
     "category": "business",
-    "best_for": ["年度总结", "经营分析", "业务汇报", "管理层汇报"],
-    "source": "https://www.slidescarnival.com/download/sc03200/business-annual-report-2/pptx",
-    "license_note": "SlidesCarnival free template; verify redistribution requirements before commercial redistribution."
-  },
-  {
-    "id": "project-roadmap",
-    "name": "Project Roadmap",
-    "file": "project-roadmap.pptx",
-    "category": "roadmap",
-    "best_for": ["项目路线图", "落地路径", "阶段计划", "执行规划"],
-    "source": "https://www.slidescarnival.com/download/sc00261/project-roadmap/pptx",
-    "license_note": "SlidesCarnival free template; verify redistribution requirements before commercial redistribution."
-  },
-  {
-    "id": "company-roadmap",
-    "name": "Company Roadmap",
-    "file": "company-roadmap.pptx",
-    "category": "roadmap",
-    "best_for": ["公司规划", "战略路线", "业务蓝图", "组织规划"],
-    "source": "https://www.slidescarnival.com/download/sc00262/company-roadmap/pptx",
-    "license_note": "SlidesCarnival free template; verify redistribution requirements before commercial redistribution."
-  },
-  {
-    "id": "biotech-startup-pitch-deck",
-    "name": "Biotech Startup Pitch Deck",
-    "file": "biotech-startup-pitch-deck.pptx",
-    "category": "startup",
-    "best_for": ["创业计划", "融资路演", "医疗健康", "产品方案"],
-    "source": "https://www.slidescarnival.com/download/sc00322/biotech-startup-pitch-deck/pptx",
-    "license_note": "SlidesCarnival free template; verify redistribution requirements before commercial redistribution."
-  },
-  {
-    "id": "innovate-2026",
-    "name": "Innovate 2026",
-    "file": "innovate-2026.pptx",
-    "category": "innovation",
-    "best_for": ["科技创新", "趋势分析", "AI 主题", "产品发布"],
-    "source": "https://www.presentationgo.com/download/innovate-2026-template/?tmstv=1775532494",
-    "license_note": "PresentationGO free template; verify redistribution requirements before commercial redistribution."
+    "best_for": ["市场分析", "行业分析", "商业汇报", "管理层汇报", "策略汇报"],
+    "source": "/Users/joey/clawdbox-gateway/市场分析报告.pptx",
+    "license_note": "本地指定模板，优先使用。"
   }
 ]
