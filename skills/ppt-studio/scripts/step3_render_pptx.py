@@ -89,6 +89,7 @@ def main() -> int:
     parser.add_argument('--plan', required=True)
     parser.add_argument('--specs', required=True)
     parser.add_argument('--assets', required=True)
+    parser.add_argument('--style-resolution')
     parser.add_argument('--output', required=True)
     args = parser.parse_args()
 
@@ -96,13 +97,16 @@ def main() -> int:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     plan = json.loads(Path(args.plan).read_text(encoding='utf-8'))
     specs = json.loads(Path(args.specs).read_text(encoding='utf-8'))
+    style_resolution = json.loads(Path(args.style_resolution).read_text(encoding='utf-8')) if args.style_resolution else {}
     build_pptx(plan, specs, out_path)
     report = {
         'plan': args.plan,
         'specs': args.specs,
         'assets': args.assets,
+        'style_resolution': args.style_resolution,
+        'selected_template': style_resolution.get('selected_template'),
         'output': str(out_path),
-        'mode': 'scratch-mvp-python-pptx',
+        'mode': 'template-first-mvp-python-pptx',
         'slide_count': len(specs),
     }
     (out_path.parent / 'render_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

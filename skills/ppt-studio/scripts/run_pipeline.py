@@ -48,6 +48,7 @@ def main() -> int:
         '--plan', str(out_dir / 'deck_plan.json'),
         '--specs', str(out_dir / 'slide_specs.json'),
         '--assets', str(out_dir / 'slide_assets_manifest.json'),
+        '--style-resolution', str(out_dir / 'style_resolution.json'),
         '--output', str(out_dir / 'presentation.pptx'),
     ])
     print(f"PPTX:{out_dir / 'presentation.pptx'}")

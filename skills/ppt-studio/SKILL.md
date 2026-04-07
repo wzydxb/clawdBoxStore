@@ -79,4 +79,4 @@ PPT_STUDIO_PYTHON=/root/.openclaw/venvs/ppt/bin/python python {baseDir}/scripts/
 - 内容与质量规则：看 `references/INTAKE.md`、`WORKFLOW.md`、`TEMPLATES.md`、`RUBRIC.md`
 - 模板模式：看 `references/template-workflow.md`
 - 组件与视觉：看 `references/VIS-GUIDE.md`、`STYLE-GUIDE.md`
-- 本 skill 第一版以模板优先为主，`ppt-nano-master` 暂时只作兜底，不再作为主入口。
+- 本 skill 第一版以模板优先为主，会根据主题从 `assets/templates/templates.json` 自动选择模板；`ppt-nano-master` 暂时只作兜底，不再作为主入口。
