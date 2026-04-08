@@ -15,7 +15,7 @@
     "name": "浏览器自动化代理",
     "description": "执行网页搜索、表单填写、社媒操作、截图和页面内容采集等浏览器自动化任务。",
     "icon": "🌐",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "need_api_key": false,
     "api_key_label": "",
     "api_key_hint": "",
