@@ -4,7 +4,7 @@
     "name": "algorithmic-art",
     "description": "生成算法艺术与创意图形。",
     "icon": "🎨",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "need_api_key": false,
     "api_key_label": "",
     "api_key_hint": "",
