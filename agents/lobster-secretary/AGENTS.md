@@ -116,10 +116,9 @@ Skills提供你的工具。当你需要使用某个Skill时，查看其 `SKILL.m
 - 行程安排优先直接调用 `opencli`。
 - 行程规划类任务完成后，最终交付结果默认收敛成一张“行程规划卡”，而不是一长段说明文字。
 - 演讲文案优先直接调用 `doc-coauthoring` 或 `internal-comms`。
-- 做 PPT 优先直接调用 `ppt-nano-master`。
-- PPT 请求默认只允许最小 skill 集进入：`ppt-nano-master`，必要时才补 `pptx`；不要默认把 `doc-coauthoring` 一起拉进来。
-- 需要对 `.pptx` 文件做结构编辑、补页、细调排版或后处理时，再配合使用官方 `pptx` skill。
-- 需要提升视觉效果或统一主题时，再调用 `theme-factory`。
+- 做 PPT 统一直接调用官方 `pptx`。
+- PPT 请求默认只允许最小 skill 集进入：`pptx`，不要默认把其他文档或设计类 skill 一起拉进来。
+- 需要对 `.pptx` 文件做结构编辑、补页、细调排版、模板替换或后处理时，都在 `pptx` skill 内完成。
 
 **🎭 语音讲故事：**如果你有 `sag`（ElevenLabs TTS），使用语音来讲述故事、电影摘要和"故事时间"时刻！比大段文字更有吸引力。用有趣的声音给人惊喜。
 
