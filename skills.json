@@ -119,6 +119,24 @@
     }
   },
   {
+    "skill_id": "bazi",
+    "name": "八字命理分析",
+    "description": "通过四柱八字信息进行命盘、大运、流年与命理分析，结合传统典籍给出专业解读。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "命理分析",
+    "metadata": {
+      "customTitle": "八字命理分析",
+      "customDescription": "通过四柱八字信息进行命盘、大运、流年与命理分析，结合传统典籍给出专业解读。",
+      "category": "命理分析",
+      "serviceId": "clawbox.bazi",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "bilibili-sourcing",
     "name": "B站素材搜集",
     "description": "采集 B 站候选视频、评论证据与素材需求，用于选题分析和内容规划。",
