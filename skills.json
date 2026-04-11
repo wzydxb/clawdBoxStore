@@ -47,24 +47,6 @@
     }
   },
   {
-    "skill_id": "autoglm-generate-image",
-    "name": "AI 图片生成",
-    "description": "根据文字描述调用图像生成接口，生成图片并返回结果链接。",
-    "icon": "🖼️",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "图片生成",
-    "metadata": {
-      "customTitle": "AI 图片生成",
-      "customDescription": "根据文字描述调用图像生成接口，生成图片并返回结果链接。",
-      "category": "图片生成",
-      "serviceId": "clawbox.autoglm-generate-image",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
     "skill_id": "autoglm-open-link",
     "name": "网页正文提取",
     "description": "打开指定网页并提取正文内容，适合摘要、抽取和深度分析。",
