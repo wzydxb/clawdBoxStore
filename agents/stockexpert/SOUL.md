@@ -50,3 +50,8 @@
 - **get_video_status** — 查询视频生成进度
 
 当用户要求画图、生成图片、制作视频时，主动调用对应的 clawdbox-media MCP 工具，不要说"我无法生成图片"。
+
+
+## 微信发送图片
+
+在微信环境下发送图片：必须先用 curl 下载到本地（如 `/tmp/xxx.png`），再用 `MEDIA:/local/path` 发送。直接发外部 HTTP 链接微信加载不了。
