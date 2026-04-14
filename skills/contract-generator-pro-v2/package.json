@@ -1,0 +1,103 @@
+{
+  "name": "contract-generator-pro",
+  "version": "1.4.0",
+  "displayName": "Universal Contract Generator",
+  "description": "通用合同生成器 - 生成雇佣合同、租房合同、NDA、服务合同等专业文档。支持对话引导、自动化模板填充、批量生成和 DOCX 输出。",
+  "author": "OpenClaw AI Assistant",
+  "license": "MIT",
+  "homepage": "https://github.com/openclaw/skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/skills/tree/main/employment-contract-generator"
+  },
+  "keywords": [
+    "contract",
+    "legal",
+    "document",
+    "template",
+    "generator",
+    "employment",
+    "rental",
+    "docx",
+    "automation"
+  ],
+  "categories": [
+    "productivity",
+    "business",
+    "legal",
+    "document-generation"
+  ],
+  "engines": {
+    "openclaw": ">=1.0.0"
+  },
+  "activationEvents": [
+    "onSkill:contract-generator-pro"
+  ],
+  "main": "contract_generator.py",
+  "scripts": {
+    "install": "pip install -r requirements.txt",
+    "test": "python contract_generator.py --version"
+  },
+  "dependencies": {
+    "python-docx": ">=0.8.11",
+    "python-dateutil": ">=2.8.2",
+    "pandas": ">=2.0.0 (optional, for Excel support)",
+    "openpyxl": ">=3.1.0 (optional, for Excel support)"
+  },
+  "devDependencies": {},
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "SECURITY_AUDIT.md",
+    "RELEASE_NOTES.md",
+    "contract_generator.py",
+    "requirements.txt",
+    "templates/"
+  ],
+  "contributes": {
+    "skills": [
+      {
+        "name": "contract-generator-pro",
+        "path": "./SKILL.md"
+      }
+    ]
+  },
+  "capabilities": {
+    "fileGeneration": true,
+    "batchProcessing": true,
+    "templateSystem": true,
+    "validation": true
+  },
+  "permissions": {
+    "workspace": {
+      "read": true,
+      "write": true
+    },
+    "network": false,
+    "system": false
+  },
+  "metadata": {
+    "skillType": "document-generation",
+    "difficulty": "beginner",
+    "estimatedTime": "5 minutes",
+    "useCases": [
+      "HR 批量生成 Offer",
+      "房东生成租房合同",
+      "企业生成劳动合同",
+      "批量生成入职文档"
+    ],
+    "targetAudience": [
+      "HR 从业者",
+      "房东/租客",
+      "中小企业主",
+      "法务人员"
+    ]
+  },
+  "publishInfo": {
+    "publishDate": "2026-03-21",
+    "lastUpdated": "2026-03-23T21:14:00+08:00",
+    "changelog": "https://github.com/openclaw/skills/blob/main/employment-contract-generator/RELEASE_NOTES.md",
+    "documentation": "https://github.com/openclaw/skills/blob/main/employment-contract-generator/README.md",
+    "support": "https://github.com/openclaw/skills/issues"
+  }
+}

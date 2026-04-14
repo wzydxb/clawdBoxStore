@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "Data Analysis",
+  "customDescription": "Data analysis and visualization. Query databases, generate reports, automate spreadsheets, and turn raw data into clear, actionable insights. Use when (1) you need to analyze, visualize, or explain data; (2) the user wants reports, dashboards, or metrics turned into a decision; (3) the work involves SQL, Python, spreadsheets, BI tools, or notebooks; (4) you need to compare segments, cohorts, funnels, experiments, or time periods; (5) the user explicitly installs or references the skill for the current task.",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.data-analysis"
+}

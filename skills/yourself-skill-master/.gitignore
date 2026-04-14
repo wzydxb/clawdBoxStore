@@ -1,0 +1,48 @@
+# 生成的自我 Skills（用户数据，不上传）
+selves/
+!selves/example_me/
+
+# 参考仓库（外部 git 仓库，不提交）
+references/
+
+# Claude 本地配置
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 临时文件
+*.log
+/tmp/
+*.tmp

@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "contract-generator-pro",
+  "customDescription": "通用合同生成器 - 生成雇佣合同、租房合同、服务合同等专业文档。支持自动化模板填充、批量生成（CSV/Excel/JSON）和 DOCX 输出。有模板走模板，没模板 AI 直接生成。v1.4.0",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.contract-generator-pro-v2"
+}

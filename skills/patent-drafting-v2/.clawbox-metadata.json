@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "patent-drafting",
+  "customDescription": "Use when drafting patent applications, writing claims, analyzing prior art, or responding to office actions. Covers USPTO (US) patent practice, claim strategies, and specification requirements. Also flags key differences for CNIPA (China) and EPO (Europe) filings. Note: for actual filing, engage a registered patent practitioner.",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.patent-drafting-v2"
+}

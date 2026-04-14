@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "scanned-doc-convert",
+  "customDescription": "当用户要求把扫描 PDF、拍照页、截图页或其他图片型文档转换为 TXT、可编辑 PDF 或 DOCX 时，使用这个 skill。固定入口是当前目录下的 `run.py`；不要搜索脚本位置，不要阅读脚本源码。",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.scanned-doc-convert"
+}

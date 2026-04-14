@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "health-weight-loss",
+  "customDescription": "个性化科学减重方案生成器 - 根据你的身体状况、时间安排、运动基础和目标，量身定制运动计划和饮食指导。像私人教练一样提供可执行、可持续的健康减重路径。v1.0.0",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.health-weight-loss-v1"
+}

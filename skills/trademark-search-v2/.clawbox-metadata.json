@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "trademark-search",
+  "customDescription": "Search trademark databases (China CNIPA, US USPTO, and WIPO) to check name availability and registration details. Use when the user wants to check if a name is trademarked, research trademark availability, or look up registration status. No API key required.",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.trademark-search-v2"
+}

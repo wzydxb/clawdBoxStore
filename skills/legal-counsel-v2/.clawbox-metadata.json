@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "legal-counsel",
+  "customDescription": "Senior Legal Counsel with 20+ years experience in corporate law. Use for legal advice, contract drafting, compliance checks, data protection (GDPR/CCPA), employment law, or risk assessment. Auto-triggers penalty warnings and statute citations. Adapts to user's jurisdiction. Primary focus: US, UK, EU law. For Chinese law (合同法/劳动法/公司法), flag jurisdiction differences proactively.",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.legal-counsel-v2"
+}

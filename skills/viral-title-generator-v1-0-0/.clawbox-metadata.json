@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "viral-title-generator",
+  "customDescription": "为小红书/公众号/抖音/知乎/B站/微博生成高点击率爆款标题。适用场景：用户需要为自媒体内容起标题、批量生成多平台标题、优化或改写现有标题。不适用：英文内容标题、学术论文标题、企业B端报告标题、新闻媒体标题。",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.viral-title-generator-v1-0-0"
+}

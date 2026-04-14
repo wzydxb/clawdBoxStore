@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "stock-price-checker",
+  "customDescription": "Get stock prices using the yfinance library. No API key required.",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.stock-price-checker"
+}

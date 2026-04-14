@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "short-video-script",
+  "customDescription": "短视频脚本创作助手。当用户需要制作抖音、快手、B站、视频号等平台的短视频内容，包括生成脚本、标题、封面建议时启动。适用于知识分享、热点评论、产品推广、剧情情感等内容类型。不适用于长视频策划、图文内容创作或视频剪辑指导。",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.short-video-script-v1-0-0"
+}
