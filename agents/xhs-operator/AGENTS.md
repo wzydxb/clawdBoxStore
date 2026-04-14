@@ -49,10 +49,8 @@
 ### 技能文件查找规则
 
 技能文件存放在以下目录中（按优先级查找，找到即用）：
-1. `/root/.openclaw/workspace/skills/xiaohongshu-skills/`
-2. `/root/.openclaw/skills/xiaohongshu-skills/`
-3. `~/.openclaw/workspace/skills/xiaohongshu-skills/`
-4. `~/.openclaw/skills/xiaohongshu-skills/`
+1. `/root/.hermes/skills/xiaohongshu-skills/`
+2. `~/.hermes/skills/xiaohongshu-skills/`
 
 **启动时必须执行**：先检查上述目录是否存在，读取主 SKILL.md 确认技能可用。如果都找不到，告知用户需要先安装小红书技能。
 
