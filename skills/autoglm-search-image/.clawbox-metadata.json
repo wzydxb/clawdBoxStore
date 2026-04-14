@@ -1,7 +1,0 @@
-{
-  "icon": "",
-  "customTitle": "图片搜索",
-  "customDescription": "根据关键词搜索相关图片，返回图片链接、描述和来源信息。",
-  "category": "图片搜索",
-  "serviceId": "clawbox.autoglm-search-image"
-}

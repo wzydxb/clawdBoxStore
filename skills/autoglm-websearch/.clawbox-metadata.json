@@ -1,7 +1,0 @@
-{
-  "icon": "",
-  "customTitle": "联网搜索",
-  "customDescription": "调用网络搜索接口检索最新网页内容，并整理摘要与来源。",
-  "category": "信息检索",
-  "serviceId": "clawbox.autoglm-websearch"
-}

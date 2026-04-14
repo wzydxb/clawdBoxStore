@@ -1,7 +1,0 @@
-{
-  "icon": "",
-  "customTitle": "网页正文提取",
-  "customDescription": "打开指定网页并提取正文内容，适合摘要、抽取和深度分析。",
-  "category": "信息检索",
-  "serviceId": "clawbox.autoglm-open-link"
-}

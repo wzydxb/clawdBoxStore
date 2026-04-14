@@ -1,7 +1,0 @@
-{
-  "icon": "",
-  "customTitle": "AI 图片生成",
-  "customDescription": "根据文字描述调用图像生成接口，生成图片并返回结果链接。",
-  "category": "图片生成",
-  "serviceId": "clawbox.autoglm-generate-image"
-}

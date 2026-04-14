@@ -1,7 +1,0 @@
-{
-  "icon": "",
-  "customTitle": "浏览器自动化代理",
-  "customDescription": "执行网页搜索、表单填写、社媒操作、截图和页面内容采集等浏览器自动化任务。",
-  "category": "浏览器自动化",
-  "serviceId": "clawbox.autoglm-browser-agent"
-}
