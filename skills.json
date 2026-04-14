@@ -489,7 +489,7 @@
   {
     "skill_id": "adhd-daily-planner",
     "name": "ADHD 日程规划助手",
-    "description": "Time-blind friendly planning, executive function support, and daily structure for ADHD brains. Specializes in realistic time estimation, dopamine-aware task design, and building systems that actually work for neurodivergent minds.",
+    "description": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -498,7 +498,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "ADHD 日程规划助手",
-      "customDescription": "Time-blind friendly planning, executive function support, and daily structure for ADHD brains. Specializes in realistic time estimation, dopamine-aware task design, and building systems that actually work for neurodivergent minds.",
+      "customDescription": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.adhd-daily-planner",
       "metadataFile": ".clawbox-metadata.json"
@@ -507,7 +507,7 @@
   {
     "skill_id": "chart-image",
     "name": "图表图像生成",
-    "description": "Generate publication-quality chart images from data. Supports line, bar, area, point, candlestick, pie/donut, heatmap, multi-series, and stacked charts. Use when visualizing data, creating graphs, plotting time series, or generating chart images for reports/alerts. Designed for Fly.io/VPS deployments - no native compilation, no Puppeteer, no browser required. Pure Node.js with prebuilt binaries.",
+    "description": "根据数据生成高质量图表图像，支持折线图、柱状图、面积图、散点图、烛形图、饼图/甜甜圈图、热力图等多种类型，可直接输出 PNG 文件。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -516,7 +516,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "图表图像生成",
-      "customDescription": "Generate publication-quality chart images from data. Supports line, bar, area, point, candlestick, pie/donut, heatmap, multi-series, and stacked charts. Use when visualizing data, creating graphs, plotting time series, or generating chart images for reports/alerts. Designed for Fly.io/VPS deployments - no native compilation, no Puppeteer, no browser required. Pure Node.js with prebuilt binaries.",
+      "customDescription": "根据数据生成高质量图表图像，支持折线图、柱状图、面积图、散点图、烛形图、饼图/甜甜圈图、热力图等多种类型，可直接输出 PNG 文件。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.chart-image",
       "metadataFile": ".clawbox-metadata.json"
@@ -561,7 +561,7 @@
   {
     "skill_id": "crushable-wingman",
     "name": "约会翅膀教练",
-    "description": "Dating wingman and texting coach. Use when the user asks for reply suggestions, message rewrites, DMs/openers, chat analysis, relationship health analysis, or date ideas, and when they provide chat screenshots to extract and structure before coaching. Prioritize context-first coaching, a concise case file, and 2-4 clarifying questions when information is missing. Reply in the user's language.",
+    "description": "约会翅膀和短信教练。当用户需要回复建议、消息改写、DM/开场白建议、聊天记录分析或心动对象关系评估时使用。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -570,7 +570,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "约会翅膀教练",
-      "customDescription": "Dating wingman and texting coach. Use when the user asks for reply suggestions, message rewrites, DMs/openers, chat analysis, relationship health analysis, or date ideas, and when they provide chat screenshots to extract and structure before coaching. Prioritize context-first coaching, a concise case file, and 2-4 clarifying questions when information is missing. Reply in the user's language.",
+      "customDescription": "约会翅膀和短信教练。当用户需要回复建议、消息改写、DM/开场白建议、聊天记录分析或心动对象关系评估时使用。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.crushable-wingman",
       "metadataFile": ".clawbox-metadata.json"
@@ -579,7 +579,7 @@
   {
     "skill_id": "cs-seo-audit",
     "name": "SEO 审计工具",
-    "description": "When the user wants to audit, review, or diagnose SEO issues on their site. Also use when the user mentions \"SEO audit,\" \"technical SEO,\" \"why am I not ranking,\" \"SEO issues,\" \"on-page SEO,\" \"meta tags review,\" or \"SEO health check.\" For building pages at scale to target keywords, see programmatic-seo. For adding structured data, see schema-markup.",
+    "description": "SEO 审计工具，识别网站 SEO 问题并提供可操作的优化建议，帮助提升自然搜索排名表现。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -588,7 +588,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "SEO 审计工具",
-      "customDescription": "When the user wants to audit, review, or diagnose SEO issues on their site. Also use when the user mentions \"SEO audit,\" \"technical SEO,\" \"why am I not ranking,\" \"SEO issues,\" \"on-page SEO,\" \"meta tags review,\" or \"SEO health check.\" For building pages at scale to target keywords, see programmatic-seo. For adding structured data, see schema-markup.",
+      "customDescription": "SEO 审计工具，识别网站 SEO 问题并提供可操作的优化建议，帮助提升自然搜索排名表现。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.cs-seo-audit",
       "metadataFile": ".clawbox-metadata.json"
@@ -597,7 +597,7 @@
   {
     "skill_id": "data-analysis",
     "name": "数据分析助手",
-    "description": "\"Data analysis and visualization. Query databases, generate reports, automate spreadsheets, and turn raw data into clear, actionable insights. Use when (1) you need to analyze, visualize, or explain data; (2) the user wants reports, dashboards, or metrics turned into a decision; (3) the work involves SQL, Python, spreadsheets, BI tools, or notebooks; (4) you need to compare segments, cohorts, funnels, experiments, or time periods; (5) the user explicitly installs or references the skill for the current task.\"",
+    "description": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -606,7 +606,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "数据分析助手",
-      "customDescription": "\"Data analysis and visualization. Query databases, generate reports, automate spreadsheets, and turn raw data into clear, actionable insights. Use when (1) you need to analyze, visualize, or explain data; (2) the user wants reports, dashboards, or metrics turned into a decision; (3) the work involves SQL, Python, spreadsheets, BI tools, or notebooks; (4) you need to compare segments, cohorts, funnels, experiments, or time periods; (5) the user explicitly installs or references the skill for the current task.\"",
+      "customDescription": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.data-analysis",
       "metadataFile": ".clawbox-metadata.json"
@@ -633,7 +633,7 @@
   {
     "skill_id": "legal-counsel-v2",
     "name": "法律顾问助手",
-    "description": "\"Senior Legal Counsel with 20+ years experience in corporate law. Use for legal advice, contract drafting, compliance checks, data protection (GDPR/CCPA), employment law, or risk assessment. Auto-triggers penalty warnings and statute citations. Adapts to user's jurisdiction. Primary focus: US, UK, EU law. For Chinese law (合同法/劳动法/公司法), flag jurisdiction differences proactively.\"",
+    "description": "拥有 20 年以上经验的资深法律顾问，提供法律建议、合同起草审查、合规检查、风险评估等专业法律服务。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -642,7 +642,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "法律顾问助手",
-      "customDescription": "\"Senior Legal Counsel with 20+ years experience in corporate law. Use for legal advice, contract drafting, compliance checks, data protection (GDPR/CCPA), employment law, or risk assessment. Auto-triggers penalty warnings and statute citations. Adapts to user's jurisdiction. Primary focus: US, UK, EU law. For Chinese law (合同法/劳动法/公司法), flag jurisdiction differences proactively.\"",
+      "customDescription": "拥有 20 年以上经验的资深法律顾问，提供法律建议、合同起草审查、合规检查、风险评估等专业法律服务。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.legal-counsel-v2",
       "metadataFile": ".clawbox-metadata.json"
@@ -669,7 +669,7 @@
   {
     "skill_id": "patent-drafting-v2",
     "name": "专利申请起草",
-    "description": "Use when drafting patent applications, writing claims, analyzing prior art, or responding to office actions. Covers USPTO (US) patent practice, claim strategies, and specification requirements. Also flags key differences for CNIPA (China) and EPO (Europe) filings. Note: for actual filing, engage a registered patent practitioner.",
+    "description": "专业专利申请起草工具，支持撰写权利要求、说明书和摘要，覆盖中国（CNIPA）、美国（USPTO）、欧洲（EPO）等多个司法管辖区。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -678,7 +678,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "专利申请起草",
-      "customDescription": "Use when drafting patent applications, writing claims, analyzing prior art, or responding to office actions. Covers USPTO (US) patent practice, claim strategies, and specification requirements. Also flags key differences for CNIPA (China) and EPO (Europe) filings. Note: for actual filing, engage a registered patent practitioner.",
+      "customDescription": "专业专利申请起草工具，支持撰写权利要求、说明书和摘要，覆盖中国（CNIPA）、美国（USPTO）、欧洲（EPO）等多个司法管辖区。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.patent-drafting-v2",
       "metadataFile": ".clawbox-metadata.json"
@@ -687,7 +687,7 @@
   {
     "skill_id": "ppt-nano-master",
     "name": "多风格 PPT 生成",
-    "description": "多风格 PPT 生成",
+    "description": "生成多风格精美 PPT，内置 14 种风格主题（白板、毛毡风、黑板报、光辉、医疗行业等），支持自动排版和图文生成。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -696,7 +696,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "多风格 PPT 生成",
-      "customDescription": "多风格 PPT 生成",
+      "customDescription": "生成多风格精美 PPT，内置 14 种风格主题（白板、毛毡风、黑板报、光辉、医疗行业等），支持自动排版和图文生成。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.ppt-nano-master",
       "metadataFile": ".clawbox-metadata.json"
@@ -741,7 +741,7 @@
   {
     "skill_id": "stock-price-checker",
     "name": "股票价格查询",
-    "description": "Get stock prices using the yfinance library. No API key required.",
+    "description": "使用 yfinance 库获取实时股票价格，支持 A 股、美股、港股，无需配置任何 API key。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -750,7 +750,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "股票价格查询",
-      "customDescription": "Get stock prices using the yfinance library. No API key required.",
+      "customDescription": "使用 yfinance 库获取实时股票价格，支持 A 股、美股、港股，无需配置任何 API key。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.stock-price-checker",
       "metadataFile": ".clawbox-metadata.json"
@@ -759,7 +759,7 @@
   {
     "skill_id": "trademark-search-v2",
     "name": "商标查询助手",
-    "description": "Search trademark databases (China CNIPA, US USPTO, and WIPO) to check name availability and registration details. Use when the user wants to check if a name is trademarked, research trademark availability, or look up registration status. No API key required.",
+    "description": "商标数据库查询工具，支持中国（CNIPA）、美国（USPTO）和国际（WIPO）三大数据库，检查商标可注册状态和注册详情。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -768,7 +768,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "商标查询助手",
-      "customDescription": "Search trademark databases (China CNIPA, US USPTO, and WIPO) to check name availability and registration details. Use when the user wants to check if a name is trademarked, research trademark availability, or look up registration status. No API key required.",
+      "customDescription": "商标数据库查询工具，支持中国（CNIPA）、美国（USPTO）和国际（WIPO）三大数据库，检查商标可注册状态和注册详情。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.trademark-search-v2",
       "metadataFile": ".clawbox-metadata.json"
@@ -795,7 +795,7 @@
   {
     "skill_id": "yourself-skill-master",
     "name": "数字分身创建",
-    "description": "\"Why distill others when you can distill yourself? Deconstruct your chat history, diaries, and photos into a runnable digital self. | 与其蒸馏别人，不如蒸馏自己。欢迎加入数字永生！\"",
+    "description": "把自己蒸馏成 AI 数字分身，导入微信聊天记录、社交媒体、文档等多平台数据，生成专属 Persona，支持持续进化。",
     "icon": "",
     "version": "1.0.0",
     "need_api_key": false,
@@ -804,7 +804,7 @@
     "category": "自定义skill，生产类",
     "metadata": {
       "customTitle": "数字分身创建",
-      "customDescription": "\"Why distill others when you can distill yourself? Deconstruct your chat history, diaries, and photos into a runnable digital self. | 与其蒸馏别人，不如蒸馏自己。欢迎加入数字永生！\"",
+      "customDescription": "把自己蒸馏成 AI 数字分身，导入微信聊天记录、社交媒体、文档等多平台数据，生成专属 Persona，支持持续进化。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.yourself-skill-master",
       "metadataFile": ".clawbox-metadata.json"
