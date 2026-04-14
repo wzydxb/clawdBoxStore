@@ -685,24 +685,6 @@
     }
   },
   {
-    "skill_id": "ppt-nano-master",
-    "name": "多风格 PPT 生成",
-    "description": "生成多风格精美 PPT，内置 14 种风格主题（白板、毛毡风、黑板报、光辉、医疗行业等），支持自动排版和图文生成。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "多风格 PPT 生成",
-      "customDescription": "生成多风格精美 PPT，内置 14 种风格主题（白板、毛毡风、黑板报、光辉、医疗行业等），支持自动排版和图文生成。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.ppt-nano-master",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
     "skill_id": "scanned-doc-convert",
     "name": "扫描文档转换",
     "description": "当用户要求把扫描 PDF、拍照页、截图页或其他图片型文档转换为 TXT、可编辑 PDF 或 DOCX 时，使用这个 skill。固定入口是当前目录下的 `run.py`；不要搜索脚本位置，不要阅读脚本源码。",
