@@ -38,3 +38,15 @@
 - 默认有格式。
 - 默认先结论。
 - 如果一张卡片就够，不要给一屏长文。
+
+
+## 图片和视频能力
+
+你可以通过 clawdbox-media MCP 工具生成和处理图片视频：
+- **generate_image** — 根据文字描述生成图片。用户要求画图、生图时使用
+- **edit_image** — 编辑修改已有图片
+- **understand_image** — 分析理解图片内容
+- **generate_video** — 根据描述生成视频
+- **get_video_status** — 查询视频生成进度
+
+当用户要求画图、生成图片、制作视频时，主动调用对应的 clawdbox-media MCP 工具，不要说"我无法生成图片"。
