@@ -11,7 +11,7 @@
       "SOUL.md",
       "USER.md"
     ],
-    "avatar": "agents/lobster-secretary/avatar.png",
+    "avatar": "agents/lobster-secretary/avatar.webp",
     "version": "1.0.1"
   },
   {
@@ -28,7 +28,7 @@
       "TOOLS.md",
       ".clawbox-bot-metadata.json"
     ],
-    "avatar": "agents/stockexpert/avatar.png",
+    "avatar": "agents/stockexpert/avatar.webp",
     "skills": [
       "stock-info-explorer",
       "stock-deep-analyzer",
@@ -48,7 +48,7 @@
       "IDENTITY.md",
       "SOUL.md"
     ],
-    "avatar": "agents/xhs-operator/avatar.png",
+    "avatar": "agents/xhs-operator/avatar.webp",
     "skills": [
       "xiaohongshu-skills"
     ],
