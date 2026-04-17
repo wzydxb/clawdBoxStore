@@ -1,0 +1,8 @@
+{
+  "icon": "https://aibot-data-cdn.easyclaw.cn/public/skill/default/startup-pitfall-checker.png",
+  "customTitle": "创业避坑顾问",
+  "customDescription": "输入你的创业想法、决策或当前处境，自动匹配失败反模式库（1,200+ 真实倒闭案例），输出风险评分、命中反模式、魔鬼代言人反驳和具体避坑行动。",
+  "category": "创业与商业",
+  "version": "1.0.0",
+  "createdAt": 1776304626699
+}

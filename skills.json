@@ -1,5 +1,23 @@
 [
   {
+    "skill_id": "adhd-daily-planner",
+    "name": "ADHD 日程规划助手",
+    "description": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "ADHD 日程规划助手",
+      "customDescription": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.adhd-daily-planner",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "algorithmic-art",
     "name": "算法艺术生成",
     "description": "用 p5.js 创作算法艺术与生成式图形，支持流场、粒子系统、随机种子等风格。当用户需要用代码生成艺术、生成式视觉或创意图形时使用。",
@@ -69,6 +87,24 @@
     "category": "官方技能"
   },
   {
+    "skill_id": "chart-image",
+    "name": "图表图像生成",
+    "description": "根据数据生成高质量图表图像，支持折线图、柱状图、面积图、散点图、烛形图、饼图/甜甜圈图、热力图等多种类型，可直接输出 PNG 文件。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "图表图像生成",
+      "customDescription": "根据数据生成高质量图表图像，支持折线图、柱状图、面积图、散点图、烛形图、饼图/甜甜圈图、热力图等多种类型，可直接输出 PNG 文件。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.chart-image",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "claude-api",
     "name": "Claude API 开发",
     "description": "用于 Claude API 与 Anthropic SDK 应用开发。当代码中引入 anthropic/@anthropic-ai/sdk，或用户需要调用 Claude API、Agent SDK 时触发。",
@@ -89,6 +125,96 @@
     "api_key_label": "",
     "api_key_hint": "",
     "category": "图片生成"
+  },
+  {
+    "skill_id": "contract-generator-pro-v2",
+    "name": "合同生成器",
+    "description": "通用合同生成器 - 生成雇佣合同、租房合同、服务合同等专业文档。支持自动化模板填充、批量生成（CSV/Excel/JSON）和 DOCX 输出。有模板走模板，没模板 AI 直接生成。v1.4.0",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "合同生成器",
+      "customDescription": "通用合同生成器 - 生成雇佣合同、租房合同、服务合同等专业文档。支持自动化模板填充、批量生成（CSV/Excel/JSON）和 DOCX 输出。有模板走模板，没模板 AI 直接生成。v1.4.0",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.contract-generator-pro-v2",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "contract-review-pro-v2",
+    "name": "合同审核助手",
+    "description": "\"专业合同审核 Skill，基于《合同审核方法论体系》提供合同类型指引和详细审核服务\"",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "合同审核助手",
+      "customDescription": "\"专业合同审核 Skill，基于《合同审核方法论体系》提供合同类型指引和详细审核服务\"",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.contract-review-pro-v2",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "crushable-wingman",
+    "name": "约会翅膀教练",
+    "description": "约会翅膀和短信教练。当用户需要回复建议、消息改写、DM/开场白建议、聊天记录分析或心动对象关系评估时使用。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "约会翅膀教练",
+      "customDescription": "约会翅膀和短信教练。当用户需要回复建议、消息改写、DM/开场白建议、聊天记录分析或心动对象关系评估时使用。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.crushable-wingman",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "cs-seo-audit",
+    "name": "SEO 审计工具",
+    "description": "SEO 审计工具，识别网站 SEO 问题并提供可操作的优化建议，帮助提升自然搜索排名表现。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "SEO 审计工具",
+      "customDescription": "SEO 审计工具，识别网站 SEO 问题并提供可操作的优化建议，帮助提升自然搜索排名表现。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.cs-seo-audit",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "data-analysis",
+    "name": "数据分析助手",
+    "description": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "数据分析助手",
+      "customDescription": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.data-analysis",
+      "metadataFile": ".clawbox-metadata.json"
+    }
   },
   {
     "skill_id": "doc-coauthoring",
@@ -160,6 +286,24 @@
     "category": "官方技能"
   },
   {
+    "skill_id": "health-weight-loss-v1",
+    "name": "科学减重方案",
+    "description": "个性化科学减重方案生成器 - 根据你的身体状况、时间安排、运动基础和目标，量身定制运动计划和饮食指导。像私人教练一样提供可执行、可持续的健康减重路径。v1.0.0",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "科学减重方案",
+      "customDescription": "个性化科学减重方案生成器 - 根据你的身体状况、时间安排、运动基础和目标，量身定制运动计划和饮食指导。像私人教练一样提供可执行、可持续的健康减重路径。v1.0.0",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.health-weight-loss-v1",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "internal-comms",
     "name": "内部沟通文案",
     "description": "撰写各类内部沟通文档，包括状态报告、领导汇报、公司简报、FAQ、故障通报、项目进展等。",
@@ -171,6 +315,24 @@
     "category": "官方技能"
   },
   {
+    "skill_id": "legal-counsel-v2",
+    "name": "法律顾问助手",
+    "description": "拥有 20 年以上经验的资深法律顾问，提供法律建议、合同起草审查、合规检查、风险评估等专业法律服务。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "法律顾问助手",
+      "customDescription": "拥有 20 年以上经验的资深法律顾问，提供法律建议、合同起草审查、合规检查、风险评估等专业法律服务。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.legal-counsel-v2",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "mcp-builder",
     "name": "MCP 服务构建",
     "description": "创建高质量 MCP（模型上下文协议）服务，让 LLM 通过工具与外部服务交互。支持 Python（FastMCP）和 Node/TypeScript（MCP SDK）。",
@@ -180,6 +342,24 @@
     "api_key_label": "",
     "api_key_hint": "",
     "category": "官方技能"
+  },
+  {
+    "skill_id": "nutrition-analyzer",
+    "name": "营养分析助手",
+    "description": "分析营养数据、识别营养模式、评估营养状况，并提供个性化营养建议。支持与运动、睡眠、慢性病数据的关联分析。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "营养分析助手",
+      "customDescription": "分析营养数据、识别营养模式、评估营养状况，并提供个性化营养建议。支持与运动、睡眠、慢性病数据的关联分析。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.nutrition-analyzer",
+      "metadataFile": ".clawbox-metadata.json"
+    }
   },
   {
     "skill_id": "opencli",
@@ -196,6 +376,24 @@
       "customDescription": "把网站或 Electron 应用变成可调用的 CLI，复用 Chrome 登录态，并支持适配器生成与浏览器自动化。",
       "category": "开发工具",
       "serviceId": "clawbox.opencli",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "patent-drafting-v2",
+    "name": "专利申请起草",
+    "description": "专业专利申请起草工具，支持撰写权利要求、说明书和摘要，覆盖中国（CNIPA）、美国（USPTO）、欧洲（EPO）等多个司法管辖区。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "专利申请起草",
+      "customDescription": "专业专利申请起草工具，支持撰写权利要求、说明书和摘要，覆盖中国（CNIPA）、美国（USPTO）、欧洲（EPO）等多个司法管辖区。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.patent-drafting-v2",
       "metadataFile": ".clawbox-metadata.json"
     }
   },
@@ -294,6 +492,42 @@
     }
   },
   {
+    "skill_id": "scanned-doc-convert",
+    "name": "扫描文档转换",
+    "description": "当用户要求把扫描 PDF、拍照页、截图页或其他图片型文档转换为 TXT、可编辑 PDF 或 DOCX 时，使用这个 skill。固定入口是当前目录下的 `run.py`；不要搜索脚本位置，不要阅读脚本源码。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "扫描文档转换",
+      "customDescription": "当用户要求把扫描 PDF、拍照页、截图页或其他图片型文档转换为 TXT、可编辑 PDF 或 DOCX 时，使用这个 skill。固定入口是当前目录下的 `run.py`；不要搜索脚本位置，不要阅读脚本源码。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.scanned-doc-convert",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "short-video-script-v1-0-0",
+    "name": "短视频脚本创作",
+    "description": "\"短视频脚本创作助手。当用户需要制作抖音、快手、B站、视频号等平台的短视频内容，包括生成脚本、标题、封面建议时启动。适用于知识分享、热点评论、产品推广、剧情情感等内容类型。不适用于长视频策划、图文内容创作或视频剪辑指导。\"",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "短视频脚本创作",
+      "customDescription": "\"短视频脚本创作助手。当用户需要制作抖音、快手、B站、视频号等平台的短视频内容，包括生成脚本、标题、封面建议时启动。适用于知识分享、热点评论、产品推广、剧情情感等内容类型。不适用于长视频策划、图文内容创作或视频剪辑指导。\"",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.short-video-script-v1-0-0",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "skill-creator",
     "name": "技能创建助手",
     "description": "创建新技能、优化已有技能、测试技能效果。当用户需要从头设计 skill、改进现有 skill 或评估 skill 触发精度时使用。",
@@ -334,6 +568,24 @@
     "category": "官方技能"
   },
   {
+    "skill_id": "startup-pitfall-checker",
+    "name": "startup-pitfall-checker",
+    "description": "创业避坑顾问。输入你的想法、决策或当前处境，自动匹配失败反模式库（1,200+ 真实倒闭案例），输出风险评分、命中的反模式、魔鬼代言人反驳、以及具体的避坑建议。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "startup-pitfall-checker",
+      "customDescription": "创业避坑顾问。输入你的想法、决策或当前处境，自动匹配失败反模式库（1,200+ 真实倒闭案例），输出风险评分、命中的反模式、魔鬼代言人反驳、以及具体的避坑建议。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.startup-pitfall-checker",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "stock-announcement-fetcher",
     "name": "A股公告抓取",
     "description": "抓取、筛选和分析 A 股上市公司公告。",
@@ -367,6 +619,24 @@
     "category": "股票分析"
   },
   {
+    "skill_id": "stock-price-checker",
+    "name": "股票价格查询",
+    "description": "使用 yfinance 库获取实时股票价格，支持 A 股、美股、港股，无需配置任何 API key。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "股票价格查询",
+      "customDescription": "使用 yfinance 库获取实时股票价格，支持 A 股、美股、港股，无需配置任何 API key。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.stock-price-checker",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "theme-factory",
     "name": "主题风格工厂",
     "description": "为文档、幻灯片、报告、HTML 落地页等产物套用主题风格。内置 10 套预设主题，也可即时生成新主题。",
@@ -376,6 +646,24 @@
     "api_key_label": "",
     "api_key_hint": "",
     "category": "官方技能"
+  },
+  {
+    "skill_id": "trademark-search-v2",
+    "name": "商标查询助手",
+    "description": "商标数据库查询工具，支持中国（CNIPA）、美国（USPTO）和国际（WIPO）三大数据库，检查商标可注册状态和注册详情。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "商标查询助手",
+      "customDescription": "商标数据库查询工具，支持中国（CNIPA）、美国（USPTO）和国际（WIPO）三大数据库，检查商标可注册状态和注册详情。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.trademark-search-v2",
+      "metadataFile": ".clawbox-metadata.json"
+    }
   },
   {
     "skill_id": "trading-coach",
@@ -403,6 +691,24 @@
       "customDescription": "用 ffmpeg 从视频中提取封面帧、指定时间点画面或缩略图。",
       "category": "视频处理",
       "serviceId": "clawbox.video-frames",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "viral-title-generator-v1-0-0",
+    "name": "爆款标题生成器",
+    "description": "\"为小红书/公众号/抖音/知乎/B站/微博生成高点击率爆款标题。适用场景：用户需要为自媒体内容起标题、批量生成多平台标题、优化或改写现有标题。不适用：英文内容标题、学术论文标题、企业B端报告标题、新闻媒体标题。\"",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "爆款标题生成器",
+      "customDescription": "\"为小红书/公众号/抖音/知乎/B站/微博生成高点击率爆款标题。适用场景：用户需要为自媒体内容起标题、批量生成多平台标题、优化或改写现有标题。不适用：英文内容标题、学术论文标题、企业B端报告标题、新闻媒体标题。\"",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.viral-title-generator-v1-0-0",
       "metadataFile": ".clawbox-metadata.json"
     }
   },
@@ -485,294 +791,6 @@
     "api_key_label": "",
     "api_key_hint": "",
     "category": "官方技能"
-  },
-  {
-    "skill_id": "adhd-daily-planner",
-    "name": "ADHD 日程规划助手",
-    "description": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "ADHD 日程规划助手",
-      "customDescription": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.adhd-daily-planner",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "chart-image",
-    "name": "图表图像生成",
-    "description": "根据数据生成高质量图表图像，支持折线图、柱状图、面积图、散点图、烛形图、饼图/甜甜圈图、热力图等多种类型，可直接输出 PNG 文件。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "图表图像生成",
-      "customDescription": "根据数据生成高质量图表图像，支持折线图、柱状图、面积图、散点图、烛形图、饼图/甜甜圈图、热力图等多种类型，可直接输出 PNG 文件。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.chart-image",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "contract-generator-pro-v2",
-    "name": "合同生成器",
-    "description": "通用合同生成器 - 生成雇佣合同、租房合同、服务合同等专业文档。支持自动化模板填充、批量生成（CSV/Excel/JSON）和 DOCX 输出。有模板走模板，没模板 AI 直接生成。v1.4.0",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "合同生成器",
-      "customDescription": "通用合同生成器 - 生成雇佣合同、租房合同、服务合同等专业文档。支持自动化模板填充、批量生成（CSV/Excel/JSON）和 DOCX 输出。有模板走模板，没模板 AI 直接生成。v1.4.0",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.contract-generator-pro-v2",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "contract-review-pro-v2",
-    "name": "合同审核助手",
-    "description": "\"专业合同审核 Skill，基于《合同审核方法论体系》提供合同类型指引和详细审核服务\"",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "合同审核助手",
-      "customDescription": "\"专业合同审核 Skill，基于《合同审核方法论体系》提供合同类型指引和详细审核服务\"",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.contract-review-pro-v2",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "crushable-wingman",
-    "name": "约会翅膀教练",
-    "description": "约会翅膀和短信教练。当用户需要回复建议、消息改写、DM/开场白建议、聊天记录分析或心动对象关系评估时使用。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "约会翅膀教练",
-      "customDescription": "约会翅膀和短信教练。当用户需要回复建议、消息改写、DM/开场白建议、聊天记录分析或心动对象关系评估时使用。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.crushable-wingman",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "cs-seo-audit",
-    "name": "SEO 审计工具",
-    "description": "SEO 审计工具，识别网站 SEO 问题并提供可操作的优化建议，帮助提升自然搜索排名表现。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "SEO 审计工具",
-      "customDescription": "SEO 审计工具，识别网站 SEO 问题并提供可操作的优化建议，帮助提升自然搜索排名表现。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.cs-seo-audit",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "data-analysis",
-    "name": "数据分析助手",
-    "description": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "数据分析助手",
-      "customDescription": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.data-analysis",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "health-weight-loss-v1",
-    "name": "科学减重方案",
-    "description": "个性化科学减重方案生成器 - 根据你的身体状况、时间安排、运动基础和目标，量身定制运动计划和饮食指导。像私人教练一样提供可执行、可持续的健康减重路径。v1.0.0",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "科学减重方案",
-      "customDescription": "个性化科学减重方案生成器 - 根据你的身体状况、时间安排、运动基础和目标，量身定制运动计划和饮食指导。像私人教练一样提供可执行、可持续的健康减重路径。v1.0.0",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.health-weight-loss-v1",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "legal-counsel-v2",
-    "name": "法律顾问助手",
-    "description": "拥有 20 年以上经验的资深法律顾问，提供法律建议、合同起草审查、合规检查、风险评估等专业法律服务。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "法律顾问助手",
-      "customDescription": "拥有 20 年以上经验的资深法律顾问，提供法律建议、合同起草审查、合规检查、风险评估等专业法律服务。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.legal-counsel-v2",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "nutrition-analyzer",
-    "name": "营养分析助手",
-    "description": "分析营养数据、识别营养模式、评估营养状况，并提供个性化营养建议。支持与运动、睡眠、慢性病数据的关联分析。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "营养分析助手",
-      "customDescription": "分析营养数据、识别营养模式、评估营养状况，并提供个性化营养建议。支持与运动、睡眠、慢性病数据的关联分析。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.nutrition-analyzer",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "patent-drafting-v2",
-    "name": "专利申请起草",
-    "description": "专业专利申请起草工具，支持撰写权利要求、说明书和摘要，覆盖中国（CNIPA）、美国（USPTO）、欧洲（EPO）等多个司法管辖区。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "专利申请起草",
-      "customDescription": "专业专利申请起草工具，支持撰写权利要求、说明书和摘要，覆盖中国（CNIPA）、美国（USPTO）、欧洲（EPO）等多个司法管辖区。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.patent-drafting-v2",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "scanned-doc-convert",
-    "name": "扫描文档转换",
-    "description": "当用户要求把扫描 PDF、拍照页、截图页或其他图片型文档转换为 TXT、可编辑 PDF 或 DOCX 时，使用这个 skill。固定入口是当前目录下的 `run.py`；不要搜索脚本位置，不要阅读脚本源码。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "扫描文档转换",
-      "customDescription": "当用户要求把扫描 PDF、拍照页、截图页或其他图片型文档转换为 TXT、可编辑 PDF 或 DOCX 时，使用这个 skill。固定入口是当前目录下的 `run.py`；不要搜索脚本位置，不要阅读脚本源码。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.scanned-doc-convert",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "short-video-script-v1-0-0",
-    "name": "短视频脚本创作",
-    "description": "\"短视频脚本创作助手。当用户需要制作抖音、快手、B站、视频号等平台的短视频内容，包括生成脚本、标题、封面建议时启动。适用于知识分享、热点评论、产品推广、剧情情感等内容类型。不适用于长视频策划、图文内容创作或视频剪辑指导。\"",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "短视频脚本创作",
-      "customDescription": "\"短视频脚本创作助手。当用户需要制作抖音、快手、B站、视频号等平台的短视频内容，包括生成脚本、标题、封面建议时启动。适用于知识分享、热点评论、产品推广、剧情情感等内容类型。不适用于长视频策划、图文内容创作或视频剪辑指导。\"",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.short-video-script-v1-0-0",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "stock-price-checker",
-    "name": "股票价格查询",
-    "description": "使用 yfinance 库获取实时股票价格，支持 A 股、美股、港股，无需配置任何 API key。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "股票价格查询",
-      "customDescription": "使用 yfinance 库获取实时股票价格，支持 A 股、美股、港股，无需配置任何 API key。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.stock-price-checker",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "trademark-search-v2",
-    "name": "商标查询助手",
-    "description": "商标数据库查询工具，支持中国（CNIPA）、美国（USPTO）和国际（WIPO）三大数据库，检查商标可注册状态和注册详情。",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "商标查询助手",
-      "customDescription": "商标数据库查询工具，支持中国（CNIPA）、美国（USPTO）和国际（WIPO）三大数据库，检查商标可注册状态和注册详情。",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.trademark-search-v2",
-      "metadataFile": ".clawbox-metadata.json"
-    }
-  },
-  {
-    "skill_id": "viral-title-generator-v1-0-0",
-    "name": "爆款标题生成器",
-    "description": "\"为小红书/公众号/抖音/知乎/B站/微博生成高点击率爆款标题。适用场景：用户需要为自媒体内容起标题、批量生成多平台标题、优化或改写现有标题。不适用：英文内容标题、学术论文标题、企业B端报告标题、新闻媒体标题。\"",
-    "icon": "",
-    "version": "1.0.0",
-    "need_api_key": false,
-    "api_key_label": "",
-    "api_key_hint": "",
-    "category": "自定义skill，生产类",
-    "metadata": {
-      "customTitle": "爆款标题生成器",
-      "customDescription": "\"为小红书/公众号/抖音/知乎/B站/微博生成高点击率爆款标题。适用场景：用户需要为自媒体内容起标题、批量生成多平台标题、优化或改写现有标题。不适用：英文内容标题、学术论文标题、企业B端报告标题、新闻媒体标题。\"",
-      "category": "自定义skill，生产类",
-      "serviceId": "clawbox.viral-title-generator-v1-0-0",
-      "metadataFile": ".clawbox-metadata.json"
-    }
   },
   {
     "skill_id": "yourself-skill-master",

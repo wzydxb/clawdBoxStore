@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "startup-pitfall-checker",
+  "customDescription": "创业避坑顾问。输入你的想法、决策或当前处境，自动匹配失败反模式库（1,200+ 真实倒闭案例），输出风险评分、命中的反模式、魔鬼代言人反驳、以及具体的避坑建议。",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.startup-pitfall-checker"
+}
