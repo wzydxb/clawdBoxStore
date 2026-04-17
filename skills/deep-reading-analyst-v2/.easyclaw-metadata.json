@@ -1,0 +1,9 @@
+{
+  "icon": "https://aibot-data-cdn.easyclaw.cn/public/skill/20260330/612912387242076575/reupload_1774125306383169.png",
+  "customTitle": "学术论文分析",
+  "customDescription": "运用SCQA、5W2H、批判性思维、逆向思维、心智模型、第一性原理、系统思维、六顶帽子等10+思维框架，支持URL/PDF/DOCX/TXT输入，将复杂内容转化为可落地洞见。",
+  "category": "学术教育",
+  "serviceId": "1774125306383169",
+  "version": "1.0.0",
+  "installedAt": 1776304691139
+}

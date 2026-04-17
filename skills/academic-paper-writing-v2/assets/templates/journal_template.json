@@ -1,0 +1,66 @@
+{
+  "template_name": "期刊论文模板",
+  "template_type": "journal",
+  "structure": {
+    "sections": [
+      {
+        "name": "摘要",
+        "required": true,
+        "word_limit": "200-300字",
+        "description": "包含研究背景、目的、方法、结果、结论"
+      },
+      {
+        "name": "关键词",
+        "required": true,
+        "count": "3-5个",
+        "description": "反映论文核心内容的关键术语"
+      },
+      {
+        "name": "引言",
+        "required": true,
+        "description": "研究背景、文献综述、研究问题和意义"
+      },
+      {
+        "name": "研究方法",
+        "required": true,
+        "description": "研究设计、数据来源、分析方法"
+      },
+      {
+        "name": "研究结果",
+        "required": true,
+        "description": "研究发现、数据呈现"
+      },
+      {
+        "name": "讨论",
+        "required": true,
+        "description": "结果解释、理论贡献、局限性"
+      },
+      {
+        "name": "结论",
+        "required": true,
+        "description": "核心发现总结、未来研究方向"
+      },
+      {
+        "name": "参考文献",
+        "required": true,
+        "description": "按期刊要求格式排列的参考文献列表"
+      }
+    ]
+  },
+  "format": {
+    "font": {
+      "chinese": "宋体",
+      "english": "Times New Roman",
+      "size_body": "小四号/12pt",
+      "size_title": "二号/22pt"
+    },
+    "page": {
+      "paper": "A4",
+      "margin_top": "2.5cm",
+      "margin_bottom": "2.5cm",
+      "margin_left": "3cm",
+      "margin_right": "2.5cm"
+    },
+    "line_spacing": "1.5倍行距"
+  }
+}

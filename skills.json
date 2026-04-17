@@ -1,5 +1,41 @@
 [
   {
+    "skill_id": "academic-paper-search-v2",
+    "name": "academic-paper-search",
+    "description": "学术论文智能检索助手，基于 Semantic Scholar 数据库，支持关键词/作者/期刊/时间多维度检索，自动构建关键词矩阵、进行论文质量评分（引用数/期刊级别/作者影响力），输出结构化文献报告。适用于文献综述、领域调研、作者研究脉络追踪。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "academic-paper-search",
+      "customDescription": "学术论文智能检索助手，基于 Semantic Scholar 数据库，支持关键词/作者/期刊/时间多维度检索，自动构建关键词矩阵、进行论文质量评分（引用数/期刊级别/作者影响力），输出结构化文献报告。适用于文献综述、领域调研、作者研究脉络追踪。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.academic-paper-search-v2",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "academic-paper-writing-v2",
+    "name": "academic-paper-writing",
+    "description": "学术论文全流程撰写助手，五步标准化流程（目标确认→文献整合→大纲规划→内容撰写→质量评估），支持期刊论文/学位论文/会议论文，覆盖理工科/人文社科/医学/商科四大领域，自动格式化 APA/MLA/Chicago/GB-T-7714 引用，生成可直接提交的 DOCX 文档。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "academic-paper-writing",
+      "customDescription": "学术论文全流程撰写助手，五步标准化流程（目标确认→文献整合→大纲规划→内容撰写→质量评估），支持期刊论文/学位论文/会议论文，覆盖理工科/人文社科/医学/商科四大领域，自动格式化 APA/MLA/Chicago/GB-T-7714 引用，生成可直接提交的 DOCX 文档。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.academic-paper-writing-v2",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
     "skill_id": "adhd-daily-planner",
     "name": "ADHD 日程规划助手",
     "description": "为 ADHD 大脑设计的规划系统，提供时间盲友好的规划、执行功能支持和日常结构。专注于现实时间估算、多巴胺感知任务设计，帮助神经多样性思维建立真正有效的系统。",
@@ -213,6 +249,24 @@
       "customDescription": "数据分析与可视化助手，支持数据库查询、报告生成、电子表格自动化、图表选择与决策简报撰写。",
       "category": "自定义skill，生产类",
       "serviceId": "clawbox.data-analysis",
+      "metadataFile": ".clawbox-metadata.json"
+    }
+  },
+  {
+    "skill_id": "deep-reading-analyst-v2",
+    "name": "deep-reading-analyst",
+    "description": "论文与长文深度分析助手，运用SCQA、5W2H、批判性思维、逆向思维、心智模型、第一性原理、系统思维、六顶帽子10+思维框架，支持URL/PDF/DOCX/TXT输入，四级深度（15~120min+），输出问题解决/学习笔记/写作参考/决策分析五种模式，将复杂内容转化为可落地洞见。",
+    "icon": "",
+    "version": "1.0.0",
+    "need_api_key": false,
+    "api_key_label": "",
+    "api_key_hint": "",
+    "category": "自定义skill，生产类",
+    "metadata": {
+      "customTitle": "deep-reading-analyst",
+      "customDescription": "论文与长文深度分析助手，运用SCQA、5W2H、批判性思维、逆向思维、心智模型、第一性原理、系统思维、六顶帽子10+思维框架，支持URL/PDF/DOCX/TXT输入，四级深度（15~120min+），输出问题解决/学习笔记/写作参考/决策分析五种模式，将复杂内容转化为可落地洞见。",
+      "category": "自定义skill，生产类",
+      "serviceId": "clawbox.deep-reading-analyst-v2",
       "metadataFile": ".clawbox-metadata.json"
     }
   },

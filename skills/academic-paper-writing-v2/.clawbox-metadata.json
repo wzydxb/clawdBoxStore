@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "academic-paper-writing",
+  "customDescription": "学术论文全流程撰写助手，五步标准化流程（目标确认→文献整合→大纲规划→内容撰写→质量评估），支持期刊论文/学位论文/会议论文，覆盖理工科/人文社科/医学/商科四大领域，自动格式化 APA/MLA/Chicago/GB-T-7714 引用，生成可直接提交的 DOCX 文档。",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.academic-paper-writing-v2"
+}

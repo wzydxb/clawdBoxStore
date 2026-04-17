@@ -1,0 +1,9 @@
+{
+  "icon": "https://aibot-data-cdn.easyclaw.cn/public/skill/20260330/612912387896387999/reupload_17740950757211035.png",
+  "customTitle": "学术论文检索",
+  "customDescription": "支持关键词/作者/期刊/时间多维度检索，自动构建关键词矩阵、进行论文质量评分，输出结构化文献报告。适用于文献综述、领域调研、学者研究脉络追踪。",
+  "category": "学术教育",
+  "serviceId": "17740950757211035",
+  "version": "1.0.0",
+  "installedAt": 1776304626699
+}

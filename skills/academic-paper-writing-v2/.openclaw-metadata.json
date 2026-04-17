@@ -1,0 +1,9 @@
+{
+  "icon": "https://aibot-data-cdn.easyclaw.cn/public/skill/20260330/612912387778947487/reupload_17740954138536229.png",
+  "customTitle": "学术论文撰写",
+  "customDescription": "支持期刊论文/学位论文/会议论文，覆盖理工科/人文社科/医学/商科四大领域，自动格式化 APA/MLA/Chicago/GB-T-7714 引用，生成可直接提交的 DOCX 文档。",
+  "category": "学术教育",
+  "serviceId": "17740954138536229",
+  "version": "1.0.0",
+  "installedAt": 1776304649339
+}

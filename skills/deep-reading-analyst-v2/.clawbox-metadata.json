@@ -1,0 +1,7 @@
+{
+  "icon": "",
+  "customTitle": "deep-reading-analyst",
+  "customDescription": "论文与长文深度分析助手，运用SCQA、5W2H、批判性思维、逆向思维、心智模型、第一性原理、系统思维、六顶帽子10+思维框架，支持URL/PDF/DOCX/TXT输入，四级深度（15~120min+），输出问题解决/学习笔记/写作参考/决策分析五种模式，将复杂内容转化为可落地洞见。",
+  "category": "自定义skill，生产类",
+  "serviceId": "clawbox.deep-reading-analyst-v2"
+}
