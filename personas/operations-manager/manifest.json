@@ -1,0 +1,34 @@
+{
+  "id": "operations-manager",
+  "name": "运营经理",
+  "version": "1.0.0",
+  "summary": "企业运营管理与增长的数字分身",
+  "description": "帮助运营经理完成增长指标、流程框架、运营节奏、规模化剧本等工作",
+  "category": "business",
+  "tags": ["运营", "增长", "流程", "效率"],
+  "archetype_compatible": ["zhang-yiming", "mrbeast"],
+  "cover": "",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md"
+  },
+  "skills": [
+    { "name": "coo-advisor", "path": "coo-advisor" },
+    { "name": "growth-metrics", "path": "growth-metrics" },
+    { "name": "ops-cadence", "path": "ops-cadence" },
+    { "name": "process-frameworks", "path": "process-frameworks" },
+    { "name": "scaling-playbook", "path": "scaling-playbook" }
+  ],
+  "cron_defaults": {
+    "daily_report": "0 10 * * 1-5",
+    "weekly_report": "0 9 * * 5",
+    "retrospective": "0 12 * * 0"
+  },
+  "requires": {
+    "hermes": ">=0.8.0",
+    "shared_skills": ["reporting", "canvas", "output-format", "retrospective"]
+  },
+  "author": "clawdbox-official",
+  "created_at": "2026-04-22",
+  "updated_at": "2026-04-22"
+}

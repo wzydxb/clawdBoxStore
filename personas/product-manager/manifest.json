@@ -1,0 +1,39 @@
+{
+  "id": "product-manager",
+  "name": "产品经理",
+  "version": "1.0.0",
+  "summary": "适合 B 端/C 端产品经理的通用数字分身",
+  "description": "帮助产品经理完成需求管理、PRD 撰写、功能优先级排序、竞品分析等日常工作",
+  "category": "business",
+  "tags": ["产品", "B端", "C端", "需求管理"],
+  "archetype_compatible": ["steve-jobs", "paul-graham", "zhang-yiming"],
+  "cover": "",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md",
+    "workflow": "WORKFLOW.md"
+  },
+  "skills": [
+    { "name": "create-prd", "path": "create-prd" },
+    { "name": "feature-prioritize", "path": "feature-prioritize" },
+    { "name": "competitor-analysis", "path": "competitor-analysis" },
+    { "name": "feature-analysis", "path": "feature-analysis" },
+    { "name": "metrics-dashboard", "path": "metrics-dashboard" },
+    { "name": "sprint-plan", "path": "sprint-plan" },
+    { "name": "stakeholder-map", "path": "stakeholder-map" },
+    { "name": "user-interview", "path": "user-interview" },
+    { "name": "user-stories", "path": "user-stories" }
+  ],
+  "cron_defaults": {
+    "daily_report": "0 10 * * 1-5",
+    "weekly_report": "0 9 * * 5",
+    "retrospective": "0 12 * * 0"
+  },
+  "requires": {
+    "hermes": ">=0.8.0",
+    "shared_skills": ["reporting", "canvas", "output-format", "retrospective"]
+  },
+  "author": "clawdbox-official",
+  "created_at": "2026-04-22",
+  "updated_at": "2026-04-22"
+}

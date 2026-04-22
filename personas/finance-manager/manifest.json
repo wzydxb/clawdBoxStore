@@ -1,0 +1,33 @@
+{
+  "id": "finance-manager",
+  "name": "财务经理",
+  "version": "1.0.0",
+  "summary": "企业财务管理与分析的数字分身",
+  "description": "帮助财务经理完成财务分析、报表生成、单位经济模型、CFO 级建议等工作",
+  "category": "business",
+  "tags": ["财务", "分析", "报表", "成本"],
+  "archetype_compatible": ["munger", "taleb"],
+  "cover": "",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md"
+  },
+  "skills": [
+    { "name": "cfo-advisor", "path": "cfo-advisor" },
+    { "name": "financial-analysis", "path": "financial-analysis" },
+    { "name": "financial-report", "path": "financial-report" },
+    { "name": "unit-economics", "path": "unit-economics" }
+  ],
+  "cron_defaults": {
+    "daily_report": "0 10 * * 1-5",
+    "weekly_report": "0 9 * * 5",
+    "retrospective": "0 12 * * 0"
+  },
+  "requires": {
+    "hermes": ">=0.8.0",
+    "shared_skills": ["reporting", "canvas", "output-format", "retrospective"]
+  },
+  "author": "clawdbox-official",
+  "created_at": "2026-04-22",
+  "updated_at": "2026-04-22"
+}

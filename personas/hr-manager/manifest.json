@@ -1,0 +1,33 @@
+{
+  "id": "hr-manager",
+  "name": "HR 经理",
+  "version": "1.0.0",
+  "summary": "人力资源管理与组织发展的数字分身",
+  "description": "帮助 HR 经理完成人才战略、薪酬体系、组织设计、CHRO 级建议等工作",
+  "category": "business",
+  "tags": ["HR", "人力资源", "组织", "薪酬"],
+  "archetype_compatible": ["naval", "munger"],
+  "cover": "",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md"
+  },
+  "skills": [
+    { "name": "chro-advisor", "path": "chro-advisor" },
+    { "name": "comp-frameworks", "path": "comp-frameworks" },
+    { "name": "org-design", "path": "org-design" },
+    { "name": "people-strategy", "path": "people-strategy" }
+  ],
+  "cron_defaults": {
+    "daily_report": "0 10 * * 1-5",
+    "weekly_report": "0 9 * * 5",
+    "retrospective": "0 12 * * 0"
+  },
+  "requires": {
+    "hermes": ">=0.8.0",
+    "shared_skills": ["reporting", "canvas", "output-format", "retrospective"]
+  },
+  "author": "clawdbox-official",
+  "created_at": "2026-04-22",
+  "updated_at": "2026-04-22"
+}

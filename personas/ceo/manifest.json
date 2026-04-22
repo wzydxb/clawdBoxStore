@@ -1,0 +1,36 @@
+{
+  "id": "ceo",
+  "name": "CEO",
+  "version": "1.0.0",
+  "summary": "企业 CEO 视角的战略决策分身",
+  "description": "帮助 CEO 完成战略规划、董事会汇报、高管团队管理、竞争情报分析等工作",
+  "category": "business",
+  "tags": ["CEO", "战略", "决策", "管理"],
+  "archetype_compatible": ["munger", "paul-graham", "elon-musk", "naval"],
+  "cover": "",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md"
+  },
+  "skills": [
+    { "name": "board", "path": "board" },
+    { "name": "c-level-advisor", "path": "c-level-advisor" },
+    { "name": "ceo-advisor", "path": "ceo-advisor" },
+    { "name": "competitive-intel", "path": "competitive-intel" },
+    { "name": "decisions", "path": "decisions" },
+    { "name": "people", "path": "people" },
+    { "name": "strategy", "path": "strategy" }
+  ],
+  "cron_defaults": {
+    "daily_report": "0 10 * * 1-5",
+    "weekly_report": "0 9 * * 5",
+    "retrospective": "0 12 * * 0"
+  },
+  "requires": {
+    "hermes": ">=0.8.0",
+    "shared_skills": ["reporting", "canvas", "output-format", "retrospective"]
+  },
+  "author": "clawdbox-official",
+  "created_at": "2026-04-22",
+  "updated_at": "2026-04-22"
+}
