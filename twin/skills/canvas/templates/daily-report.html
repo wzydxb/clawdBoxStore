@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 15px;
+    color: #1F2329;
+    background: #fff;
+    padding: 48px 56px 56px;
+    max-width: 800px;
+    line-height: 1.7;
+  }
+  .doc-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E8EAED; }
+  .doc-title { font-size: 26px; font-weight: 600; color: #1F2329; margin-bottom: 8px; }
+  .doc-meta { font-size: 13px; color: #8F959E; display: flex; gap: 20px; }
+
+  .section { margin-bottom: 28px; }
+  .section-title {
+    font-size: 13px; font-weight: 600; color: #8F959E;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: #F0F1F3; margin-left: 4px; }
+
+  /* Status cards */
+  .status-grid { display: flex; gap: 12px; margin-bottom: 20px; }
+  .status-card {
+    flex: 1; padding: 14px 16px; border-radius: 8px; text-align: center;
+  }
+  .status-card.done { background: #F0FFF4; }
+  .status-card.doing { background: #FFF8E6; }
+  .status-card.blocked { background: #FFF2F0; }
+  .status-num { font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .status-card.done .status-num { color: #27C346; }
+  .status-card.doing .status-num { color: #FF8800; }
+  .status-card.blocked .status-num { color: #F54A45; }
+  .status-label { font-size: 12px; color: #8F959E; }
+
+  /* Task items */
+  .task-list { display: flex; flex-direction: column; gap: 6px; }
+  .task-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px; border-radius: 6px; font-size: 14px;
+    border: 1px solid #EBEDF0;
+  }
+  .task-item.done { border-color: #D3F9DC; background: #FAFFFE; }
+  .task-item.doing { border-color: #FFE9B8; background: #FFFDF5; }
+  .task-item.blocked { border-color: #FFD6D4; background: #FFFAFA; }
+  .task-status-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+  }
+  .done .task-status-dot { background: #27C346; }
+  .doing .task-status-dot { background: #FF8800; }
+  .blocked .task-status-dot { background: #F54A45; }
+  .task-text { flex: 1; color: #1F2329; }
+  .task-tag {
+    font-size: 11px; padding: 2px 7px; border-radius: 3px;
+    background: #F2F3F5; color: #646A73; flex-shrink: 0;
+  }
+
+  /* Next steps */
+  .next-list { display: flex; flex-direction: column; gap: 6px; }
+  .next-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 14px; padding: 6px 0;
+    border-bottom: 1px solid #F0F1F3;
+  }
+  .next-item:last-child { border-bottom: none; }
+  .next-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #3370FF; color: #fff;
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* Summary */
+  .summary-box {
+    background: #F7F8FA; border-radius: 8px;
+    padding: 14px 18px; font-size: 14px; color: #3D3D3D; line-height: 1.75;
+  }
+
+  .doc-footer {
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid #F0F1F3;
+    font-size: 12px; color: #C2C7CF; text-align: right;
+  }
+  .list-item { display: flex; gap: 8px; font-size: 14px; padding: 4px 0; color: #3D3D3D; }
+  .list-item::before { content: "·"; color: #C2C7CF; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-title">{{title}}</div>
+  <div class="doc-meta">
+    <span>📅 {{date}}</span>
+    <span>👤 {{author}}</span>
+  </div>
+</div>
+
+<!-- 数据概览 -->
+<div class="status-grid">
+  <div class="status-card done">
+    <div class="status-num">{{stats.done_count}}</div>
+    <div class="status-label">✅ 已完成</div>
+  </div>
+  <div class="status-card doing">
+    <div class="status-num">{{stats.doing_count}}</div>
+    <div class="status-label">🔄 进行中</div>
+  </div>
+  <div class="status-card blocked">
+    <div class="status-num">{{stats.blocked_count}}</div>
+    <div class="status-label">❌ 阻塞</div>
+  </div>
+</div>
+
+<!-- 今日完成 -->
+<div class="section">
+  <div class="section-title">今日完成</div>
+  <div class="task-list">{{done_tasks}}</div>
+</div>
+
+<!-- 进行中 -->
+<div class="section">
+  <div class="section-title">进行中</div>
+  <div class="task-list">{{doing_tasks}}</div>
+</div>
+
+<!-- 阻塞 / 风险 -->
+<div class="section">
+  <div class="section-title">阻塞 / 风险</div>
+  <div class="task-list">{{blocked_tasks}}</div>
+</div>
+
+<!-- 明日计划 -->
+<div class="section">
+  <div class="section-title">明日计划</div>
+  <div class="next-list">{{next_tasks}}</div>
+</div>
+
+<!-- 备注 -->
+<div class="section">
+  <div class="section-title">备注</div>
+  <div class="summary-box">{{notes}}</div>
+</div>
+
+<div class="doc-footer">{{author}} · {{date}} 日报 · 由 AI 生成</div>
+
+</body>
+</html>

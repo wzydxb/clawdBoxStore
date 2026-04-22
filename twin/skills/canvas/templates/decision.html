@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 14px; color: #1F2329; background: #fff;
+    padding: 40px 44px 52px; max-width: 860px; line-height: 1.65;
+  }
+
+  /* Header */
+  .doc-type { font-size: 11px; font-weight: 600; color: #8F959E; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .doc-title { font-size: 22px; font-weight: 700; color: #1F2329; margin-bottom: 6px; line-height: 1.3; }
+  .doc-meta { font-size: 12px; color: #8F959E; margin-bottom: 28px; display: flex; gap: 16px; }
+
+  /* Decision result banner */
+  .decision-banner {
+    border-radius: 10px; padding: 20px 24px; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .decision-banner.decided   { background: #F0FFF4; border: 1px solid #C8F0D4; }
+  .decision-banner.pending   { background: #FFF8E6; border: 1px solid #FFE9B8; }
+  .decision-banner.escalated { background: #FFF0F0; border: 1px solid #FFCDD2; }
+  .banner-icon { font-size: 28px; flex-shrink: 0; }
+  .banner-body { flex: 1; }
+  .banner-status { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .decided   .banner-status { color: #1A8A2E; }
+  .pending   .banner-status { color: #7A5800; }
+  .escalated .banner-status { color: #C0392B; }
+  .banner-decision { font-size: 16px; font-weight: 700; color: #1F2329; line-height: 1.4; }
+
+  /* Section */
+  .section { margin-bottom: 24px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: #fff;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px;
+  }
+  .label-gray   { background: #8F959E; }
+  .label-blue   { background: #3370FF; }
+  .label-orange { background: #FF8800; }
+  .label-green  { background: #27C346; }
+  .label-red    { background: #F54A45; }
+  .label-purple { background: #8B5CF6; }
+
+  /* Text block */
+  .text-block { font-size: 14px; color: #3D3D3D; line-height: 1.75; padding: 14px 18px; background: #F7F8FA; border-radius: 8px; }
+
+  /* Criteria grid */
+  .criteria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .criterion-card { border: 1px solid #E8EAED; border-radius: 8px; padding: 14px 16px; }
+  .criterion-name { font-size: 13px; font-weight: 600; color: #1F2329; margin-bottom: 4px; }
+  .criterion-weight { font-size: 11px; color: #8F959E; margin-bottom: 8px; }
+  .weight-bar { height: 4px; background: #F0F1F3; border-radius: 2px; }
+  .weight-fill { height: 4px; background: #3370FF; border-radius: 2px; }
+
+  /* Stakeholders */
+  .stakeholder-list { display: flex; flex-direction: column; gap: 8px; }
+  .stakeholder-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border: 1px solid #EBEDF0; border-radius: 7px; }
+  .sh-avatar { width: 32px; height: 32px; border-radius: 50%; background: #EEF3FF; color: #2B5FD9; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sh-name { font-size: 14px; font-weight: 600; color: #1F2329; }
+  .sh-role { font-size: 12px; color: #8F959E; }
+  .sh-stance { margin-left: auto; font-size: 12px; padding: 3px 10px; border-radius: 10px; font-weight: 600; }
+  .stance-support { background: #E8F8EE; color: #1A8A2E; }
+  .stance-neutral { background: #F2F3F5; color: #646A73; }
+  .stance-oppose  { background: #FFECEC; color: #C0392B; }
+
+  /* Risk list */
+  .risk-list { display: flex; flex-direction: column; gap: 8px; }
+  .risk-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; border-radius: 8px; border: 1px solid #E8EAED; }
+  .risk-level { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .risk-high   { background: #FFECEC; color: #C0392B; }
+  .risk-medium { background: #FFF3E0; color: #A05A00; }
+  .risk-low    { background: #E8F8EE; color: #1A8A2E; }
+  .risk-body { flex: 1; }
+  .risk-title { font-size: 14px; font-weight: 600; color: #1F2329; margin-bottom: 3px; }
+  .risk-mitigation { font-size: 13px; color: #646A73; }
+
+  /* Action items */
+  .action-list { display: flex; flex-direction: column; gap: 7px; }
+  .action-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border: 1px solid #EBEDF0; border-radius: 7px; }
+  .action-check { width: 15px; height: 15px; border: 1.5px solid #C2C7CF; border-radius: 3px; flex-shrink: 0; margin-top: 1px; }
+  .action-text { flex: 1; font-size: 14px; color: #1F2329; }
+  .action-meta { display: flex; gap: 10px; font-size: 11px; color: #8F959E; margin-top: 2px; }
+
+  .doc-footer { margin-top: 32px; font-size: 11px; color: #C2C7CF; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="doc-type">决策记录</div>
+<div class="doc-title">{{title}}</div>
+<div class="doc-meta">
+  <span>📅 {{date}}</span>
+  <span>👤 {{decision_maker}}</span>
+  <span>🏷️ {{category}}</span>
+</div>
+
+<!-- 决策结果 -->
+<div class="decision-banner {{status}}">
+  <span class="banner-icon">{{status_icon}}</span>
+  <div class="banner-body">
+    <div class="banner-status">{{status_label}}</div>
+    <div class="banner-decision">{{decision}}</div>
+  </div>
+</div>
+
+<!-- 背景 -->
+<div class="section">
+  <div class="section-label label-gray">决策背景</div>
+  <div class="text-block">{{background}}</div>
+</div>
+
+<!-- 决策标准 -->
+<div class="section">
+  <div class="section-label label-blue">决策标准</div>
+  <div class="criteria-grid">{{criteria}}</div>
+</div>
+
+<!-- 干系人 -->
+<div class="section">
+  <div class="section-label label-orange">干系人立场</div>
+  <div class="stakeholder-list">{{stakeholders}}</div>
+</div>
+
+<!-- 风险 -->
+<div class="section">
+  <div class="section-label label-red">风险与应对</div>
+  <div class="risk-list">{{risks}}</div>
+</div>
+
+<!-- 行动项 -->
+<div class="section">
+  <div class="section-label label-green">行动项</div>
+  <div class="action-list">{{actions}}</div>
+</div>
+
+<div class="doc-footer">{{decision_maker}} · {{date}}</div>
+
+</body>
+</html>

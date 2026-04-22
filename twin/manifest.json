@@ -1,0 +1,24 @@
+{
+  "type": "twin-template",
+  "name": "hermes-opc 数字分身初始模板",
+  "version": "1.0.0",
+  "summary": "带 5 步 onboarding 引导流程的通用数字分身模板",
+  "source": "hermes-opc",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md",
+    "user": "USER.md",
+    "tasklog": "TASKLOG.md"
+  },
+  "personas": [
+    "product-manager", "ceo", "finance-manager",
+    "hr-manager", "operations-manager", "data-analyst"
+  ],
+  "skills": [
+    "onboarding", "persona-builder", "reporting", "retrospective",
+    "twin-distillation", "canvas", "browser", "media", "note-taking",
+    "knowledge-base", "productivity", "research", "nuwa-skill",
+    "output-format", "yourself-skill", "system-setup"
+  ],
+  "updated_at": "2026-04-22"
+}

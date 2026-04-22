@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 14px; color: #1F2329; background: #fff;
+    padding: 40px 44px 52px; max-width: 860px; line-height: 1.65;
+  }
+
+  /* Header */
+  .card-type { font-size: 11px; font-weight: 600; color: #8F959E; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .card-title { font-size: 22px; font-weight: 700; color: #1F2329; margin-bottom: 6px; line-height: 1.3; }
+  .card-meta { font-size: 12px; color: #8F959E; margin-bottom: 28px; display: flex; gap: 16px; }
+
+  /* Section */
+  .section { margin-bottom: 22px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: #fff;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 10px;
+  }
+  .label-bg   { background: #8F959E; }
+  .label-red  { background: #F54A45; }
+  .label-blue { background: #3370FF; }
+  .label-orange { background: #FF8800; }
+  .label-green  { background: #27C346; }
+  .label-purple { background: #8B5CF6; }
+
+  /* Status / severity badge */
+  .severity {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; padding: 6px 14px;
+    border-radius: 6px; margin-bottom: 20px;
+  }
+  .severity-critical { background: #FFF0F0; color: #C0392B; border: 1px solid #FFCDD2; }
+  .severity-high     { background: #FFF3E0; color: #A05A00; border: 1px solid #FFE0B2; }
+  .severity-medium   { background: #FFF8E6; color: #7A5800; border: 1px solid #FFE9B8; }
+  .severity-low      { background: #F0FFF4; color: #1A8A2E; border: 1px solid #C8F0D4; }
+
+  /* Content blocks */
+  .text-block {
+    font-size: 14px; color: #3D3D3D; line-height: 1.75;
+    padding: 14px 18px; background: #F7F8FA; border-radius: 8px;
+  }
+  .text-block p + p { margin-top: 8px; }
+
+  /* Bullet list */
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .bullet-list li {
+    font-size: 14px; color: #3D3D3D; padding-left: 16px; position: relative; line-height: 1.65;
+  }
+  .bullet-list li::before { content: "•"; position: absolute; left: 0; color: #3370FF; font-weight: 700; }
+
+  /* Root cause chain */
+  .cause-chain { display: flex; flex-direction: column; gap: 0; }
+  .cause-item { display: flex; gap: 12px; align-items: flex-start; }
+  .cause-left { display: flex; flex-direction: column; align-items: center; width: 28px; flex-shrink: 0; }
+  .cause-dot { width: 10px; height: 10px; border-radius: 50%; background: #3370FF; flex-shrink: 0; margin-top: 4px; }
+  .cause-line { flex: 1; width: 2px; background: #E8EAED; margin: 4px 0; min-height: 16px; }
+  .cause-item:last-child .cause-line { display: none; }
+  .cause-body { flex: 1; padding-bottom: 14px; }
+  .cause-label { font-size: 11px; font-weight: 600; color: #8F959E; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+  .cause-text { font-size: 14px; color: #1F2329; line-height: 1.6; }
+
+  /* Solution options */
+  .solution-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .solution-card { border: 1px solid #E8EAED; border-radius: 8px; padding: 16px; }
+  .solution-card.recommended { border-color: #3370FF; background: #F5F8FF; }
+  .solution-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .solution-name { font-size: 14px; font-weight: 600; color: #1F2329; }
+  .solution-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+  .tag-recommended { background: #3370FF; color: #fff; }
+  .tag-alternative { background: #F2F3F5; color: #646A73; }
+  .solution-desc { font-size: 13px; color: #646A73; line-height: 1.6; margin-bottom: 10px; }
+  .solution-pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pros, .cons { font-size: 12px; }
+  .pros-label { color: #27C346; font-weight: 600; margin-bottom: 3px; }
+  .cons-label { color: #F54A45; font-weight: 600; margin-bottom: 3px; }
+  .pros li, .cons li { color: #3D3D3D; padding: 1px 0 1px 10px; position: relative; list-style: none; }
+  .pros li::before { content: "+"; position: absolute; left: 0; color: #27C346; font-weight: 700; }
+  .cons li::before { content: "−"; position: absolute; left: 0; color: #F54A45; font-weight: 700; }
+
+  /* Recommendation box */
+  .recommendation {
+    background: #F0F4FF; border: 1px solid #D0DCFF; border-radius: 8px;
+    padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start;
+    margin-top: 4px;
+  }
+  .rec-icon { font-size: 18px; flex-shrink: 0; }
+  .rec-body { flex: 1; }
+  .rec-title { font-size: 13px; font-weight: 600; color: #2B5FD9; margin-bottom: 4px; }
+  .rec-text { font-size: 13px; color: #3D3D3D; line-height: 1.65; }
+
+  .doc-footer { margin-top: 32px; font-size: 11px; color: #C2C7CF; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="card-type">问题分析</div>
+<div class="card-title">{{title}}</div>
+<div class="card-meta">
+  <span>📅 {{date}}</span>
+  <span>👤 {{author}}</span>
+  <span>🏷️ {{category}}</span>
+</div>
+
+<div class="severity severity-{{severity_level}}">{{severity_icon}} {{severity_label}}</div>
+
+<!-- 背景 -->
+<div class="section">
+  <div class="section-label label-bg">背景</div>
+  <div class="text-block">{{background}}</div>
+</div>
+
+<!-- 现状 -->
+<div class="section">
+  <div class="section-label label-red">现状 / 问题</div>
+  <ul class="bullet-list">{{current_state}}</ul>
+</div>
+
+<!-- 根因分析 -->
+<div class="section">
+  <div class="section-label label-orange">根因分析</div>
+  <div class="cause-chain">{{root_causes}}</div>
+</div>
+
+<!-- 解决方案 -->
+<div class="section">
+  <div class="section-label label-blue">解决方案</div>
+  <div class="solution-grid">{{solutions}}</div>
+</div>
+
+<!-- 建议 -->
+<div class="recommendation">
+  <span class="rec-icon">💡</span>
+  <div class="rec-body">
+    <div class="rec-title">建议</div>
+    <div class="rec-text">{{recommendation}}</div>
+  </div>
+</div>
+
+<div class="doc-footer">{{author}} · {{date}}</div>
+
+</body>
+</html>
