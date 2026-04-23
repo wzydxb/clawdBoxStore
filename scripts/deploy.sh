@@ -35,11 +35,11 @@ elif command -v sshpass &>/dev/null; then
     read -rs SSH_PASS; echo ""
   fi
   _ssh() { sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "$@"; }
-  _scp() { sshpass -p "$SSH_PASS" scp $SSH_OPTS "$@"; }
+  _scp() { sshpass -p "$SSH_PASS" scp -O $SSH_OPTS "$@"; }
 else
   # 无 sshpass，走交互式 ssh（需要用户手动输密码）
   _ssh() { ssh $SSH_OPTS "$TARGET" "$@"; }
-  _scp() { scp $SSH_OPTS "$@"; }
+  _scp() { scp -O $SSH_OPTS "$@"; }
 fi
 
 # ── 0. 连通性检查 ─────────────────────────────────────────
@@ -172,12 +172,12 @@ ok "reporting / output-format / retrospective / twin-distillation / share-bot"
 
 # personas（每个角色完整 skill 包 + SOUL.md）
 _ssh "mkdir -p $H/personas"
-_scp -r "$L/personas/." "$TARGET:$H/personas/"
+tar -C "$L" -czf - personas | sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "tar -C $H -xzf -"
 ok "personas（$(ls "$L/personas/" | wc -l | tr -d ' ') 个角色）"
 
 # archetypes（人物认知原型，skill_view 直接加载）
 _ssh "mkdir -p $H/archetypes"
-_scp -r "$L/archetypes/." "$TARGET:$H/archetypes/"
+tar -C "$L" -czf - archetypes | sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "tar -C $H -xzf -"
 ok "archetypes（$(ls "$L/archetypes/" | wc -l | tr -d ' ') 个原型）"
 
 # archetypes symlink → skills/（让 skill_view 能直接找到原型）
