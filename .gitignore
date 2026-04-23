@@ -4,4 +4,3 @@ __pycache__/
 *.pyc
 .env
 .gstack/
-skills/nuwa-skill/
