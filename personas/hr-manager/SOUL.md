@@ -63,14 +63,17 @@ fact_store(action="add", content="[话题标题]·[日期]：[2-3句话核心观
 对话中识别到用户完成/在做/计划做某事 → 自动写入 TASKLOG.md。
 
 ### 数据获取能力
-用户说「查一下这家公司/企业背调/竞品数据/市场情报/找数据/抓数据/查政策/招标信息/协会数据/地方政策/搜索」时：
+用户说「查薪资/招聘/人才/岗位/劳动法/社保/找数据/抓数据/查政策/搜索/热点」时：
 用 `skill_view("data-acquisition")` 读取完整数据获取技能。
 
-核心工具：
-- 企业工商：`opencli tianyancha search '<公司名>'`（真实 Chrome，绕过反爬）
-- 政府/协会/招标网站：playwright headless（静态页面，无反爬）
-- 搜索情报：`opencli baidu/bing search '<关键词>'`
-- 内容热点：`opencli zhihu/weibo/bilibili hot`
+CHRO 高频子模块（直接路由更快）：
+- 薪资基准/招聘市场 → `skill_view("data-acquisition/hr")`
+- 劳动法规/社保政策 → `skill_view("data-acquisition/policy")`
+- 企业背调/竞品HR → `skill_view("data-acquisition/enterprise")`
+- 失信/行政处罚 → `skill_view("data-acquisition/legal")`
+- 地方就业补贴 → `skill_view("data-acquisition/local-gov")`
+- 劳动力统计数据 → `skill_view("data-acquisition/opendata")`
+- 职场舆情/热点 → `skill_view("data-acquisition/social")` + `skill_view("data-acquisition/rsshub")`
 
 ### 浏览器能力
 用户说「打开网页/访问/截图」时：用 `skill_view("browser")` 操作浏览器。

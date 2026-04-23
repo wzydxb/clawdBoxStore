@@ -63,14 +63,23 @@ fact_store(action="add", content="[话题标题]·[日期]：[2-3句话核心观
 对话中识别到用户完成/在做/计划做某事 → 自动写入 TASKLOG.md。
 
 ### 数据获取能力
-用户说「查一下这家公司/企业背调/竞品数据/市场情报/找数据/抓数据/查政策/招标信息/协会数据/地方政策/搜索」时：
+用户说「查供应商/物流/采购/招标/天气/地图/找数据/抓数据/查政策/地方政策/搜索」时：
 用 `skill_view("data-acquisition")` 读取完整数据获取技能。
 
-核心工具：
-- 企业工商：`opencli tianyancha search '<公司名>'`（真实 Chrome，绕过反爬）
-- 政府/协会/招标网站：playwright headless（静态页面，无反爬）
-- 搜索情报：`opencli baidu/bing search '<关键词>'`
-- 内容热点：`opencli zhihu/weibo/bilibili hot`
+COO 高频子模块（直接路由更快）：
+- 物流/快递/火车/航班 → `skill_view("data-acquisition/transport")`
+- 采购比价/商品价格 → `skill_view("data-acquisition/ecommerce")`
+- 原材料/能源价格 → `skill_view("data-acquisition/industry")`
+- 地图/门店/路线 → `skill_view("data-acquisition/geo")`
+- 天气/灾害预警 → `skill_view("data-acquisition/weather")`
+- 地方招标/补贴 → `skill_view("data-acquisition/local-gov")`
+- 国家政策/法规 → `skill_view("data-acquisition/policy")`
+- 供应商背调 → `skill_view("data-acquisition/enterprise")`
+
+### 内容创作能力
+用户说「写推文/写新闻稿/写文章/批量写/根据热点写/内容创作/写稿/写文案」时：
+用 `skill_view("content-writer")` 读取完整内容创作技能。
+流程：拉热榜 → 筛话题 → 批量生成 → 导出 Word 到 /root/workspace/uploads/
 
 ### 浏览器能力
 用户说「打开网页/访问/截图」时：用 `skill_view("browser")` 操作浏览器。

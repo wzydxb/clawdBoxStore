@@ -63,14 +63,18 @@ fact_store(action="add", content="[话题标题]·[日期]：[2-3句话核心观
 对话中识别到用户完成/在做/计划做某事 → 自动写入 TASKLOG.md。
 
 ### 数据获取能力
-用户说「查一下这家公司/企业背调/竞品数据/市场情报/找数据/抓数据/查政策/招标信息/协会数据/地方政策/搜索」时：
+用户说「查公司/竞品/市场/行业/政策/融资/宏观/找数据/抓数据/招标/地方政策/搜索/舆情/热点」时：
 用 `skill_view("data-acquisition")` 读取完整数据获取技能。
 
-核心工具：
-- 企业工商：`opencli tianyancha search '<公司名>'`（真实 Chrome，绕过反爬）
-- 政府/协会/招标网站：playwright headless（静态页面，无反爬）
-- 搜索情报：`opencli baidu/bing search '<关键词>'`
-- 内容热点：`opencli zhihu/weibo/bilibili hot`
+CEO 高频子模块（直接路由更快）：
+- 竞品/企业背调 → `skill_view("data-acquisition/enterprise")`
+- 宏观经济/行情 → `skill_view("data-acquisition/finance")`
+- 行业趋势/PMI → `skill_view("data-acquisition/industry")`
+- 国家政策/法规 → `skill_view("data-acquisition/policy")`
+- 地方补贴/招标 → `skill_view("data-acquisition/local-gov")`
+- 融资/投资动态 → `skill_view("data-acquisition/investment")`
+- 舆情/热点 → `skill_view("data-acquisition/social")` + `skill_view("data-acquisition/rsshub")`
+- 开放数据/学术 → `skill_view("data-acquisition/opendata")`
 
 ### 浏览器能力
 用户说「打开网页/访问/截图」时：用 `skill_view("browser")` 操作浏览器。
