@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 15px; color: #1F2329; background: #fff;
+    padding: 48px 56px 56px; max-width: 800px; line-height: 1.7;
+  }
+  .doc-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E8EAED; }
+  .doc-title { font-size: 26px; font-weight: 600; color: #1F2329; margin-bottom: 8px; }
+  .doc-meta { font-size: 13px; color: #8F959E; display: flex; gap: 20px; }
+
+  .section { margin-bottom: 28px; }
+  .section-title {
+    font-size: 13px; font-weight: 600; color: #8F959E;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+  }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: #F0F1F3; margin-left: 4px; }
+
+  /* OKR Progress */
+  .okr-list { display: flex; flex-direction: column; gap: 12px; }
+  .okr-item { padding: 14px 16px; border: 1px solid #EBEDF0; border-radius: 8px; }
+  .okr-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .okr-name { font-size: 14px; font-weight: 500; color: #1F2329; }
+  .okr-pct { font-size: 13px; font-weight: 600; color: #3370FF; }
+  .progress-bar { height: 6px; background: #F0F1F3; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #3370FF; border-radius: 3px; }
+
+  /* Weekly highlights */
+  .highlight-list { display: flex; flex-direction: column; gap: 8px; }
+  .highlight-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 14px; border-radius: 6px; font-size: 14px;
+    background: #F7F8FA;
+  }
+  .highlight-icon { flex-shrink: 0; }
+  .highlight-text { flex: 1; color: #1F2329; }
+  .highlight-impact { font-size: 12px; color: #8F959E; margin-top: 2px; }
+
+  /* Metrics */
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .metric-card {
+    padding: 14px 16px; border: 1px solid #EBEDF0; border-radius: 8px; text-align: center;
+  }
+  .metric-val { font-size: 24px; font-weight: 700; color: #1F2329; line-height: 1.2; }
+  .metric-val .unit { font-size: 14px; font-weight: 400; color: #8F959E; }
+  .metric-label { font-size: 12px; color: #8F959E; margin-top: 4px; }
+  .metric-delta { font-size: 12px; margin-top: 3px; }
+  .metric-delta.up { color: #27C346; }
+  .metric-delta.down { color: #F54A45; }
+
+  /* Retrospective */
+  .retro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .retro-card { padding: 14px 16px; border-radius: 8px; }
+  .retro-card.good { background: #F0FFF4; border: 1px solid #D3F9DC; }
+  .retro-card.improve { background: #FFF8E6; border: 1px solid #FFE9B8; }
+  .retro-card-title { font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+  .retro-card.good .retro-card-title { color: #27C346; }
+  .retro-card.improve .retro-card-title { color: #FF8800; }
+  .retro-item { font-size: 13px; color: #3D3D3D; padding: 3px 0; display: flex; gap: 6px; }
+  .retro-item::before { content: "·"; color: #C2C7CF; }
+
+  /* Next week */
+  .plan-list { display: flex; flex-direction: column; gap: 8px; }
+  .plan-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 14px; border: 1px solid #EBEDF0; border-radius: 6px; font-size: 14px;
+  }
+  .plan-priority {
+    font-size: 11px; padding: 2px 7px; border-radius: 3px;
+    font-weight: 600; flex-shrink: 0;
+  }
+  .plan-priority.p1 { background: #FFE9E8; color: #F54A45; }
+  .plan-priority.p2 { background: #FFF3D8; color: #FF8800; }
+  .plan-priority.p3 { background: #F2F3F5; color: #646A73; }
+
+  .doc-footer {
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid #F0F1F3;
+    font-size: 12px; color: #C2C7CF; text-align: right;
+  }
+  .list-item { display: flex; gap: 8px; font-size: 14px; padding: 4px 0; color: #3D3D3D; }
+  .list-item::before { content: "·"; color: #C2C7CF; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-title">{{title}}</div>
+  <div class="doc-meta">
+    <span>📅 {{week_range}}</span>
+    <span>👤 {{author}}</span>
+  </div>
+</div>
+
+<!-- 目标进展 -->
+<div class="section">
+  <div class="section-title">目标进展</div>
+  <div class="okr-list">{{okr_items}}</div>
+</div>
+
+<!-- 核心数据 -->
+<div class="section">
+  <div class="section-title">核心数据</div>
+  <div class="metrics-grid">{{metrics}}</div>
+</div>
+
+<!-- 本周亮点 -->
+<div class="section">
+  <div class="section-title">本周亮点</div>
+  <div class="highlight-list">{{highlights}}</div>
+</div>
+
+<!-- 复盘 -->
+<div class="section">
+  <div class="section-title">复盘</div>
+  <div class="retro-grid">
+    <div class="retro-card good">
+      <div class="retro-card-title">✅ 做得好</div>
+      {{retro_good}}
+    </div>
+    <div class="retro-card improve">
+      <div class="retro-card-title">💡 待改进</div>
+      {{retro_improve}}
+    </div>
+  </div>
+</div>
+
+<!-- 下周计划 -->
+<div class="section">
+  <div class="section-title">下周计划</div>
+  <div class="plan-list">{{next_plans}}</div>
+</div>
+
+<div class="doc-footer">{{author}} · {{week_range}} 周报 · 由 AI 生成</div>
+
+</body>
+</html>

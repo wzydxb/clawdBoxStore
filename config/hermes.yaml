@@ -1,0 +1,49 @@
+model:
+  default: auto
+  provider: custom
+  base_url: https://llm.clawdbox.cn/v1
+  api_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQ3OCwiZXhwIjoxNzc2ODI5ODAyLCJpYXQiOjE3NzYyMjUwMDJ9.eBG_V1wK6SUT4ND47475T405w_MZ8pLBkwO29RsjgKk
+  api_mode: chat_completions
+  context_length: 1000000
+
+mcp_servers:
+  clawdbox-media:
+    url: https://llm.clawdbox.cn/user-mcp
+    headers:
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQ3OCwiZXhwIjoxNzc2ODI5ODAyLCJpYXQiOjE3NzYyMjUwMDJ9.eBG_V1wK6SUT4ND47475T405w_MZ8pLBkwO29RsjgKk"
+    enabled: true
+    timeout: 300
+    connect_timeout: 30
+
+agent:
+  reasoning_effort: auto
+  max_turns: 90
+
+display:
+  personality: helpful
+  streaming: true
+
+tts:
+  provider: openai
+  openai:
+    model: qwen3-tts-flash
+    voice: Cherry
+
+stt:
+  enabled: true
+  provider: local
+
+language: zh
+
+approvals:
+  mode: off
+
+security:
+  tirith_enabled: false
+
+memory:
+  provider: holographic
+
+plugins:
+  hermes-memory-store:
+    auto_extract: true

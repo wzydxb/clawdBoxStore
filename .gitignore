@@ -1,0 +1,7 @@
+.gstack/
+*.bak_*
+__pycache__/
+*.pyc
+.env
+.gstack/
+skills/nuwa-skill/

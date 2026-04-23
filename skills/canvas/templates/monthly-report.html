@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 15px; color: #1F2329; background: #fff;
+    padding: 48px 56px 56px; max-width: 800px; line-height: 1.7;
+  }
+  .doc-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #E8EAED; }
+  .doc-title { font-size: 26px; font-weight: 600; color: #1F2329; margin-bottom: 8px; }
+  .doc-meta { font-size: 13px; color: #8F959E; display: flex; gap: 20px; }
+
+  .section { margin-bottom: 32px; }
+  .section-title {
+    font-size: 13px; font-weight: 600; color: #8F959E;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+  }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: #F0F1F3; margin-left: 4px; }
+
+  /* Big metrics */
+  .big-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  .big-metric {
+    padding: 16px; border: 1px solid #EBEDF0; border-radius: 8px; text-align: center;
+  }
+  .big-metric-val { font-size: 28px; font-weight: 700; color: #1F2329; line-height: 1.1; }
+  .big-metric-val .unit { font-size: 14px; font-weight: 400; color: #8F959E; }
+  .big-metric-label { font-size: 12px; color: #8F959E; margin-top: 5px; }
+  .big-metric-delta { font-size: 12px; margin-top: 3px; font-weight: 500; }
+  .big-metric-delta.up { color: #27C346; }
+  .big-metric-delta.down { color: #F54A45; }
+  .big-metric-delta.flat { color: #8F959E; }
+
+  /* Goal achievement */
+  .goal-list { display: flex; flex-direction: column; gap: 10px; }
+  .goal-item { padding: 14px 16px; border: 1px solid #EBEDF0; border-radius: 8px; }
+  .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .goal-name { font-size: 14px; font-weight: 500; }
+  .goal-badge {
+    font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+  }
+  .goal-badge.achieved { background: #D3F9DC; color: #1A8A2E; }
+  .goal-badge.partial { background: #FFE9B8; color: #A05A00; }
+  .goal-badge.missed { background: #FFD6D4; color: #C0392B; }
+  .goal-progress { height: 6px; background: #F0F1F3; border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+  .goal-fill { height: 100%; border-radius: 3px; }
+  .goal-fill.achieved { background: #27C346; }
+  .goal-fill.partial { background: #FF8800; }
+  .goal-fill.missed { background: #F54A45; }
+  .goal-note { font-size: 12px; color: #8F959E; }
+
+  /* Highlights timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item { display: flex; gap: 16px; padding-bottom: 16px; position: relative; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-left { display: flex; flex-direction: column; align-items: center; }
+  .timeline-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #3370FF; flex-shrink: 0; margin-top: 4px;
+  }
+  .timeline-line { flex: 1; width: 1px; background: #E8EAED; margin-top: 4px; }
+  .timeline-item:last-child .timeline-line { display: none; }
+  .timeline-content { flex: 1; padding-bottom: 4px; }
+  .timeline-title { font-size: 14px; font-weight: 500; color: #1F2329; margin-bottom: 3px; }
+  .timeline-desc { font-size: 13px; color: #646A73; line-height: 1.6; }
+  .timeline-date { font-size: 11px; color: #C2C7CF; margin-top: 3px; }
+
+  /* Issues */
+  .issue-list { display: flex; flex-direction: column; gap: 8px; }
+  .issue-item {
+    display: flex; gap: 10px; padding: 12px 14px;
+    border-radius: 6px; border: 1px solid #FFD6D4; background: #FFFAFA; font-size: 14px;
+  }
+  .issue-icon { flex-shrink: 0; }
+  .issue-body { flex: 1; }
+  .issue-title { color: #1F2329; margin-bottom: 3px; }
+  .issue-action { font-size: 12px; color: #8F959E; }
+
+  /* Next month focus */
+  .focus-list { display: flex; flex-direction: column; gap: 8px; }
+  .focus-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 14px; border: 1px solid #EBEDF0; border-radius: 6px;
+  }
+  .focus-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #3370FF; color: #fff;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .focus-body { flex: 1; }
+  .focus-title { font-size: 14px; font-weight: 500; color: #1F2329; margin-bottom: 2px; }
+  .focus-desc { font-size: 13px; color: #646A73; }
+
+  .doc-footer {
+    margin-top: 40px; padding-top: 16px;
+    border-top: 1px solid #F0F1F3;
+    font-size: 12px; color: #C2C7CF; text-align: right;
+  }
+  .list-item { display: flex; gap: 8px; font-size: 14px; padding: 4px 0; color: #3D3D3D; }
+  .list-item::before { content: "·"; color: #C2C7CF; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-title">{{title}}</div>
+  <div class="doc-meta">
+    <span>📅 {{month}}</span>
+    <span>👤 {{author}}</span>
+  </div>
+</div>
+
+<!-- 核心数据 -->
+<div class="section">
+  <div class="section-title">核心数据</div>
+  <div class="big-metrics">{{big_metrics}}</div>
+</div>
+
+<!-- 目标达成 -->
+<div class="section">
+  <div class="section-title">目标达成</div>
+  <div class="goal-list">{{goals}}</div>
+</div>
+
+<!-- 本月亮点 -->
+<div class="section">
+  <div class="section-title">本月亮点</div>
+  <div class="timeline">{{highlights}}</div>
+</div>
+
+<!-- 问题与风险 -->
+<div class="section">
+  <div class="section-title">问题与风险</div>
+  <div class="issue-list">{{issues}}</div>
+</div>
+
+<!-- 下月重点 -->
+<div class="section">
+  <div class="section-title">下月重点</div>
+  <div class="focus-list">{{next_focus}}</div>
+</div>
+
+<div class="doc-footer">{{author}} · {{month}} 月报 · 由 AI 生成</div>
+
+</body>
+</html>

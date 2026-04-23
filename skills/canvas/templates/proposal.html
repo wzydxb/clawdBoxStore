@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 14px; color: #1F2329; background: #fff;
+    padding: 40px 44px 52px; max-width: 900px; line-height: 1.65;
+  }
+
+  /* Header */
+  .doc-type { font-size: 11px; font-weight: 600; color: #8F959E; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .doc-title { font-size: 24px; font-weight: 700; color: #1F2329; margin-bottom: 8px; line-height: 1.3; }
+  .doc-summary { font-size: 14px; color: #646A73; line-height: 1.7; margin-bottom: 6px; }
+  .doc-meta { font-size: 12px; color: #8F959E; margin-bottom: 32px; display: flex; gap: 16px; }
+
+  /* Section */
+  .section { margin-bottom: 28px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: #fff;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 14px;
+  }
+  .label-gray   { background: #8F959E; }
+  .label-blue   { background: #3370FF; }
+  .label-orange { background: #FF8800; }
+  .label-green  { background: #27C346; }
+  .label-purple { background: #8B5CF6; }
+
+  /* Context block */
+  .context-block {
+    background: #F7F8FA; border-radius: 8px; padding: 16px 20px;
+    font-size: 14px; color: #3D3D3D; line-height: 1.75;
+  }
+  .context-block p + p { margin-top: 8px; }
+
+  /* Goal tags */
+  .goal-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .goal-tag {
+    background: #EEF3FF; color: #2B5FD9; border: 1px solid #D0DCFF;
+    border-radius: 6px; padding: 6px 14px; font-size: 13px; font-weight: 500;
+  }
+
+  /* Options comparison */
+  .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .option-card { border: 1px solid #E8EAED; border-radius: 10px; padding: 20px; }
+  .option-card.recommended { border-color: #3370FF; background: #F5F8FF; }
+  .option-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .option-num { font-size: 11px; font-weight: 700; color: #8F959E; text-transform: uppercase; letter-spacing: 0.06em; }
+  .option-badge { font-size: 11px; padding: 2px 10px; border-radius: 10px; font-weight: 600; }
+  .badge-rec  { background: #3370FF; color: #fff; }
+  .badge-alt  { background: #F2F3F5; color: #646A73; }
+  .option-name { font-size: 16px; font-weight: 700; color: #1F2329; margin-bottom: 8px; }
+  .option-desc { font-size: 13px; color: #646A73; line-height: 1.65; margin-bottom: 14px; }
+  .option-divider { height: 1px; background: #F0F1F3; margin-bottom: 12px; }
+  .pros-cons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pc-col { font-size: 12px; }
+  .pc-label { font-weight: 700; margin-bottom: 5px; }
+  .pc-label.pros { color: #27C346; }
+  .pc-label.cons { color: #F54A45; }
+  .pc-col ul { list-style: none; }
+  .pc-col li { padding: 2px 0 2px 12px; position: relative; color: #3D3D3D; line-height: 1.5; }
+  .pc-col.pros li::before { content: "+"; position: absolute; left: 0; color: #27C346; font-weight: 700; }
+  .pc-col.cons li::before { content: "−"; position: absolute; left: 0; color: #F54A45; font-weight: 700; }
+
+  /* Effort / risk row */
+  .option-metrics { display: flex; gap: 12px; margin-top: 14px; }
+  .metric-pill {
+    flex: 1; text-align: center; padding: 8px 6px; border-radius: 6px;
+    background: #F7F8FA; font-size: 12px;
+  }
+  .metric-pill .mp-val { font-size: 14px; font-weight: 700; color: #1F2329; }
+  .metric-pill .mp-key { color: #8F959E; margin-top: 2px; }
+
+  /* Comparison table */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table th {
+    background: #F7F8FA; padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 700; color: #8F959E; text-transform: uppercase; letter-spacing: 0.05em;
+    border-bottom: 1px solid #E8EAED;
+  }
+  .compare-table td { padding: 10px 14px; border-bottom: 1px solid #F0F1F3; color: #3D3D3D; vertical-align: top; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 600; color: #1F2329; width: 120px; }
+  .score-high   { color: #27C346; font-weight: 700; }
+  .score-mid    { color: #FF8800; font-weight: 700; }
+  .score-low    { color: #F54A45; font-weight: 700; }
+
+  /* Recommendation */
+  .recommendation {
+    background: #F0F4FF; border: 1px solid #D0DCFF; border-radius: 10px;
+    padding: 20px 24px; display: flex; gap: 14px; align-items: flex-start;
+  }
+  .rec-icon { font-size: 20px; flex-shrink: 0; }
+  .rec-body { flex: 1; }
+  .rec-title { font-size: 14px; font-weight: 700; color: #2B5FD9; margin-bottom: 6px; }
+  .rec-text { font-size: 13px; color: #3D3D3D; line-height: 1.7; }
+
+  /* Next steps */
+  .steps-list { display: flex; flex-direction: column; gap: 8px; }
+  .step-item { display: flex; gap: 12px; align-items: flex-start; }
+  .step-num {
+    width: 24px; height: 24px; border-radius: 50%; background: #3370FF; color: #fff;
+    font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-body { flex: 1; }
+  .step-text { font-size: 14px; color: #1F2329; line-height: 1.6; }
+  .step-owner { font-size: 12px; color: #8F959E; margin-top: 2px; }
+
+  .doc-footer { margin-top: 32px; font-size: 11px; color: #C2C7CF; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="doc-type">方案提案</div>
+<div class="doc-title">{{title}}</div>
+<div class="doc-summary">{{summary}}</div>
+<div class="doc-meta">
+  <span>📅 {{date}}</span>
+  <span>👤 {{author}}</span>
+  <span>🏷️ {{category}}</span>
+</div>
+
+<!-- 背景与目标 -->
+<div class="section">
+  <div class="section-label label-gray">背景与目标</div>
+  <div class="context-block">{{context}}</div>
+</div>
+
+<!-- 核心目标 -->
+<div class="section">
+  <div class="section-label label-blue">核心目标</div>
+  <div class="goal-list">{{goals}}</div>
+</div>
+
+<!-- 方案对比 -->
+<div class="section">
+  <div class="section-label label-orange">方案对比</div>
+  <div class="options-grid">{{options}}</div>
+</div>
+
+<!-- 综合对比 -->
+<div class="section">
+  <div class="section-label label-purple">综合对比</div>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>维度</th>
+        {{compare_headers}}
+      </tr>
+    </thead>
+    <tbody>
+      {{compare_rows}}
+    </tbody>
+  </table>
+</div>
+
+<!-- 建议 -->
+<div class="section">
+  <div class="recommendation">
+    <span class="rec-icon">💡</span>
+    <div class="rec-body">
+      <div class="rec-title">建议采用：{{recommended_option}}</div>
+      <div class="rec-text">{{recommendation}}</div>
+    </div>
+  </div>
+</div>
+
+<!-- 下一步 -->
+<div class="section">
+  <div class="section-label label-green">下一步行动</div>
+  <div class="steps-list">{{next_steps}}</div>
+</div>
+
+<div class="doc-footer">{{author}} · {{date}}</div>
+
+</body>
+</html>

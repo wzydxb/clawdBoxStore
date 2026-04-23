@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+    font-size: 14px; color: #1F2329; background: #fff;
+    padding: 40px 44px 52px; max-width: 860px; line-height: 1.65;
+  }
+
+  /* Header bar */
+  .brief-header {
+    background: #1F2329; border-radius: 10px; padding: 20px 24px;
+    margin-bottom: 28px; display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .brief-header-left { flex: 1; }
+  .brief-type { font-size: 11px; font-weight: 700; color: #8F959E; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .brief-title { font-size: 20px; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 6px; }
+  .brief-subtitle { font-size: 13px; color: #8F959E; }
+  .brief-header-right { text-align: right; flex-shrink: 0; margin-left: 20px; }
+  .brief-date { font-size: 12px; color: #8F959E; margin-bottom: 4px; }
+  .urgency-badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 6px; display: inline-block; }
+  .urgency-high   { background: #F54A45; color: #fff; }
+  .urgency-medium { background: #FF8800; color: #fff; }
+  .urgency-low    { background: #27C346; color: #fff; }
+
+  /* BLUF */
+  .bluf {
+    background: #F0F4FF; border: 1px solid #D0DCFF; border-radius: 8px;
+    padding: 16px 20px; margin-bottom: 24px;
+  }
+  .bluf-label { font-size: 11px; font-weight: 700; color: #2B5FD9; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .bluf-text { font-size: 14px; color: #1F2329; line-height: 1.7; font-weight: 500; }
+
+  /* Section */
+  .section { margin-bottom: 22px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; color: #fff;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 12px;
+  }
+  .label-gray   { background: #8F959E; }
+  .label-blue   { background: #3370FF; }
+  .label-orange { background: #FF8800; }
+  .label-green  { background: #27C346; }
+  .label-red    { background: #F54A45; }
+  .label-purple { background: #8B5CF6; }
+
+  /* Signal cards */
+  .signal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .signal-card { border: 1px solid #E8EAED; border-radius: 8px; padding: 14px 16px; }
+  .signal-card.positive { border-left: 3px solid #27C346; }
+  .signal-card.negative { border-left: 3px solid #F54A45; }
+  .signal-card.neutral  { border-left: 3px solid #8F959E; }
+  .signal-source { font-size: 11px; color: #8F959E; margin-bottom: 4px; }
+  .signal-text { font-size: 13px; color: #1F2329; line-height: 1.6; }
+  .signal-impact { font-size: 12px; color: #646A73; margin-top: 6px; }
+
+  /* Data points */
+  .data-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .data-card { background: #F7F8FA; border-radius: 8px; padding: 14px; text-align: center; }
+  .data-val { font-size: 22px; font-weight: 800; color: #1F2329; }
+  .data-label { font-size: 11px; color: #8F959E; margin-top: 4px; }
+  .data-delta { font-size: 12px; font-weight: 600; margin-top: 3px; }
+  .delta-up   { color: #27C346; }
+  .delta-down { color: #F54A45; }
+  .delta-flat { color: #8F959E; }
+
+  /* Timeline events */
+  .event-list { display: flex; flex-direction: column; gap: 0; }
+  .event-item { display: flex; gap: 12px; align-items: flex-start; }
+  .event-left { display: flex; flex-direction: column; align-items: center; width: 60px; flex-shrink: 0; }
+  .event-time { font-size: 11px; font-weight: 600; color: #3370FF; background: #EEF3FF; border-radius: 4px; padding: 2px 6px; white-space: nowrap; }
+  .event-line { flex: 1; width: 1px; background: #E8EAED; margin: 4px 0; min-height: 14px; }
+  .event-item:last-child .event-line { display: none; }
+  .event-body { flex: 1; padding-bottom: 14px; }
+  .event-title { font-size: 14px; font-weight: 600; color: #1F2329; margin-bottom: 3px; }
+  .event-desc { font-size: 13px; color: #646A73; line-height: 1.6; }
+
+  /* Action required */
+  .action-required {
+    background: #FFF8E6; border: 1px solid #FFE9B8; border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .ar-label { font-size: 11px; font-weight: 700; color: #7A5800; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .ar-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .ar-list li { font-size: 14px; color: #3D3D3D; padding-left: 18px; position: relative; line-height: 1.6; }
+  .ar-list li::before { content: "→"; position: absolute; left: 0; color: #FF8800; font-weight: 700; }
+
+  .doc-footer { margin-top: 32px; font-size: 11px; color: #C2C7CF; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="brief-header">
+  <div class="brief-header-left">
+    <div class="brief-type">{{brief_type}}</div>
+    <div class="brief-title">{{title}}</div>
+    <div class="brief-subtitle">{{subtitle}}</div>
+  </div>
+  <div class="brief-header-right">
+    <div class="brief-date">{{date}}</div>
+    <span class="urgency-badge urgency-{{urgency}}">{{urgency_label}}</span>
+  </div>
+</div>
+
+<!-- BLUF -->
+<div class="bluf">
+  <div class="bluf-label">BLUF — 结论先行</div>
+  <div class="bluf-text">{{bluf}}</div>
+</div>
+
+<!-- 关键数据 -->
+<div class="section">
+  <div class="section-label label-blue">关键数据</div>
+  <div class="data-grid">{{data_points}}</div>
+</div>
+
+<!-- 信号 -->
+<div class="section">
+  <div class="section-label label-orange">市场信号</div>
+  <div class="signal-grid">{{signals}}</div>
+</div>
+
+<!-- 事件时间线 -->
+<div class="section">
+  <div class="section-label label-purple">关键事件</div>
+  <div class="event-list">{{events}}</div>
+</div>
+
+<!-- 需要行动 -->
+<div class="action-required">
+  <div class="ar-label">⚡ 需要行动</div>
+  <ul class="ar-list">{{actions}}</ul>
+</div>
+
+<div class="doc-footer">{{author}} · {{date}}</div>
+
+</body>
+</html>
