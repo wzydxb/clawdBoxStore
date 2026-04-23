@@ -289,19 +289,19 @@ ls ~/.hermes/personas/__role_dir__ 2>/dev/null && echo "EXISTS" || echo "NEW"
 ```bash
 ROLE=__role_dir__        # 主角色：product-manager / finance-manager / hr-manager / operations-manager / ceo / data-analyst
 SECONDARY=__secondary__  # 副角色（无则留空）
-任务描述="__任务描述__"
-行业="__行业__"
-产品="__产品__"
-原型="__原型__"
-思维框架="__从原型SKILL.md提炼的3条核心决策规则__"
+TASK_DESC="__任务描述__"
+INDUSTRY="__行业__"
+PRODUCT="__产品__"
+ARCHETYPE="__原型__"
+FRAMEWORK="__从原型SKILL.md提炼的3条核心决策规则__"
 
 R=~/.hermes/personas
 
 # 1. 复制主角色 SOUL.md
 cp "$R/$ROLE/SOUL.md" ~/.hermes/SOUL.md
 
-# 2. 替换占位符（职业字段用任务描述填充）
-sed -i "s|{{职业}}|${任务描述}|g; s|{{行业}}|${行业}|g; s|{{产品}}|${产品}|g; s|{{原型}}|${原型}|g; s|{{思维框架}}|${思维框架}|g" ~/.hermes/SOUL.md
+# 2. 替换占位符
+sed -i "s|{{职业}}|${TASK_DESC}|g; s|{{行业}}|${INDUSTRY}|g; s|{{产品}}|${PRODUCT}|g; s|{{原型}}|${ARCHETYPE}|g; s|{{思维框架}}|${FRAMEWORK}|g" ~/.hermes/SOUL.md
 
 # 3. 覆盖 AGENTS.md
 cp "$R/$ROLE/AGENTS.md" ~/.hermes/AGENTS.md
@@ -316,7 +316,6 @@ done
 if [ -n "$SECONDARY" ] && [ -d "$R/$SECONDARY" ]; then
   for d in "$R/$SECONDARY"/*/; do
     skill_name=$(basename "$d")
-    # 不覆盖主角色已有的同名 skill
     [ ! -e ~/.hermes/skills/"$skill_name" ] && ln -s "$d" ~/.hermes/skills/"$skill_name"
   done
   echo "Secondary role activated: $SECONDARY"

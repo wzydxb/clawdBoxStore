@@ -180,6 +180,16 @@ _ssh "mkdir -p $H/archetypes"
 _scp -r "$L/archetypes/." "$TARGET:$H/archetypes/"
 ok "archetypes（$(ls "$L/archetypes/" | wc -l | tr -d ' ') 个原型）"
 
+# archetypes symlink → skills/（让 skill_view 能直接找到原型）
+_ssh "
+  for d in $H/archetypes/*/; do
+    name=\$(basename \"\$d\")
+    [ ! -e $H/skills/\"\$name\" ] && ln -s \"\$d\" $H/skills/\"\$name\"
+  done
+  echo \"archetypes symlinked: \$(ls $H/skills/ | grep perspective | wc -l) perspectives\"
+"
+ok "archetypes → skills/ symlink 完成"
+
 # system-setup 技能
 _ssh "mkdir -p $H/skills/system-setup"
 _scp "$L/skills/system-setup/SKILL.md"        "$TARGET:$H/skills/system-setup/SKILL.md"
