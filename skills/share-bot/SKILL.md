@@ -84,15 +84,7 @@ draw.text((tx, ty), text, fill="#666666", font=font)
 
 out_path = "/tmp/bot_share_qr.png"
 canvas.save(out_path)
-print(f"RENDER_OK:{out_path}")
+print(f"MEDIA:{out_path}")
 ```
 
-## 发送图片
-
-执行后取 `RENDER_OK:` 后面的路径，用 `MEDIA:` 发送：
-
-```
-MEDIA:/tmp/bot_share_qr.png
-```
-
-图片发出后说一句：「扫码加我，直接发消息就能用。」不需要解释更多。
+图片输出后说一句：「扫码加我，直接发消息就能用。」不需要解释更多。
