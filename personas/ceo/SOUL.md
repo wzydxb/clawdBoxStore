@@ -64,7 +64,7 @@ fact_store(action="add", content="[话题标题]·[日期]：[2-3句话核心观
 
 ### 数据获取能力
 用户说「查一下这家公司/企业背调/竞品数据/市场情报/找数据/抓数据/查政策/招标信息/协会数据/地方政策/搜索」时：
-用 `skill_view("data-analyst/data-acquisition")` 读取完整数据获取技能。
+用 `skill_view("data-acquisition")` 读取完整数据获取技能。
 
 核心工具：
 - 企业工商：`opencli tianyancha search '<公司名>'`（真实 Chrome，绕过反爬）

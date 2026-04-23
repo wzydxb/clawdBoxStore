@@ -211,7 +211,19 @@ _scp "$L/scripts/env-init.sh" "$TARGET:$H/scripts/env-init.sh"
 _ssh "chmod +x $H/scripts/env-init.sh"
 ok "scripts/env-init.sh"
 
-# ── Chrome tab 泄漏修复 ──────────────────────────────────
+# ── 修复 chromium.desktop（确保启动时加载 opencli extension）────
+_ssh "
+  DESKTOP=\$HOME/.config/autostart/chromium.desktop
+  if [ -f \"\$DESKTOP\" ]; then
+    if ! grep -q 'load-extension' \"\$DESKTOP\"; then
+      sed -i 's|^Exec=.*|Exec=/usr/bin/chromium --start-fullscreen --remote-debugging-port=9222 --no-sandbox --load-extension=/root/opencli-extension --no-first-run|' \"\$DESKTOP\"
+      echo 'chromium.desktop patched'
+    else
+      echo 'chromium.desktop already has extension'
+    fi
+  fi
+"
+ok "chromium.desktop extension 修复"
 # 1. 去掉 chromium-vnc.service 的 ExecStartPost（每次 restart 都开新 tab 是泄漏根源）
 _ssh "
   SVC=\$HOME/.config/systemd/user/chromium-vnc.service
