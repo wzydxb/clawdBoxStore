@@ -205,6 +205,18 @@ for f in "$L/skills/knowledge-base/"*.md; do
 done
 ok "knowledge-base（$(ls "$L/skills/knowledge-base/"*.md | wc -l | tr -d ' ') 个文件）"
 
+# data-acquisition 技能（主入口 + 14个子模块）
+_ssh "mkdir -p $H/skills/data-acquisition"
+for f in "$L/skills/data-acquisition/"*.md; do
+  _scp "$f" "$TARGET:$H/skills/data-acquisition/$(basename "$f")"
+done
+ok "data-acquisition（$(ls "$L/skills/data-acquisition/"*.md | wc -l | tr -d ' ') 个子模块）"
+
+# content-writer 技能
+_ssh "mkdir -p $H/skills/content-writer"
+_scp "$L/skills/content-writer/SKILL.md" "$TARGET:$H/skills/content-writer/SKILL.md"
+ok "content-writer skill"
+
 # scripts（env-init.sh 等）
 _ssh "mkdir -p $H/scripts"
 _scp "$L/scripts/env-init.sh" "$TARGET:$H/scripts/env-init.sh"
@@ -263,7 +275,7 @@ PYEOF
 CLEANUP
 _scp /tmp/_cleanup_tabs.sh "$TARGET:$H/scripts/cleanup-chrome-tabs.sh"
 _ssh "chmod +x $H/scripts/cleanup-chrome-tabs.sh"
-# 3. 安装 systemd timer（每30分钟清理一次）
+# 3. 安装 systemd timer（每5分钟清理一次，clawdbox heartbeat 每10秒开一个tab）
 _ssh "
   mkdir -p \$HOME/.config/systemd/user
   cat > \$HOME/.config/systemd/user/chrome-tab-cleanup.service << 'EOF'
@@ -275,10 +287,10 @@ ExecStart=$H/scripts/cleanup-chrome-tabs.sh
 EOF
   cat > \$HOME/.config/systemd/user/chrome-tab-cleanup.timer << 'EOF'
 [Unit]
-Description=Run Chrome tab cleanup every 30 minutes
+Description=Run Chrome tab cleanup every 5 minutes
 [Timer]
-OnBootSec=5min
-OnUnitActiveSec=30min
+OnBootSec=2min
+OnUnitActiveSec=5min
 [Install]
 WantedBy=timers.target
 EOF
@@ -288,43 +300,87 @@ EOF
 "
 ok "Chrome tab 泄漏修复（chromium-vnc ExecStartPost 已移除 + 30min 清理 timer）"
 
+# 4. 禁用 Chromium metrics 写盘 + 每30分钟清理 DeferredBrowserMetrics
+_ssh "
+  SVC=\$HOME/.config/systemd/user/chromium-vnc.service
+  if [ -f \"\$SVC\" ]; then
+    if ! grep -q 'disable-metrics' \"\$SVC\"; then
+      sed -i 's|^ExecStart=.*chromium.*|ExecStart=/usr/bin/chromium --remote-debugging-port=9222 --start-fullscreen --no-first-run --disable-metrics --disable-metrics-reporting --metrics-recording-only --disable-field-trial-config --no-pings|' \"\$SVC\"
+      systemctl --user daemon-reload 2>/dev/null
+      systemctl --user restart chromium-vnc.service 2>/dev/null
+      echo 'chromium-vnc metrics disabled'
+    else
+      echo 'chromium-vnc already has metrics disabled'
+    fi
+  fi
+
+  # systemd timer 兜底：每30分钟清理一次 DeferredBrowserMetrics
+  cat > /etc/systemd/system/clean-chromium-metrics.service << 'EOF'
+[Unit]
+Description=Clean Chromium DeferredBrowserMetrics
+
+[Service]
+Type=oneshot
+ExecStart=/bin/rm -rf /root/.config/chromium/DeferredBrowserMetrics/
+EOF
+  cat > /etc/systemd/system/clean-chromium-metrics.timer << 'EOF'
+[Unit]
+Description=Clean Chromium metrics every 30 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+
+[Install]
+WantedBy=timers.target
+EOF
+  systemctl daemon-reload 2>/dev/null
+  systemctl enable --now clean-chromium-metrics.timer 2>/dev/null
+  echo 'clean-chromium-metrics timer enabled'
+"
+ok "Chromium DeferredBrowserMetrics 清理（metrics 已禁用 + 30min timer）"
+
 # opencli 搜索适配器
-_ssh "for site in baidu bing so sogou sohu tianyancha; do mkdir -p ${OPENCLI_BASE}/clis/\$site; done"
+_ssh "for site in baidu bing so sogou sohu tianyancha 163 qqnews; do mkdir -p ${OPENCLI_BASE}/clis/\$site; done"
 for site in baidu bing so sogou sohu tianyancha; do
   _scp "$L/opencli-adapters/$site/search.js" "$TARGET:${OPENCLI_BASE}/clis/$site/search.js"
 done
-ok "opencli 搜索适配器（baidu / bing / so / sogou / sohu / tianyancha）"
+_scp "$L/opencli-adapters/163/search.js"    "$TARGET:${OPENCLI_BASE}/clis/163/search.js"
+_scp "$L/opencli-adapters/163/hot.js"       "$TARGET:${OPENCLI_BASE}/clis/163/hot.js"
+_scp "$L/opencli-adapters/qqnews/search.js" "$TARGET:${OPENCLI_BASE}/clis/qqnews/search.js"
+_scp "$L/opencli-adapters/qqnews/hot.js"    "$TARGET:${OPENCLI_BASE}/clis/qqnews/hot.js"
+ok "opencli 搜索适配器（baidu / bing / so / sogou / sohu / tianyancha / 163 / qqnews）"
+
+# opencli 热榜适配器
+_ssh "for site in weibo zhihu baidu douyin toutiao; do mkdir -p ${OPENCLI_BASE}/clis/\$site; done"
+for site in weibo zhihu douyin toutiao; do
+  _scp "$L/opencli-adapters/$site/hot.js" "$TARGET:${OPENCLI_BASE}/clis/$site/hot.js"
+done
+_scp "$L/opencli-adapters/baidu/hot.js" "$TARGET:${OPENCLI_BASE}/clis/baidu/hot.js"
+ok "opencli 热榜适配器（weibo / zhihu / baidu / douyin / toutiao）"
 
 # ── 6. 检查 playwright ────────────────────────────────────
 step "6/7" "检查 playwright + 记忆配置"
-PLAYWRIGHT_OK=$(_ssh "python3 -c 'from playwright.sync_api import sync_playwright; print(OK)' 2>/dev/null || echo NO")
-if [ "$PLAYWRIGHT_OK" = "OK" ]; then
-  ok "playwright 已安装"
-else
-  warn "playwright 未安装，正在安装（约1分钟）..."
-  _ssh "pip3 install playwright --break-system-packages -q 2>&1 | tail -1"
-  ok "playwright 安装完成"
-fi
 
-# 确保 playwright chromium 二进制已安装（canvas 渲染引擎依赖）
-CHROMIUM_OK=$(_ssh "ls ~/.cache/ms-playwright/chromium-* 2>/dev/null | head -1 || echo MISSING")
-if [ "$CHROMIUM_OK" = "MISSING" ]; then
-  warn "playwright chromium 未安装，正在下载（约2分钟）..."
-  _ssh "python3 -m playwright install chromium 2>&1 | tail -2"
-  ok "playwright chromium 安装完成"
-else
-  ok "playwright chromium 已就绪"
-fi
-
-# 确保 hermes venv 里也有 playwright（execute_code 跑在 venv 里，不继承系统包）
+# 只检查 hermes venv（agent 跑在 venv 里，系统级不需要）
 VENV_PY="$H/hermes-agent/venv/bin/python3"
-VENV_PLAYWRIGHT=$(_ssh "[ -x $VENV_PY ] && $VENV_PY -c 'from playwright.sync_api import sync_playwright; print(OK)' 2>/dev/null || echo NO")
+VENV_PLAYWRIGHT=$(_ssh "[ -x $VENV_PY ] && $VENV_PY -c 'from playwright.sync_api import sync_playwright; print(\"OK\")' 2>/dev/null || echo NO")
 if [ "$VENV_PLAYWRIGHT" != "OK" ]; then
   warn "hermes venv 缺少 playwright，正在安装..."
   _ssh "SITE=\$($VENV_PY -c 'import site; print(site.getsitepackages()[0])') && python3 -m pip install --target=\$SITE playwright -q 2>&1 | tail -1"
   ok "hermes venv playwright 已安装"
 else
   ok "hermes venv playwright 已就绪"
+fi
+
+# 确保 playwright chromium 二进制已安装（canvas 渲染引擎依赖）
+CHROMIUM_OK=$(_ssh "ls ~/.cache/ms-playwright/chromium-* 2>/dev/null | head -1 || echo MISSING")
+if [ "$CHROMIUM_OK" = "MISSING" ]; then
+  warn "playwright chromium 未安装，正在下载（约2分钟）..."
+  _ssh "$VENV_PY -m playwright install chromium 2>&1 | tail -2"
+  ok "playwright chromium 安装完成"
+else
+  ok "playwright chromium 已就绪"
 fi
 
 # 启用 holographic 本地记忆（零依赖，会话结束自动提取事实）

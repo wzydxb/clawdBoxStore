@@ -1,352 +1,53 @@
 ---
 name: data-acquisition
 description: |
-  数据获取能力。覆盖企业工商、政策法规、招标公告、行业协会、搜索情报、内容平台热点、公开数据集。
-  使用真实 Chrome（opencli）访问有反爬保护的网站；政府/协会网站用 playwright headless 直接抓取。
-  触发词：查一下这家公司、企业背调、竞品数据、市场情报、找数据、抓数据、查政策、招标信息、协会数据
-version: 2.0.0
+  数据获取总入口。按需求类型路由到对应子模块：
+  企业工商 → enterprise | 金融市场 → finance | 新闻资讯 → news | 国家政策法规 → policy
+  地方政府/工信厅/发改委 → local-gov | 社交热点 → social | 招聘薪资 → hr
+  一级市场融资 → investment | 应用商店 → appstore | 天气环境 → weather
+  地图POI → geo | 交通物流 → transport | 法律知产 → legal | 电商价格 → ecommerce
+  行业垂直数据 → industry | RSS聚合订阅 → rsshub | 开放数据/学术 → opendata
+version: 8.0.0
 ---
 
 # 数据获取能力
 
-## 核心原则
-
-**按网站类型选工具，不一刀切。**
-
-| 网站类型 | 特征 | 工具 |
-|----------|------|------|
-| 企业数据平台（天眼查等） | 强反爬，检测 headless | opencli（真实 Chrome） |
-| 政府/政企网站 | 静态/SSR，无反爬 | playwright headless |
-| 行业协会官网 | 静态/SSR，无反爬 | playwright headless |
-| 招标平台 | 部分有验证码 | playwright headless，失败则 opencli |
-| 搜索引擎 | 有频率限制 | opencli |
-| 内容平台 | 公开 API | opencli |
-
-**opencli 连接检查（每次使用前）：**
-```bash
-if ! opencli doctor 2>/dev/null | grep -q "Extension: connected"; then
-  CHROME_PID=$(pgrep -f '/usr/bin/chromium' | head -1)
-  [ -n "$CHROME_PID" ] && kill -9 "$CHROME_PID" 2>/dev/null
-  sleep 8
-fi
-```
-
----
-
-## 数据源地图
-
-### 企业工商数据
-
-```bash
-# 天眼查：法人、注册资本、成立日期、经营状态
-opencli tianyancha search '企业名称' --limit 5
-```
-
-返回字段：`name` / `status`（存续/注销）/ `legal_person` / `capital` / `established`
-
-**典型用途：** 供应商背调、竞品基本面、投资标的核查
-
----
-
-### 政策法规
-
-**国家级政策：**
-```python
-# 中央政府门户网站
-browser_navigate("https://www.gov.cn/search/results?searchWord=关键词")
-browser_snapshot()  # 提取政策标题、发布日期、文号
-
-# 国务院政策文件库
-browser_navigate("https://www.gov.cn/zhengce/zuixin.htm")
-browser_snapshot()
-```
-
-**地方政策（省/市）：**
-```python
-# 搜索定位：百度搜索 "XX省 XX政策 site:gov.cn"
-opencli baidu search 'XX省 产业政策 site:gov.cn' --limit 10
-# 找到具体页面后 browser_navigate 进去抓全文
-```
-
-**监管文件：**
-```python
-# 证监会、银保监、工信部等
-browser_navigate("http://www.csrc.gov.cn/csrc/c100028/zfxxgk_zdgk.shtml")
-browser_snapshot()
-```
-
----
-
-### 招标公告
-
-**全国招标信息平台：**
-```python
-# 中国政府采购网
-browser_navigate("https://www.ccgp.gov.cn/cggg/zygg/?searchWord=关键词")
-browser_snapshot()
-
-# 中国招标投标公共服务平台
-browser_navigate("https://www.ctbpsp.com/front/search?keyword=关键词")
-browser_snapshot()
-```
-
-**地方招标平台（示例）：**
-```python
-# 各省公共资源交易中心，URL 格式：
-# https://ggzy.XX省简称.gov.cn/
-# 用百度搜索定位：opencli baidu search 'XX省 公共资源交易中心 招标公告'
-```
-
-**抓取招标数据的通用脚本：**
-```python
-from playwright.sync_api import sync_playwright
-
-def fetch_tender(url, keyword=""):
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-        page.set_extra_http_headers({
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        })
-        page.goto(url, timeout=15000)
-        page.wait_for_timeout(3000)
-        # 提取列表项：标题、日期、金额
-        items = page.evaluate("""() => {
-            const rows = document.querySelectorAll('tr, .list-item, .notice-item, li');
-            return Array.from(rows).filter(r => r.innerText?.length > 20 && r.innerText?.length < 500)
-                .slice(0, 20).map(r => r.innerText.trim());
-        }""")
-        browser.close()
-        return items
-```
-
----
-
-### 行业协会数据
-
-**常用协会网站：**
-
-| 行业 | 协会 | 网址 |
-|------|------|------|
-| 互联网 | 中国互联网络信息中心 | cnnic.cn |
-| 制造业 | 中国机械工业联合会 | mei.net.cn |
-| 零售 | 中国连锁经营协会 | ccfa.org.cn |
-| 物流 | 中国物流与采购联合会 | chinawuliu.com.cn |
-| 金融 | 中国银行业协会 | china-cba.net |
-| 医疗 | 中国医院协会 | cha.org.cn |
-
-**通用抓取方式：**
-```python
-# 协会网站通常是静态页面，playwright headless 直接可用
-browser_navigate("https://协会网址/新闻/报告页面")
-browser_snapshot()  # 提取报告标题、发布日期
-# 如有 PDF 报告链接，记录 URL 供用户下载
-```
-
-**搜索定位协会数据：**
-```bash
-opencli baidu search 'XX行业协会 年度报告 2024' --limit 10
-opencli baidu search 'XX协会 行业数据 统计' --limit 10
-```
-
----
-
-### 搜索情报
-
-```bash
-opencli baidu search '关键词' --limit 10
-opencli bing search '关键词' --limit 10
-opencli sogou search '关键词' --limit 10
-```
-
----
-
-### 内容平台热点
-
-```bash
-opencli zhihu hot --limit 10       # 知乎热榜（行业讨论）
-opencli weibo hot --limit 10       # 微博热搜（大众舆情）
-opencli bilibili hot --limit 10    # B站热门（年轻用户偏好）
-opencli hackernews top --limit 10  # HN（技术趋势）
-opencli github trending --limit 10 # GitHub趋势（开发者动向）
-```
-
----
-
-### 公开统计数据集
-
-| 数据类型 | 来源 | 获取方式 |
-|----------|------|----------|
-| 宏观经济 | 国家统计局 data.stats.gov.cn | browser_navigate + 下载 |
-| A股行情 | 东方财富 eastmoney.com | opencli eastmoney |
-| 招聘数据 | Boss直聘 | opencli boss |
-| 电商数据 | 京东 | opencli jd |
-
----
-
-## 数据获取工作流
-
-### 企业背调
-
-```
-1. opencli tianyancha search '<公司名>' --limit 3
-2. 提取：法人、注册资本、成立日期、状态
-3. 如需深度：browser_navigate 天眼查详情页 → browser_snapshot
-4. 输出 brief 格式
-```
-
-### 政策研究
-
-```
-1. opencli baidu search '<行业> <政策关键词> site:gov.cn' --limit 10
-2. 筛选最相关的 2-3 个链接
-3. browser_navigate 逐一访问 → browser_snapshot 提取全文
-4. 整理政策要点：发文机关、文号、核心条款、执行时间
-5. 输出 brief 或 long-article 格式
-```
-
-### 招标情报
-
-```
-1. 确定目标：行业/地区/金额范围
-2. browser_navigate 对应招标平台
-3. 用 playwright 脚本批量提取公告列表
-4. 筛选相关项目，提取：项目名、采购方、预算、截止日期
-5. 输出 brief 格式
-```
-
-### 行业协会报告
-
-```
-1. opencli baidu search '<行业> 协会 年度报告 filetype:pdf' --limit 5
-2. 找到报告 PDF 链接
-3. 下载到 /tmp/report.pdf
-4. execute_code: 用 pymupdf 提取文字 → 分析关键数据
-5. 输出 brief 或 long-article 格式
-```
-
----
-
-## 数据质量规则
-
-- **交叉验证**：重要数据至少两个来源核实
-- **时效标注**：注明数据获取时间和来源
-- **来源透明**：告知用户数据来自哪里，不隐瞒局限性
-- **拒绝推断**：没有数据时说"没找到"，不用猜测填充
-- **登录墙处理**：遇到需要登录的页面，告知用户并提供替代来源
-
-
-# 数据获取能力
-
-## 核心原则
-
-**用真实浏览器，不用 headless 爬虫。**
-
-天眼查、企查查等企业数据平台的反爬针对的是 headless 特征，不是真实用户。
-opencli 驱动真实 Chrome，行为与真人一致，可以正常访问。
-
-**每次使用 opencli 前先检查连接：**
-```bash
-if ! opencli doctor 2>/dev/null | grep -q "Extension: connected"; then
-  CHROME_PID=$(pgrep -f '/usr/bin/chromium' | head -1)
-  [ -n "$CHROME_PID" ] && kill -9 "$CHROME_PID" 2>/dev/null
-  sleep 8
-fi
-```
-
----
-
-## 数据源地图
-
-### 企业工商数据
-
-```bash
-# 天眼查：法人、注册资本、成立日期、经营状态
-opencli tianyancha search '企业名称' --limit 5
-```
-
-返回字段：`name` / `status`（存续/注销）/ `legal_person` / `capital` / `established`
-
-**典型用途：**
-- 供应商/合作方背调
-- 竞品公司基本面核查
-- 投资标的工商信息
-
----
-
-### 搜索情报
-
-```bash
-# 多引擎并行搜索，交叉验证
-opencli baidu search '关键词' --limit 10
-opencli bing search '关键词' --limit 10
-opencli sogou search '关键词' --limit 10
-```
-
-**典型用途：**
-- 竞品动态监控
-- 行业新闻聚合
-- 舆情初筛
-
----
-
-### 内容平台热点
-
-```bash
-opencli zhihu hot --limit 10       # 知乎热榜（行业讨论）
-opencli weibo hot --limit 10       # 微博热搜（大众舆情）
-opencli bilibili hot --limit 10    # B站热门（年轻用户偏好）
-opencli hackernews top --limit 10  # HN（技术趋势）
-opencli github trending --limit 10 # GitHub趋势（开发者动向）
-```
-
----
-
-### 公开数据集
-
-| 数据类型 | 来源 | 获取方式 |
-|----------|------|----------|
-| 宏观经济 | 国家统计局 data.stats.gov.cn | browser_navigate + 下载 |
-| A股行情 | 东方财富 eastmoney.com | opencli eastmoney |
-| 招聘数据 | Boss直聘 | opencli boss |
-| 电商数据 | 京东/淘宝 | opencli jd |
-
----
-
-## 数据获取工作流
-
-### 企业背调流程
-
-```
-1. opencli tianyancha search '<公司名>' --limit 3
-2. 提取：法人、注册资本、成立日期、状态、统一社会信用代码
-3. 如需深度信息：browser_navigate 到天眼查详情页 → browser_snapshot 提取
-4. 整理成 problem-card 或 brief 格式输出
-```
-
-### 竞品情报流程
-
-```
-1. opencli baidu search '<竞品名> 最新动态' --limit 10
-2. opencli zhihu hot（看行业讨论）
-3. browser_navigate 竞品官网 → browser_snapshot 提取关键信息
-4. 整理成 brief 格式：BLUF + 数据点 + 信号 + 行动建议
-```
-
-### 市场数据流程
-
-```
-1. 明确数据需求：指标名称、时间范围、粒度
-2. 判断数据源：公开数据集 > opencli平台 > 手动抓取
-3. 用 execute_code 处理原始数据（pandas）
-4. 输出图表或 brief
-```
-
----
-
-## 数据质量规则
-
-- **交叉验证**：重要数据至少两个来源核实
-- **时效标注**：注明数据获取时间，天眼查工商信息可能有延迟
-- **来源透明**：告知用户数据来自哪里，不隐瞒局限性
-- **拒绝推断**：没有数据时说"没找到"，不用猜测填充
+## 路由规则
+
+| 需求类型 | 子模块 | 触发词示例 |
+|----------|--------|-----------|
+| 企业工商/背调/竞品基本面 | `skill_view("data-acquisition/enterprise")` | 查这家公司、企业背调、法人是谁、注册资本 |
+| 股票/基金/期货/宏观/汇率 | `skill_view("data-acquisition/finance")` | 股价、行情、基金净值、GDP、CPI、汇率 |
+| 新闻/资讯/媒体内容 | `skill_view("data-acquisition/news")` | 最新新闻、行业资讯、媒体报道、找文章 |
+| 国家政策/法规/招标/统计 | `skill_view("data-acquisition/policy")` | 国务院政策、国家法规、全国招标、国家统计局 |
+| 地方政府/工信厅/发改委 | `skill_view("data-acquisition/local-gov")` | 省级政策、工信厅补贴、地方招标、省级统计、产业园区 |
+| 社交热点/舆情/热榜 | `skill_view("data-acquisition/social")` | 热搜、热点、舆情、微博热榜、今天发生了什么 |
+| 招聘/薪资/人才市场 | `skill_view("data-acquisition/hr")` | 招聘数据、薪资水平、岗位需求、人才趋势 |
+| 一级市场/融资/投资 | `skill_view("data-acquisition/investment")` | 融资事件、投资机构、融资轮次、一级市场 |
+| 应用商店/竞品App | `skill_view("data-acquisition/appstore")` | App排行、用户评论、版本更新、关键词搜索量 |
+| 天气/气候/空气质量 | `skill_view("data-acquisition/weather")` | 天气、气温、AQI、空气质量、预报、灾害预警 |
+| 地图/POI/路线规划 | `skill_view("data-acquisition/geo")` | 地址查询、周边搜索、路线规划、门店分布 |
+| 火车/航班/快递物流 | `skill_view("data-acquisition/transport")` | 火车余票、航班查询、快递追踪、物流状态 |
+| 专利/商标/裁判文书/失信 | `skill_view("data-acquisition/legal")` | 专利查询、商标注册、失信被执行人、行政处罚 |
+| 电商价格/排行/促销 | `skill_view("data-acquisition/ecommerce")` | 商品价格、历史最低价、电商排行、什么值得买 |
+| 行业垂直数据 | `skill_view("data-acquisition/industry")` | 医药NMPA、农产品价格、油价、房价、碳市场、PMI、CNNIC |
+| RSS聚合/内容订阅 | `skill_view("data-acquisition/rsshub")` | 知乎/B站/小红书/微博/豆瓣/政府部门/GitHub趋势 |
+| 开放数据/学术论文 | `skill_view("data-acquisition/opendata")` | 国家统计局API、世界银行、arXiv、知网、政府开放数据平台 |
+
+## 混合需求
+
+多类型需求时并行调用多个子模块，最后汇总输出。
+
+**典型组合：**
+- 「分析XX公司市场地位」→ enterprise + finance + news + social
+- 「找某省产业补贴」→ local-gov（工信厅）+ policy（国家级）
+- 「企业合作风险排查」→ enterprise + legal（失信/处罚）
+- 「选址/投资某省」→ local-gov + geo + weather + finance
+- 「竞品全景分析」→ enterprise + finance + appstore + social + ecommerce
+- 「出差行程规划」→ transport + weather + geo
+- 「行业研究报告」→ industry + opendata + finance + news + rsshub
+- 「宏观经济分析」→ opendata（国家统计局/世界银行）+ finance + industry
+- 「舆情监控」→ social + rsshub + news（并行拉取多源）
+- 「供应链/采购情报」→ ecommerce + industry（原材料价格）+ transport + local-gov
+
+> 浏览器使用方式（opencli / headless / 真实浏览器降级策略）→ `skill_view("browser")`

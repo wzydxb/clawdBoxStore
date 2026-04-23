@@ -78,6 +78,26 @@ opencli list
 | `browser_vision()` | 截图 + AI 分析 |
 | `browser_scroll(direction)` | 滚动页面 |
 
+### 模式3：playwright 真实浏览器（headless 被验证码拦截时升级）
+
+```python
+import os
+os.environ.setdefault("DISPLAY", ":1")
+
+from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    # 方式A：启动独立真实浏览器（有完整指纹，无共享 cookie）
+    browser = p.chromium.launch(headless=False)
+
+    # 方式B：连接系统 Chromium（共享已登录的 cookie/session，反爬最强）
+    # browser = p.chromium.connect_over_cdp("http://localhost:9222")
+
+    page = browser.new_page()
+    page.goto("https://example.com", timeout=20000)
+    # ... 操作 ...
+    browser.close()
+```
+
 ## 选择哪种模式
 
 | 场景 | 推荐 |
@@ -87,6 +107,27 @@ opencli list
 | 竞品官网内容抓取 | opencli + browser_snapshot |
 | 填写表单/点击按钮 | browser_navigate + browser_click |
 | 截图分析 | browser_vision |
+| playwright headless 被验证码拦截 | playwright 真实浏览器（模式3） |
+| 需要已登录 cookie（淘宝/微博等） | connect_over_cdp 连接系统 Chromium |
+
+**降级策略**：opencli → playwright headless → playwright 真实浏览器 → connect_over_cdp
+
+## playwright 环境检查
+
+```bash
+# 检查 playwright 是否可用（hermes venv）
+python3 -c 'from playwright.sync_api import sync_playwright; print("OK")'
+
+# 若缺失，安装到 hermes venv
+VENV_PY=~/.hermes/hermes-agent/venv/bin/python3
+SITE=$($VENV_PY -c 'import site; print(site.getsitepackages()[0])')
+python3 -m pip install --target=$SITE playwright -q
+
+# 安装 Chromium 二进制（首次或迁移后）
+$VENV_PY -m playwright install chromium
+```
+
+> **注意**：`headless=False` 需要 VNC 环境（`DISPLAY=:1`）。无 VNC 的盒子只能用 `headless=True`。
 
 ## 状态检查与自愈
 
