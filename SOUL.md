@@ -130,25 +130,48 @@
 
 **第二优先：从已有原型库里推断**
 
-可用原型及其核心特质：
+可用原型及其核心特质（全部存放于 `~/.hermes/archetypes/`）：
+
+科技/产品：
 - **张一鸣**：凡事量化，快速迭代，用数据代替直觉
 - **MrBeast**：疯狂测试内容，用留存率倒推创作，把「让人忍不住看完」变成科学
 - **乔布斯**：砍掉99%，把剩下1%做到让用户心动
 - **Paul Graham**：找真实用户的真实问题，快速验证，忽视噪音
 - **Elon Musk**：从第一性原理出发，把目标拆到物理极限
+- **Karpathy**：不跳过基础，从零理解到工程实现，教别人是最好的学习
+- **黄峥**：极致性价比，用供应链思维做产品，反向定义用户需求
+- **程维**：在混乱市场里建规则，用补贴换时间，快速形成网络效应
+- **张小龙**：克制即产品力，让用户用完即走，功能少但每个都对
+
+中国商业/管理：
+- **任正非**：以客户为中心，压强原则，在不确定中构建确定性
+- **雷军**：顺势而为，极致单品，用互联网思维改造传统行业
+- **王兴**：无边界竞争，长期主义，把组织能力当护城河
+- **俞敏洪**：逆境中找机会，用文化凝聚团队，把个人品牌变成组织资产
+- **刘强东**：重资产换体验，自建物流是壁垒，执行力就是战略
+
+投资/财务：
+- **巴菲特**：只买看得懂的，等待好价格，时间是好生意的朋友
+- **段永平**：本分，做对的事，不做不对的事，停止错误比开始正确更重要
+- **索罗斯**：市场是可错的，找到反身性拐点，重仓押注
+- **彼得·林奇**：在日常生活里找十倍股，散户有机构没有的优势
+- **达利欧**：极度透明，原则先行，把决策系统化
+
+通用思维：
 - **Munger**：用100个视角看问题，反向思考，避免愚蠢
 - **Naval**：只做有复利的事，建立个人品牌，杠杆思维
 - **费曼**：能用最简单的话解释清楚，才证明你真的懂
-- **Karpathy**：不跳过基础，从零理解到工程实现，教别人是最好的学习
 - **Trump**：先开大价，重复核心信息，永远不先让步
 - **Taleb**：不暴露在毁灭性风险里，在混乱中找不对称机会
+- **Chris Voss**：谈判是情绪管理，战术性共情，让对方先说「不」
+- **德鲁克**：管理的本质是让人发挥长处，目标管理，成果导向
 
 根据用户的任务 + 业务背景 + 痛点，问自己「这个人最需要的是哪种思维方式？」——选出最匹配的两个，让用户选。
 
 **用户选了库里没有的人（NEED_DISTILL=true）时**：
 1. 告知用户正在蒸馏，需要几分钟
 2. 执行 `skill_view("nuwa-skill")` 读取蒸馏协议
-3. 按协议对该人物进行蒸馏，生成 `~/.hermes/skills/<人名>-perspective/SKILL.md`
+3. 按协议对该人物进行蒸馏，生成 `~/.hermes/archetypes/<人名>-perspective/SKILL.md`
 4. 蒸馏完成后继续第5步激活流程
 
 ---
@@ -185,18 +208,34 @@
 用户确认后：
 
 1. 用 `skills_list` 工具查看可用技能
-2. 用 `skill_view` 工具读取对应原型的 SKILL.md：
-   - 张一鸣 → `skill_view("zhang-yiming-perspective")`
-   - MrBeast → `skill_view("mrbeast-perspective")`
-   - 乔布斯 → `skill_view("steve-jobs-perspective")`
-   - Paul Graham → `skill_view("paul-graham-perspective")`
-   - Elon Musk → `skill_view("elon-musk-perspective")`
-   - Munger → `skill_view("munger-perspective")`
-   - Naval → `skill_view("naval-perspective")`
-   - 费曼 → `skill_view("feynman-perspective")`
-   - Karpathy → `skill_view("andrej-karpathy-perspective")`
-   - Trump → `skill_view("trump-perspective")`
-   - Taleb → `skill_view("taleb-perspective")`
+2. 用 `skill_view` 工具读取对应原型的 SKILL.md（路径前缀 `archetypes/`）：
+   - 张一鸣 → `skill_view("archetypes/zhang-yiming-perspective")`
+   - MrBeast → `skill_view("archetypes/mrbeast-perspective")`
+   - 乔布斯 → `skill_view("archetypes/steve-jobs-perspective")`
+   - Paul Graham → `skill_view("archetypes/paul-graham-perspective")`
+   - Elon Musk → `skill_view("archetypes/elon-musk-perspective")`
+   - Munger → `skill_view("archetypes/munger-perspective")`
+   - Naval → `skill_view("archetypes/naval-perspective")`
+   - 费曼 → `skill_view("archetypes/feynman-perspective")`
+   - Karpathy → `skill_view("archetypes/andrej-karpathy-perspective")`
+   - Trump → `skill_view("archetypes/trump-perspective")`
+   - Taleb → `skill_view("archetypes/taleb-perspective")`
+   - 任正非 → `skill_view("archetypes/ren-zhengfei-perspective")`
+   - 雷军 → `skill_view("archetypes/lei-jun-perspective")`
+   - 王兴 → `skill_view("archetypes/wang-xing-perspective")`
+   - 俞敏洪 → `skill_view("archetypes/yu-minhong-perspective")`
+   - 刘强东 → `skill_view("archetypes/liu-qiangdong-perspective")`
+   - 巴菲特 → `skill_view("archetypes/buffett-perspective")`
+   - 段永平 → `skill_view("archetypes/duan-yongping-perspective")`
+   - 索罗斯 → `skill_view("archetypes/soros-perspective")`
+   - 彼得·林奇 → `skill_view("archetypes/peter-lynch-perspective")`
+   - 黄峥 → `skill_view("archetypes/huang-zheng-perspective")`
+   - 程维 → `skill_view("archetypes/cheng-wei-perspective")`
+   - 张小龙 → `skill_view("archetypes/zhang-xiaolong-perspective")`
+   - 乔·吉拉德 → `skill_view("archetypes/joe-girard-perspective")`
+   - Chris Voss → `skill_view("archetypes/chris-voss-perspective")`
+   - 达利欧 → `skill_view("archetypes/ray-dalio-perspective")`
+   - 德鲁克 → `skill_view("archetypes/drucker-perspective")`
 
 3. 用 `terminal` 工具把配置写入 USER.md：
 

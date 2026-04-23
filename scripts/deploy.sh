@@ -175,6 +175,11 @@ _ssh "mkdir -p $H/personas"
 _scp -r "$L/personas/." "$TARGET:$H/personas/"
 ok "personas（$(ls "$L/personas/" | wc -l | tr -d ' ') 个角色）"
 
+# archetypes（人物认知原型，skill_view 直接加载）
+_ssh "mkdir -p $H/archetypes"
+_scp -r "$L/archetypes/." "$TARGET:$H/archetypes/"
+ok "archetypes（$(ls "$L/archetypes/" | wc -l | tr -d ' ') 个原型）"
+
 # system-setup 技能
 _ssh "mkdir -p $H/skills/system-setup"
 _scp "$L/skills/system-setup/SKILL.md"        "$TARGET:$H/skills/system-setup/SKILL.md"
