@@ -12,8 +12,8 @@ version: 2.0.0
 ## 工作流
 
 1. AI 从对话/任务中提取结构化 JSON 数据
-2. 调用 `terminal` 执行渲染脚本生成 HTML → 截图
-3. 用 `MEDIA:/path` 发送图片给用户
+2. 调用 `terminal` 执行渲染脚本生成 HTML → 截图（**输出路径必须硬编码，不要用变量捕获**）
+3. 用 `echo "MEDIA:/tmp/output.png"` 发送图片（**不要用变量拼接路径，避免换行符污染**）
 
 ---
 
@@ -373,9 +373,9 @@ cat > /tmp/data.json << 'EOF'
 { ...JSON数据... }
 EOF
 
-# 2. 渲染并截图
+# 2. 渲染并截图（指定固定输出路径，避免换行问题）
 python3 ~/.hermes/skills/canvas/render.py problem-card /tmp/data.json /tmp/output.png
 
-# 3. 发送给用户
-# MEDIA:/tmp/output.png
+# 3. 发送给用户（直接输出 MEDIA: 行，不要用变量拼接）
+echo "MEDIA:/tmp/output.png"
 ```
