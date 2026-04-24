@@ -239,6 +239,11 @@ _ssh "
 "
 ok "opencli 安装检查"
 
+# opencli-extension（推送到 ~/opencli-extension/）
+_ssh "mkdir -p ~/opencli-extension"
+tar -C "$L" -czf - opencli-extension | sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "tar -xzf - --strip-components=1 -C ~/opencli-extension"
+ok "opencli-extension"
+
 # ── 修复 chromium.desktop（确保启动时加载 opencli extension）────
 _ssh "
   DESKTOP=\$HOME/.config/autostart/chromium.desktop
