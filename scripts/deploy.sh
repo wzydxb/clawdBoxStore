@@ -223,6 +223,22 @@ _scp "$L/scripts/env-init.sh" "$TARGET:$H/scripts/env-init.sh"
 _ssh "chmod +x $H/scripts/env-init.sh"
 ok "scripts/env-init.sh"
 
+# opencli 安装检查（env-init.sh 有完整逻辑，这里只补安装）
+_ssh "
+  if ! command -v opencli &>/dev/null; then
+    source ~/.nvm/nvm.sh 2>/dev/null || true
+    if command -v npm &>/dev/null; then
+      npm install -g @jackwener/opencli -q 2>&1 | tail -1
+      echo 'opencli installed'
+    else
+      echo 'WARN: npm not found, opencli not installed'
+    fi
+  else
+    echo 'opencli already installed'
+  fi
+"
+ok "opencli 安装检查"
+
 # ── 修复 chromium.desktop（确保启动时加载 opencli extension）────
 _ssh "
   DESKTOP=\$HOME/.config/autostart/chromium.desktop
