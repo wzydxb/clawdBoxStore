@@ -86,17 +86,19 @@ os.environ.setdefault("DISPLAY", ":1")
 
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
-    # 方式A：启动独立真实浏览器（有完整指纹，无共享 cookie）
-    browser = p.chromium.launch(headless=False)
+    # 方式A：连接系统 Chromium（首选——共享已登录 cookie，反爬最强，无需启动新实例）
+    browser = p.chromium.connect_over_cdp("http://localhost:9222")
 
-    # 方式B：连接系统 Chromium（共享已登录的 cookie/session，反爬最强）
-    # browser = p.chromium.connect_over_cdp("http://localhost:9222")
+    # 方式B：启动独立真实浏览器（connect_over_cdp 不可用时备用）
+    # browser = p.chromium.launch(headless=False)
 
     page = browser.new_page()
     page.goto("https://example.com", timeout=20000)
     # ... 操作 ...
     browser.close()
 ```
+
+> **注意**：优先用 `connect_over_cdp`，避免 `chromium.launch()` 在部分盒子上因 ozone platform 报错失败。
 
 ## 选择哪种模式
 
@@ -110,7 +112,7 @@ with sync_playwright() as p:
 | playwright headless 被验证码拦截 | playwright 真实浏览器（模式3） |
 | 需要已登录 cookie（淘宝/微博等） | connect_over_cdp 连接系统 Chromium |
 
-**降级策略**：opencli → playwright headless → playwright 真实浏览器 → connect_over_cdp
+**降级策略**：opencli → playwright headless → connect_over_cdp → playwright launch(headless=False)
 
 ## playwright 环境检查
 

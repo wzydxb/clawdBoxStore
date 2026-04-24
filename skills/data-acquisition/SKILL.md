@@ -50,4 +50,5 @@ version: 8.0.0
 - 「舆情监控」→ social + rsshub + news（并行拉取多源）
 - 「供应链/采购情报」→ ecommerce + industry（原材料价格）+ transport + local-gov
 
-> 浏览器使用方式（opencli / headless / 真实浏览器降级策略）→ `skill_view("browser")`
+> 浏览器使用方式 → `skill_view("browser")`
+> **playwright 注意**：子模块代码中的 `chromium.launch(headless=True)` 在部分盒子上会因 ozone platform 报错失败，优先改用 `connect_over_cdp("http://localhost:9222")` 连接系统 Chromium。
