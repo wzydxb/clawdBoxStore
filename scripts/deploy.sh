@@ -200,16 +200,12 @@ ok "system-setup（4 个子文件）"
 
 # knowledge-base 技能
 _ssh "mkdir -p $H/skills/knowledge-base"
-for f in "$L/skills/knowledge-base/"*.md; do
-  _scp "$f" "$TARGET:$H/skills/knowledge-base/$(basename "$f")"
-done
+tar -C "$L/skills/knowledge-base" -czf - . | sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "tar -xzf - -C $H/skills/knowledge-base"
 ok "knowledge-base（$(ls "$L/skills/knowledge-base/"*.md | wc -l | tr -d ' ') 个文件）"
 
 # data-acquisition 技能（主入口 + 14个子模块）
 _ssh "mkdir -p $H/skills/data-acquisition"
-for f in "$L/skills/data-acquisition/"*.md; do
-  _scp "$f" "$TARGET:$H/skills/data-acquisition/$(basename "$f")"
-done
+tar -C "$L/skills/data-acquisition" -czf - . | sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "tar -xzf - -C $H/skills/data-acquisition"
 ok "data-acquisition（$(ls "$L/skills/data-acquisition/"*.md | wc -l | tr -d ' ') 个子模块）"
 
 # content-writer 技能
