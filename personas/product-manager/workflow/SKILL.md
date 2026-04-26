@@ -19,22 +19,6 @@ version: 1.0.0
 
 ---
 
-## 触发词与对应技能
-
-| 用户说 | 加载技能 | 工具 |
-|--------|----------|------|
-| 竞品分析/竞品研究/分析竞争对手 | competitor-analysis | `skill_view("pm/competitor-analysis")` |
-| 用户访谈/用户研究/做访谈/访谈提纲 | user-interview | `skill_view("pm/user-interview")` |
-| 需求分析/整理需求/用户反馈 | feature-analysis | `skill_view("pm/feature-analysis")` |
-| 需求优先级/功能排序/排期 | feature-prioritize | `skill_view("pm/feature-prioritize")` |
-| 写PRD/产品文档/需求文档 | create-prd | `skill_view("pm/create-prd")` |
-| 用户故事/User Story/AC | user-stories | `skill_view("pm/user-stories")` |
-| Sprint计划/迭代计划/排Sprint | sprint-plan | `skill_view("pm/sprint-plan")` |
-| 数据指标/数据看板/追踪指标 | metrics-dashboard | `skill_view("pm/metrics-dashboard")` |
-| 干系人/汇报/利益相关方 | stakeholder-map | `skill_view("pm/stakeholder-map")` |
-
----
-
 ## 完整工作流（核心闭环）
 
 ### 阶段一：市场洞察
@@ -136,20 +120,6 @@ version: 1.0.0
 3. 更新 TASKLOG.md：
    | Sprint-[编号] | 完成 | [结束日期] | 达成率：X% |
 ```
-
----
-
-## 主动提醒规则
-
-每当用户提到以下场景，主动建议对应技能：
-
-| 场景信号 | 主动建议 |
-|----------|----------|
-| "我们要做一个新功能" | "要先做竞品分析和用户访谈验证方向吗？" |
-| "用户在反馈说XX" | "要整理一下这批需求，做个优先级分析吗？" |
-| "下周要开排期会" | "要提前做Sprint计划吗？" |
-| "功能上线了" | "上线2周了，要看一下数据指标吗？" |
-| "老板要看进展" | "需要我帮你生成干系人汇报吗？" |
 
 ---
 

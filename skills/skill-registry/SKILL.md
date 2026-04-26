@@ -21,6 +21,7 @@ version: 1.0.0
 | browser | `skill_view("browser")` | 浏览器自动化：搜索、抓取、截图 | 打开网页、搜索、帮我看看这个网站 |
 | share-bot | `skill_view("share-bot")` | 生成 bot 二维码供他人添加 | 分享、二维码、怎么加你、邀请别人 |
 | content-writer | `skill_view("content-writer")` | 长文写作、公众号文章、营销文案 | 帮我写文章、写一篇、公众号推文 |
+| migrate | `skill_view("migrate")` | 从其他龙虾Bot继承记忆和偏好 | 我之前用过XX、从XXX换过来、帮我迁移 |
 | output-format | `skill_view("output-format")` | 控制输出格式（表格/列表/段落） | 用表格、换个格式、简洁一点 |
 
 ## 数据获取（data-acquisition 子模块）

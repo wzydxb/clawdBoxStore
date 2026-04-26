@@ -23,7 +23,7 @@ REPO_DIR="$(cd "$(dirname "$SCRIPT_PATH")/.." && pwd)"
 HOME="${HOME:-/root}"
 
 # ── 1. Python ─────────────────────────────────────────────
-step "1/4" "Python 运行时"
+step "1/5" "Python 运行时"
 
 # hermes venv 是 agent 实际运行环境，优先用它；系统 python3 作为工具（装包用）
 HERMES_VENV="${HOME}/.hermes/hermes-agent/venv"
@@ -66,8 +66,69 @@ while IFS= read -r f; do
 done < <(find "$REPO_DIR/personas" -name "*.py" 2>/dev/null)
 [ "$FAIL" -eq 0 ] && ok "persona 脚本语法全部通过" || warn "部分脚本有语法错误，请检查"
 
-# ── 2. opencli ────────────────────────────────────────────
-step "2/4" "opencli 工具链"
+# ── 2. 浏览器工具链 ───────────────────────────────────────
+step "2/5" "浏览器工具链（agent-browser + CDP）"
+
+# playwright headless_shell（hermes browser toolset 依赖）
+HEADLESS_OK=$("$HERMES_PY" -c "
+import subprocess, sys
+r = subprocess.run(['python3', '-m', 'playwright', 'install', '--dry-run', 'chromium'],
+    capture_output=True, text=True)
+# 检查 headless_shell 是否已下载
+import pathlib, glob
+shells = glob.glob(str(pathlib.Path.home()) + '/.cache/ms-playwright/chromium_headless_shell-*/chrome-linux/headless_shell')
+print('OK' if shells else 'MISSING')
+" 2>/dev/null || echo "MISSING")
+
+if [ "$HEADLESS_OK" != "OK" ]; then
+  warn "playwright headless_shell 未安装，正在下载..."
+  "$HERMES_PY" -m playwright install chromium 2>&1 | tail -2 \
+    && ok "playwright headless_shell 已安装" \
+    || warn "headless_shell 安装失败（ARM 架构将回退 CDP 模式）"
+else
+  ok "playwright headless_shell 已就绪"
+fi
+
+# agent-browser（hermes browser toolset 的 CLI 驱动）
+NVM_SH="${HOME}/.nvm/nvm.sh"
+_npm() { [ -f "$NVM_SH" ] && source "$NVM_SH" 2>/dev/null; npm "$@"; }
+_npx() { [ -f "$NVM_SH" ] && source "$NVM_SH" 2>/dev/null; npx "$@"; }
+
+if ! _npx agent-browser --version &>/dev/null 2>&1; then
+  warn "agent-browser 未安装，正在安装..."
+  _npm install -g agent-browser -q 2>&1 | tail -2 \
+    && ok "agent-browser 已安装" \
+    || warn "agent-browser 安装失败"
+else
+  ok "agent-browser 已就绪"
+fi
+
+# ARM64 上 agent-browser 无法下载 Chrome for Testing，改用 CDP 连接已有 Chromium
+ARCH="$(uname -m)"
+if [ "$ARCH" = "aarch64" ]; then
+  # 确认 9222 端口有 Chromium 在监听
+  CDP_OK=$(curl -s --max-time 3 http://localhost:9222/json/version 2>/dev/null | grep -c '"Browser"' || true)
+  if [ "$CDP_OK" -gt 0 ]; then
+    # 注入 BROWSER_CDP_URL 到 hermes gateway service
+    SVC="${HOME}/.config/systemd/user/hermes-gateway.service"
+    if [ -f "$SVC" ] && ! grep -q "BROWSER_CDP_URL" "$SVC"; then
+      sed -i '/^\[Service\]/a Environment=BROWSER_CDP_URL=http://localhost:9222' "$SVC"
+      systemctl --user daemon-reload 2>/dev/null || true
+      systemctl --user restart hermes-gateway.service 2>/dev/null || true
+      ok "ARM64 CDP 模式：BROWSER_CDP_URL 已注入 gateway service"
+    else
+      ok "ARM64 CDP 模式：BROWSER_CDP_URL 已配置"
+    fi
+    # 写入 /etc/environment 兜底
+    grep -q "BROWSER_CDP_URL" /etc/environment 2>/dev/null \
+      || echo "BROWSER_CDP_URL=http://localhost:9222" >> /etc/environment
+  else
+    warn "ARM64：9222 端口无 Chromium，浏览器工具将在首次使用时尝试启动"
+  fi
+fi
+
+# ── 3. opencli ────────────────────────────────────────────
+step "3/5" "opencli 工具链"
 
 if ! command -v opencli &>/dev/null; then
   warn "opencli 未安装，正在安装..."
@@ -82,34 +143,72 @@ fi
 
 ok "opencli $(opencli --version 2>/dev/null || echo '已安装')"
 
-# opencli extension 连接检查（仅在 VNC/X11 环境下尝试修复）
+# ── 真实浏览器检查与修复 ──────────────────────────────────
+# 三项要求：① Chromium 进程在跑 ② 带 --remote-debugging-port=9222
+#           ③ 带 --load-extension=…/opencli-extension
+CHROMIUM_BIN="${CHROMIUM_BIN:-/usr/bin/chromium}"
+OPENCLI_EXT="${HOME}/opencli-extension"
+CHROMIUM_NEED_START=0
+
+# 检查 Chromium 是否在跑且带了必要参数
+CHROME_PID="$(pgrep -f "${CHROMIUM_BIN}.*remote-debugging-port" | head -1 || true)"
+if [ -z "$CHROME_PID" ]; then
+  CHROMIUM_NEED_START=1
+  warn "Chromium 未运行"
+elif ! grep -q "load-extension" /proc/$CHROME_PID/cmdline 2>/dev/null; then
+  CHROMIUM_NEED_START=1
+  warn "Chromium 运行中但未加载 opencli extension，将重启..."
+  pkill -f "${CHROMIUM_BIN}" 2>/dev/null || true
+  sleep 2
+fi
+
+if [ "$CHROMIUM_NEED_START" -eq 1 ]; then
+  if ! xdpyinfo -display :1 &>/dev/null 2>&1; then
+    warn "VNC display :1 不可用，无法启动真实浏览器（Chromium 将在 VNC 启动后自动加载）"
+  else
+    warn "正在以正确参数启动 Chromium..."
+    CHROME_CMD="${CHROMIUM_BIN} \
+      --remote-debugging-port=9222 \
+      --start-fullscreen \
+      --no-first-run \
+      --no-default-browser-check \
+      --no-sandbox \
+      --load-extension=${OPENCLI_EXT}"
+    DISPLAY=:1 XAUTHORITY=/root/.Xauthority setsid $CHROME_CMD &>/dev/null &
+    # 同步更新 autostart desktop，保证重启后也对
+    AUTOSTART="/root/.config/autostart/chromium.desktop"
+    if [ -f "$AUTOSTART" ]; then
+      sed -i "s|^Exec=.*|Exec=${CHROME_CMD}|" "$AUTOSTART"
+    fi
+    # 等待 9222 就绪（最多 15s）
+    for i in $(seq 1 15); do
+      curl -s --max-time 1 http://localhost:9222/json/version &>/dev/null && break
+      sleep 1
+    done
+    ok "Chromium 已启动（带 opencli extension + 9222）"
+  fi
+else
+  ok "Chromium 运行中（带 opencli extension + 9222）"
+fi
+
+# opencli extension 连接检查
 DOCTOR_OUT="$(opencli doctor 2>/dev/null || true)"
 if echo "$DOCTOR_OUT" | grep -q "Extension: connected"; then
   ok "opencli extension 已连接"
-elif xdpyinfo -display :1 &>/dev/null 2>&1; then
-  # VNC display :1 存在，尝试重启 Chromium
-  warn "opencli extension 未连接，尝试重启 Chromium..."
-  pkill -f '/usr/bin/chromium' 2>/dev/null || true
-  sleep 2
-  AUTOSTART="/root/.config/autostart/chromium.desktop"
-  if [ -f "$AUTOSTART" ]; then
-    EXEC_LINE="$(grep '^Exec=' "$AUTOSTART" | sed 's/^Exec=//')"
-    DISPLAY=:1 XAUTHORITY=/root/.Xauthority setsid $EXEC_LINE &>/dev/null &
-    sleep 5
-    if opencli doctor 2>/dev/null | grep -q "Extension: connected"; then
-      ok "opencli extension 已重连"
-    else
-      warn "extension 仍未连接，请在 VNC 中手动检查 Chromium"
-    fi
+elif [ "$CHROMIUM_NEED_START" -eq 1 ]; then
+  # 刚启动的 Chromium，extension 需要更多时间初始化
+  sleep 5
+  if opencli doctor 2>/dev/null | grep -q "Extension: connected"; then
+    ok "opencli extension 已连接"
   else
-    warn "找不到 autostart 配置，请手动启动 Chromium 并确保包含 --remote-debugging-port=9222"
+    warn "extension 未连接，请在 VNC 中确认 Chromium 已加载扩展"
   fi
 else
-  warn "VNC display :1 不可用，Chromium 将在首次使用浏览器时自动启动"
+  warn "extension 未连接（Chromium 在跑但 extension 无响应，请在 VNC 中手动检查）"
 fi
 
 # ── 3. 搜索适配器 ─────────────────────────────────────────
-step "3/4" "搜索适配器"
+step "4/5" "搜索适配器"
 
 ADAPTERS_DIR="${HOME}/.opencli/clis"
 NEED_COPY=0
@@ -135,7 +234,7 @@ else
 fi
 
 # ── 4. 网盘（Samba）─────────────────────────────────────
-step "4/4" "网盘挂载"
+step "5/5" "网盘挂载"
 
 HAS_SYSTEMCTL=0
 command -v systemctl &>/dev/null && HAS_SYSTEMCTL=1

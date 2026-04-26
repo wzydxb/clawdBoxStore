@@ -67,9 +67,13 @@ step "3/7" "重置 gateway 状态"
 _ssh "
   rm -f $H/state.db $H/state.db-shm $H/state.db-wal 2>/dev/null
   rm -f $H/sessions/sessions.json 2>/dev/null
+  if [ -d $H/weixin/accounts ]; then
+    rm -f $H/weixin/accounts/*.json
+    echo '[]' > $H/weixin/accounts.json
+  fi
   echo cleared
 " | grep -q cleared
-ok "gateway 状态已重置（下次对话新建会话，历史保留可检索）"
+ok "gateway 状态已重置（weixin accounts 已清除，下次对话新建会话）"
 
 # ── 4. 推送核心配置 ───────────────────────────────────────
 step "4/7" "推送核心配置"
@@ -217,6 +221,16 @@ ok "content-writer skill"
 _ssh "mkdir -p $H/skills/skill-registry"
 _scp "$L/skills/skill-registry/SKILL.md" "$TARGET:$H/skills/skill-registry/SKILL.md"
 ok "skill-registry"
+
+# base-soul（所有角色共享的基座能力）
+_ssh "mkdir -p $H/skills/base-soul"
+_scp "$L/skills/base-soul/SKILL.md" "$TARGET:$H/skills/base-soul/SKILL.md"
+ok "base-soul"
+
+# migrate（从其他龙虾迁移记忆）
+_ssh "mkdir -p $H/skills/migrate"
+_scp "$L/skills/migrate/SKILL.md" "$TARGET:$H/skills/migrate/SKILL.md"
+ok "migrate"
 
 # scripts（env-init.sh 等）
 _ssh "mkdir -p $H/scripts"
