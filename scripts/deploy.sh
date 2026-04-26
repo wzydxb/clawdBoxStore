@@ -213,6 +213,11 @@ _ssh "mkdir -p $H/skills/content-writer"
 _scp "$L/skills/content-writer/SKILL.md" "$TARGET:$H/skills/content-writer/SKILL.md"
 ok "content-writer skill"
 
+# skill-registry（全局 skill 索引）
+_ssh "mkdir -p $H/skills/skill-registry"
+_scp "$L/skills/skill-registry/SKILL.md" "$TARGET:$H/skills/skill-registry/SKILL.md"
+ok "skill-registry"
+
 # scripts（env-init.sh 等）
 _ssh "mkdir -p $H/scripts"
 _scp "$L/scripts/env-init.sh" "$TARGET:$H/scripts/env-init.sh"
