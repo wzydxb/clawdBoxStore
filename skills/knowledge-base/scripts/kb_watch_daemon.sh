@@ -25,9 +25,16 @@ LAST_RUN=0
 inotifywait -m -r -e close_write,moved_to,create --format '%f' "$MOUNT" \
   --exclude '.hermes-index' 2>/dev/null | \
 while IFS= read -r FNAME; do
-  # 过滤 Mac SMB 元数据文件
+  # 过滤 Mac SMB 元数据文件和 agent 自写文件
   case "$FNAME" in
     .DS_Store|._*|.Spotlight*|.Trashes*|*.tmp|~\$*) continue ;;
+    *.md|*.json|*.log|*.lock|*.py|*.sh|*.yaml|*.yml|*.txt) continue ;;
+  esac
+
+  # 只响应用户文档类型
+  case "$FNAME" in
+    *.pdf|*.docx|*.xlsx|*.xls|*.pptx|*.ppt|*.csv|*.doc) ;;
+    *) continue ;;
   esac
 
   # 防抖：8秒内同一批变化只触发一次
