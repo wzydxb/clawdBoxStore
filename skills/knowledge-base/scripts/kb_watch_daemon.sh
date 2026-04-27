@@ -21,27 +21,40 @@ INBOX="$MOUNT/inbox"
 mkdir -p "$MOUNT" "$INBOX"
 echo "[$(date '+%H:%M:%S')] kb_watch_daemon 启动，MOUNT=$MOUNT" >&2
 
-DEBOUNCE_SEC=8
+INBOX_SILENCE_SEC=30   # inbox：最后一个文件到达后静默30秒才触发
+MAIN_DEBOUNCE_SEC=8    # main：普通前沿防抖
+INBOX_PENDING="/tmp/kb_inbox_pending"
+INBOX_FILES="/tmp/kb_inbox_files"
 
-# ── inbox watcher：触发整理 + 推送 ──────────────────────────
+# ── inbox watcher：只标记，不直接触发 ───────────────────────
 inbox_watcher() {
-  local LAST_RUN=0
   inotifywait -m -r -e close_write,moved_to,create --format '%f' "$INBOX" \
     2>/dev/null | \
   while IFS= read -r FNAME; do
     case "$FNAME" in
       .DS_Store|._*|.Spotlight*|.Trashes*|*.tmp|~\$*) continue ;;
     esac
+    echo "[$(date '+%H:%M:%S')] [inbox] 收到文件: $FNAME" >&2
+    echo "$FNAME" >> "$INBOX_FILES"
+    touch "$INBOX_PENDING"   # 每来一个文件都刷新 mtime
+  done
+}
 
+# ── inbox timer：尾沿触发，沉默 INBOX_SILENCE_SEC 秒后触发一次 ──
+inbox_timer() {
+  while true; do
+    sleep 5
+    [ -f "$INBOX_PENDING" ] || continue
+    MTIME=$(stat -c %Y "$INBOX_PENDING" 2>/dev/null || echo 0)
     NOW=$(date +%s)
-    if (( NOW - LAST_RUN < DEBOUNCE_SEC )); then
-      echo "[$(date '+%H:%M:%S')] [inbox] 防抖跳过: $FNAME" >&2
-      continue
-    fi
-    LAST_RUN=$NOW
+    (( NOW - MTIME < INBOX_SILENCE_SEC )) && continue
 
-    echo "[$(date '+%H:%M:%S')] [inbox] 新文件: $FNAME" >&2
-    bash "$SCRIPTS/kb_watcher.sh" "$INBOX" "$FNAME" --mode inbox 2>>/tmp/kb_watcher.log
+    # 沉默够久，触发
+    rm -f "$INBOX_PENDING"
+    FLIST=$(cat "$INBOX_FILES" 2>/dev/null | sort -u | tr '\n' ' ')
+    rm -f "$INBOX_FILES"
+    echo "[$(date '+%H:%M:%S')] [inbox] 静默结束，触发处理: $FLIST" >&2
+    bash "$SCRIPTS/kb_watcher.sh" "$INBOX" "$FLIST" --mode inbox 2>>/tmp/kb_watcher.log
   done
 }
 
@@ -56,7 +69,7 @@ main_watcher() {
     esac
 
     NOW=$(date +%s)
-    if (( NOW - LAST_RUN < DEBOUNCE_SEC )); then
+    if (( NOW - LAST_RUN < MAIN_DEBOUNCE_SEC )); then
       continue
     fi
     LAST_RUN=$NOW
@@ -67,5 +80,6 @@ main_watcher() {
 }
 
 inbox_watcher &
+inbox_timer &
 main_watcher &
 wait
