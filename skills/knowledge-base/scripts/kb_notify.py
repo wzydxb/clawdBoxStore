@@ -25,8 +25,10 @@ open(PENDING, 'w').close()
 try:
     db = sqlite3.connect(STATE_DB)
     row = db.execute(
-        "SELECT user_id FROM sessions WHERE source='weixin' AND user_id IS NOT NULL "
-        "ORDER BY started_at DESC LIMIT 1"
+        "SELECT s.user_id FROM messages m "
+        "JOIN sessions s ON m.session_id = s.id "
+        "WHERE s.source='weixin' AND s.user_id IS NOT NULL "
+        "ORDER BY m.timestamp DESC LIMIT 1"
     ).fetchone()
     if row:
         deliver = f"weixin:{row[0]}"
