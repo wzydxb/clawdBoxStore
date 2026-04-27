@@ -144,7 +144,20 @@ def print_plan(plan: list):
 
 # ── 执行移动 + 更新索引 ───────────────────────────────────
 
+ORGANIZE_LOCK = "/tmp/kb_organize_running"
+
 def execute_plan(mount: str, plan: list):
+    open(ORGANIZE_LOCK, 'w').close()
+    try:
+        _execute_plan_inner(mount, plan)
+    finally:
+        try:
+            os.remove(ORGANIZE_LOCK)
+        except OSError:
+            pass
+
+
+def _execute_plan_inner(mount: str, plan: list):
     db_path = os.path.join(mount, ".hermes-index", "index.db")
     db = sqlite3.connect(db_path) if os.path.exists(db_path) else None
 

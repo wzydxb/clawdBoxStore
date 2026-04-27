@@ -16,6 +16,9 @@ LOCK="/tmp/kb_watcher.lock"
 exec 9>"$LOCK"
 flock -n 9 || exit 0
 
+# agent 整理中，跳过（避免误触发推送）
+[ -f /tmp/kb_organize_running ] && exit 0
+
 log() { echo "[$(date '+%H:%M:%S')] $*" >&2; }
 
 # 1. 增量索引
