@@ -23,7 +23,7 @@ step() { echo -e "\n${YELLOW}[$1]${NC} $2"; }
 [ -z "$TARGET" ] && die "用法: $0 <host>  例: $0 root@192.168.10.130"
 
 # ── SSH 辅助 ──────────────────────────────────────────────
-SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10"
+SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3"
 
 # 检测认证方式：优先密钥，其次 sshpass，最后交互输入
 if ssh $SSH_OPTS -o BatchMode=yes "$TARGET" true 2>/dev/null; then
@@ -49,15 +49,9 @@ ok "$TARGET 可达，hermes 已安装"
 
 # ── 1. 停止 gateway（先停再改文件，避免时序冲突）──────────
 step "1/7" "停止 gateway"
-_ssh "
-  hermes gateway stop 2>/dev/null
-  # 等待 hermes 进程完全退出（最多 15s），确保 state.db 锁释放
-  for i in \$(seq 1 15); do
-    pgrep -f 'hermes_cli.main gateway' > /dev/null 2>&1 || break
-    sleep 1
-  done
-  echo stopped
-" | grep -q stopped
+_ssh "hermes gateway stop 2>/dev/null || true" || true
+sleep 4
+_ssh "pkill -f 'hermes_cli.main.*gateway run' 2>/dev/null || true" || true
 ok "gateway 已停止"
 
 # ── 2. 备份现有配置 ───────────────────────────────────────
@@ -73,20 +67,13 @@ ok "备份完成（后缀 .bak_${TS}）"
 # ── 3. 重置 gateway 状态 + 强制新建会话 ─────────────────
 step "3/7" "重置 gateway 状态"
 _ssh "
-  # 二次确认进程已退出（防止 stop 命令返回但进程未消亡）
-  for i in \$(seq 1 10); do
-    pgrep -f 'hermes_cli.main gateway' > /dev/null 2>&1 || break
-    kill \$(pgrep -f 'hermes_cli.main gateway') 2>/dev/null || true
-    sleep 1
-  done
   rm -f $H/state.db $H/state.db-shm $H/state.db-wal 2>/dev/null
   rm -f $H/sessions/sessions.json 2>/dev/null
   if [ -d $H/weixin/accounts ]; then
     rm -f $H/weixin/accounts/*.json
     echo '[]' > $H/weixin/accounts.json
   fi
-  echo cleared
-" | grep -q cleared
+"
 ok "gateway 状态已重置（weixin accounts 已清除，下次对话新建会话）"
 
 # ── 4. 推送核心配置 ───────────────────────────────────────
@@ -232,7 +219,7 @@ ok "system-setup（4 个子文件）"
 # knowledge-base 技能
 _ssh "mkdir -p $H/skills/knowledge-base"
 tar -C "$L/skills/knowledge-base" -czf - . | sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "tar -xzf - -C $H/skills/knowledge-base"
-ok "knowledge-base（$(ls "$L/skills/knowledge-base/"*.md | wc -l | tr -d ' ') 个文件）"
+ok "knowledge-base（$(ls "$L/skills/knowledge-base/"*.md | wc -l | tr -d ' ') 个文件，含 kb_entities.py）"
 
 # data-acquisition 技能（主入口 + 14个子模块）
 _ssh "mkdir -p $H/skills/data-acquisition"

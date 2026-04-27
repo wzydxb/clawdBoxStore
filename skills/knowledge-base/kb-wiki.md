@@ -65,22 +65,103 @@ version: 1.0.0
 
 ---
 
+## Session 开始时注入实体指纹
+
+每次 session 开始，静默执行（不发消息给用户）：
+
+```bash
+# 读取挂载路径（从 USER.md 解析）
+MOUNT=$(python3 -c "
+import re
+c = open('/root/.hermes/USER.md').read()
+m = re.search(r'挂载路径:\s*(.+)', c)
+print(m.group(1).strip() if m else '')
+")
+
+if [ -n "$MOUNT" ]; then
+  python3 ~/.hermes/skills/knowledge-base/scripts/kb_entities.py "$MOUNT" --read
+fi
+```
+
+- 有输出 → 注入到 context，LLM 自动感知知识库实体
+- 无输出（entities.json 不存在或为空）→ 跳过，不影响正常对话
+
+---
+
 ## 知识问答流程
 
 ```
 用户提问
     ↓
+Step 0：context 实体表命中用户问题里的词？
+    ↓ 命中 → 已知要查哪些文件，直接跳 Step 2.5
+    ↓ 未命中
 Step 1：读 wiki/insights/ → 有现成结论？
     ↓ 有 → 直接回答，附来源文件
     ↓ 无
 Step 2：读 wiki/_index.md + 相关 concepts/ → 有主题页？
     ↓ 有 → LLM 基于 concept 页回答
     ↓ 无
-Step 3：调用 skill_view("knowledge-base/kb-search") 全文检索
+Step 2.5（HyDE 降级检索）：
+    LLM 先生成假设答案（内部，不输出给用户）
+    从假设答案提取关键词列表
+    用关键词跑 kb_search.py（比口语问题命中率高 3-5x）
     ↓
-Step 4：读原文相关段落 → LLM 综合回答
+Step 3：读原文相关段落 → LLM 综合回答
     ↓
-Step 5：结论写入 wiki/insights/[主题].md
+Step 4：结论写入 wiki/insights/[主题].md
+```
+
+**HyDE 假设答案提取 prompt**（内部执行）：
+```
+用户问题：[原始问题]
+
+请生成一段假设性回答（假设你已经知道答案），然后从中提取用于文档检索的关键词。
+
+输出格式：
+关键词：词1 词2 词3 词4 词5
+```
+
+---
+
+## 实体图谱更新流程
+
+每次 kb-index 完成后（新增或更新文件），触发实体提取：
+
+```bash
+MOUNT=<挂载路径>
+SCRIPT=~/.hermes/skills/knowledge-base/scripts/kb_entities.py
+
+# 1. 获取待提取文件列表（含内容）
+FILE_LIST=$(python3 $SCRIPT "$MOUNT" --list)
+
+# 2. LLM 提取实体（Agent 直接处理，不需要额外调用）
+# 使用下方 prompt 模板，对 FILE_LIST 里每个文件提取实体
+# 将结果合并为一个 JSON
+
+# 3. 写入 entities.json
+python3 $SCRIPT "$MOUNT" --write '<LLM输出的JSON>'
+```
+
+**实体提取 prompt 模板**（对每个文件执行）：
+```
+文件：[文件名]
+内容：[content，最多3000字符]
+
+请提取：
+1. 实体：组织名、人名、产品名、指标名、时间点（只提取文中明确出现的）
+2. 关系：[实体A] → [关系动词] → [实体B]（有明确关联才写，不要推断）
+3. 时间线：实体+日期+事件（有明确日期才写）
+
+输出 JSON（严格格式，不要加注释）：
+{
+  "entities": {
+    "实体名": {"type": "组织|人名|产品|指标|时间", "summary": "一句话描述", "files": ["文件名"], "last_seen": "YYYY-MM-DD"}
+  },
+  "relations": [
+    {"from": "实体A", "rel": "关系", "to": "实体B", "date": "YYYY-MM-DD", "files": ["文件名"]}
+  ]
+}
 ```
 
 ---

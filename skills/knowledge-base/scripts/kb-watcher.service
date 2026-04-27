@@ -1,0 +1,16 @@
+[Unit]
+Description=Hermes Knowledge Base File Watcher
+After=network.target
+
+[Service]
+Type=simple
+Environment=HERMES_HOME=/root/.hermes
+Environment=PATH=/root/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/bin/bash /root/.hermes/skills/knowledge-base/scripts/kb_watch_daemon.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

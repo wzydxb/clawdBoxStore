@@ -131,11 +131,20 @@ def scan(mount: str):
             else:
                 added += 1
 
+    # 清理孤儿：meta 表里有、磁盘上已不存在的路径
+    all_indexed = {row[0] for row in db.execute("SELECT path FROM meta").fetchall()}
+    orphans = [p for p in all_indexed if not os.path.exists(p)]
+    for p in orphans:
+        db.execute("DELETE FROM files WHERE path=?", (p,))
+        db.execute("DELETE FROM meta WHERE path=?", (p,))
+    if orphans:
+        print(f"清理孤儿：{len(orphans)} 条")
+
     db.commit()
-    print(f"扫描完成：新增 {added} | 更新 {updated} | 跳过 {skipped}")
+    print(f"扫描完成：新增 {added} | 更新 {updated} | 跳过 {skipped} | 孤儿清理 {len(orphans)}")
 
     # 更新 wiki log
-    _append_log(mount, f"增量扫描：新增 {added}，更新 {updated}")
+    _append_log(mount, f"增量扫描：新增 {added}，更新 {updated}，孤儿清理 {len(orphans)}")
 
 
 # ── 单文件更新 + diff ─────────────────────────────────────

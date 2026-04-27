@@ -17,7 +17,7 @@ version: 1.0.0
 | retrospective | `skill_view("retrospective")` | 复盘反思、经验沉淀 | 复盘、反思、总结一下、经验沉淀 |
 | twin-distillation | `skill_view("twin-distillation")` | 提炼用户偏好、自进化工作流 | 记住这个、以后都这样、不要这种风格 |
 | canvas | `skill_view("canvas")` | 把结构化数据渲染成图片发送 | 生成纪要、出日报图、做报告卡片 |
-| knowledge-base | `skill_view("knowledge-base")` | 文件归档、知识库索引、找文件 | 整理文件、扫一下目录、帮我找文件 |
+| knowledge-base | `skill_view("knowledge-base")` | 文件归档、实体图谱问答、知识库检索 | 整理文件、扫一下目录、帮我找文件 |
 | browser | `skill_view("browser")` | 浏览器自动化：搜索、抓取、截图 | 打开网页、搜索、帮我看看这个网站 |
 | share-bot | `skill_view("share-bot")` | 生成 bot 二维码供他人添加 | 分享、二维码、怎么加你、邀请别人 |
 | content-writer | `skill_view("content-writer")` | 长文写作、公众号文章、营销文案 | 帮我写文章、写一篇、公众号推文 |
