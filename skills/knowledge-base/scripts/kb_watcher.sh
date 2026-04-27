@@ -1,12 +1,16 @@
 #!/bin/bash
 # kb_watcher.sh — 文件变化触发器
-# 被 inotifywait 调用，执行增量索引 + 实体更新 + SOUL.md 刷新
-# 用法: kb_watcher.sh <mount_path> <changed_file>
+# 用法: kb_watcher.sh <mount_path> <changed_file> [--mode inbox|main]
+#
+# --mode inbox: 新文件进 inbox，触发整理归类 + 推送通知（默认）
+# --mode main : 主目录变化，只静默更新索引和实体图谱，不推送
 
 set -euo pipefail
 
 MOUNT="${1:-/userdata/uploads}"
 CHANGED_FILE="${2:-}"
+MODE="${4:-inbox}"
+
 H="${HERMES_HOME:-/root/.hermes}"
 SCRIPTS="$H/skills/knowledge-base/scripts"
 PENDING_SUMMARY="/tmp/kb_pending_summary"
@@ -16,10 +20,7 @@ LOCK="/tmp/kb_watcher.lock"
 exec 9>"$LOCK"
 flock -n 9 || exit 0
 
-# agent 整理中，跳过（避免误触发推送）
-[ -f /tmp/kb_organize_running ] && exit 0
-
-log() { echo "[$(date '+%H:%M:%S')] $*" >&2; }
+log() { echo "[$(date '+%H:%M:%S')] [$MODE] $*" >&2; }
 
 # 1. 增量索引
 log "增量扫描 $MOUNT ..."
@@ -39,14 +40,11 @@ log "更新实体图谱 ..."
 if [ -n "$CHANGED_FILE" ]; then
   python3 "$SCRIPTS/kb_entities.py" "$MOUNT" --update "$CHANGED_FILE" 2>/dev/null || true
 else
-  # 批量：先 --list 输出供 LLM 提取，这里只做增量合并已有实体
   python3 "$SCRIPTS/kb_entities.py" "$MOUNT" --list 2>/dev/null | python3 - << 'PYEOF' 2>/dev/null || true
-# 简单实体提取：从文件名推断实体（无需 LLM，作为兜底）
 import sys, json, os, re
 from datetime import date
 
 lines = sys.stdin.read()
-# 解析 --list 输出的文件名行
 files = re.findall(r'文件：(.+\.(?:docx|xlsx|pdf))', lines)
 mount = os.environ.get('MOUNT', '/userdata/uploads')
 entities_path = os.path.join(mount, '.hermes-index', 'entities.json')
@@ -59,7 +57,6 @@ except:
 today = date.today().isoformat()
 for f in files:
     name = os.path.basename(f)
-    # 从文件名提取学校名
     for school in ['中南大学', '湖南大学', '湖南师范大学', '中南林业科技大学']:
         if school in name:
             if school not in data['entities']:
@@ -96,20 +93,24 @@ print('SOUL.md updated')
 PYEOF
 fi
 
-# 4. 写 pending summary（供 kb_notify.py 读取后构造 prompt）
-{
-  echo "=== $(date '+%Y-%m-%d %H:%M') ==="
-  echo "新增: $NEW_COUNT 个文件，更新: $UPD_COUNT 个文件"
-  if [ -n "$CHANGED_FILE" ]; then
-    echo "文件: $(basename "$CHANGED_FILE")"
-  fi
-  LOG_MD="$MOUNT/.hermes-index/wiki/log.md"
-  [ -f "$LOG_MD" ] && tail -3 "$LOG_MD"
-} >> "$PENDING_SUMMARY"
+# 4. inbox 模式：写 pending summary + 触发推送
+if [ "$MODE" = "inbox" ]; then
+  log "写入 pending summary ..."
+  {
+    echo "=== $(date '+%Y-%m-%d %H:%M') ==="
+    echo "新增: $NEW_COUNT 个文件，更新: $UPD_COUNT 个文件"
+    if [ -n "$CHANGED_FILE" ]; then
+      echo "文件: $(basename "$CHANGED_FILE")"
+    fi
+    LOG_MD="$MOUNT/.hermes-index/wiki/log.md"
+    [ -f "$LOG_MD" ] && tail -3 "$LOG_MD"
+  } >> "$PENDING_SUMMARY"
 
-# 5. 事件触发 hermes cron run（直接触发，不轮询）
-KB_NOTIFY_JOB_ID="3d03d9db2a03"
-log "触发 hermes cron run $KB_NOTIFY_JOB_ID ..."
-hermes cron run "$KB_NOTIFY_JOB_ID" 2>>/tmp/kb_watcher.log || true
+  KB_NOTIFY_JOB_ID="3d03d9db2a03"
+  log "触发 hermes cron run $KB_NOTIFY_JOB_ID ..."
+  hermes cron run "$KB_NOTIFY_JOB_ID" 2>>/tmp/kb_watcher.log || true
+else
+  log "main 模式，索引已更新，不推送"
+fi
 
 log "完成"
