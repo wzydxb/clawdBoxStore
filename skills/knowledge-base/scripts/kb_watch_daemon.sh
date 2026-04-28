@@ -28,7 +28,8 @@ INBOX_FILES="/tmp/kb_inbox_files"
 
 # ── inbox watcher：只标记，不直接触发 ───────────────────────
 inbox_watcher() {
-  inotifywait -m -r -e close_write,moved_to,create --format '%f' "$INBOX" \
+  # 只监听 inbox 根目录（不递归），避免解压/agent 在子目录操作时误触发
+  inotifywait -m -e close_write,moved_to,create --format '%f' "$INBOX" \
     2>/dev/null | \
   while IFS= read -r FNAME; do
     case "$FNAME" in
@@ -36,7 +37,7 @@ inbox_watcher() {
     esac
     echo "[$(date '+%H:%M:%S')] [inbox] 收到文件: $FNAME" >&2
     echo "$FNAME" >> "$INBOX_FILES"
-    touch "$INBOX_PENDING"   # 每来一个文件都刷新 mtime
+    touch "$INBOX_PENDING"
   done
 }
 
