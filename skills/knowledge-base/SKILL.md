@@ -39,6 +39,7 @@ version: 2.0.0
 | 我更新了 / 改了文件 / 重新上传了 | `skill_view("knowledge-base/kb-index")` → 文件更新流程 |
 | 总结一下 / 提炼 / 上次那个 | `skill_view("knowledge-base/kb-wiki")` |
 | 整理文件 / 归档 / 文件太乱了 | `skill_view("knowledge-base/kb-organize")` |
+| kb_notify 推送 / 收到 inbox 文件通知 | `skill_view("knowledge-base/kb-inbox")` → 执行 ETL 流程 |
 
 ---
 

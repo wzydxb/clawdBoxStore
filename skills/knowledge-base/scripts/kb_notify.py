@@ -39,15 +39,17 @@ try:
 except Exception:
     pass
 
-print(f"""我注意到知识库有新文件变动：
+print(f"""我注意到知识库 inbox 有新文件：
 
 {content}
 
-请：
-1. 用 skill_view("knowledge-base/kb-index") 确认最新索引状态
-2. 读取新文件摘要（最多3句话）
-3. 主动推送给用户，格式：
-   📂 我看到你上传了[文件名]。
-   [一句话核心内容]
-   要我[具体动作：分析/对比/提炼/归档]吗？
+请立即执行：
+skill_view("knowledge-base/kb-inbox")
+
+按 kb-inbox ETL 流程处理 inbox 内**所有**文件（不只是第一个）：
+1. 列出 inbox 根目录全部文件
+2. zip 解压到主目录临时区，不在 inbox 内解压
+3. 逐一归类、清洗、入库
+4. 处理完后清空 inbox
+5. 向用户报告处理结果
 """)
