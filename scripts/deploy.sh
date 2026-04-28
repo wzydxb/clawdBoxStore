@@ -24,22 +24,23 @@ step() { echo -e "\n${YELLOW}[$1]${NC} $2"; }
 
 # ── SSH 辅助 ──────────────────────────────────────────────
 SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3"
+SCP_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10"
 
 # 检测认证方式：优先密钥，其次 sshpass，最后交互输入
 if ssh $SSH_OPTS -o BatchMode=yes "$TARGET" true 2>/dev/null; then
   _ssh() { ssh $SSH_OPTS "$TARGET" "$@"; }
-  _scp() { scp $SSH_OPTS "$@" ; }
+  _scp() { scp -O $SCP_OPTS "$@" ; }
 elif command -v sshpass &>/dev/null; then
   if [ -z "$SSH_PASS" ]; then
     echo -n "请输入 $TARGET 的密码: "
     read -rs SSH_PASS; echo ""
   fi
   _ssh() { sshpass -p "$SSH_PASS" ssh $SSH_OPTS "$TARGET" "$@"; }
-  _scp() { sshpass -p "$SSH_PASS" scp -O $SSH_OPTS "$@"; }
+  _scp() { sshpass -p "$SSH_PASS" scp -O $SCP_OPTS "$@"; }
 else
   # 无 sshpass，走交互式 ssh（需要用户手动输密码）
   _ssh() { ssh $SSH_OPTS "$TARGET" "$@"; }
-  _scp() { scp -O $SSH_OPTS "$@"; }
+  _scp() { scp -O $SCP_OPTS "$@"; }
 fi
 
 # ── 0. 连通性检查 ─────────────────────────────────────────
@@ -64,17 +65,28 @@ _ssh "
 "
 ok "备份完成（后缀 .bak_${TS}）"
 
-# ── 3. 重置 gateway 状态 + 强制新建会话 ─────────────────
+# ── 3. 重置 gateway 状态（仅在 --reset-user 时清会话历史）──
 step "3/7" "重置 gateway 状态"
-_ssh "
-  rm -f $H/state.db $H/state.db-shm $H/state.db-wal 2>/dev/null
-  rm -f $H/sessions/sessions.json 2>/dev/null
-  if [ -d $H/weixin/accounts ]; then
-    rm -f $H/weixin/accounts/*.json
-    echo '[]' > $H/weixin/accounts.json
-  fi
-"
-ok "gateway 状态已重置（weixin accounts 已清除，下次对话新建会话）"
+if [ "$RESET_USER" = "--reset-user" ]; then
+  _ssh "
+    rm -f $H/state.db $H/state.db-shm $H/state.db-wal 2>/dev/null
+    rm -f $H/sessions/sessions.json 2>/dev/null
+    if [ -d $H/weixin/accounts ]; then
+      rm -f $H/weixin/accounts/*.json
+      echo '[]' > $H/weixin/accounts.json
+    fi
+  "
+  ok "gateway 状态已重置（含会话历史 + weixin accounts，--reset-user 触发）"
+else
+  # 默认只重置 weixin 账号绑定，保留会话历史和 state.db
+  _ssh "
+    if [ -d $H/weixin/accounts ]; then
+      rm -f $H/weixin/accounts/*.json
+      echo '[]' > $H/weixin/accounts.json
+    fi
+  "
+  ok "weixin accounts 已重置（保留 state.db 和 sessions 历史，下次对话延续上下文）"
+fi
 
 # ── 4. 推送核心配置 ───────────────────────────────────────
 step "4/7" "推送核心配置"
@@ -249,8 +261,9 @@ ok "migrate"
 # scripts（env-init.sh 等）
 _ssh "mkdir -p $H/scripts"
 _scp "$L/scripts/env-init.sh" "$TARGET:$H/scripts/env-init.sh"
-_ssh "chmod +x $H/scripts/env-init.sh"
-ok "scripts/env-init.sh"
+_scp "$L/scripts/session_tail.py" "$TARGET:$H/scripts/session_tail.py"
+_ssh "chmod +x $H/scripts/env-init.sh $H/scripts/session_tail.py"
+ok "scripts/env-init.sh + session_tail.py"
 
 # opencli 安装检查（env-init.sh 有完整逻辑，这里只补安装）
 _ssh "

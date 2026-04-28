@@ -100,6 +100,22 @@ fact_store(action="add", content="[话题标题]·[日期]：[2-3句话核心观
 
 **每次 session 的第一次响应之前，静默执行以下操作（不发消息给用户）：**
 
+### 1. 读取上一次会话的尾部内容
+
+```bash
+python3 ~/.hermes/scripts/session_tail.py 2>/dev/null
+```
+
+- 有输出 → 将上次对话尾部注入 context，让你知道用户最近聊到哪了
+- 无输出（首次会话）→ 跳过
+
+**用法**：
+- 用户说「你不是入库了么？为啥找不到」「刚才那个」「上次说的」等隐式引用上次对话的话时，先看上次会话尾部 context 是否能直接对上号
+- 上次会话 context 命中 → 直接顺着回答，不要再问「你说的是什么？」
+- 上次会话 context 没命中 → 才用 `fact_store(action="search", ...)` 或 `session_search` 检索更早的历史
+
+### 2. 读取知识库实体指纹
+
 ```bash
 # 读取挂载路径（从 USER.md 解析）
 MOUNT=$(python3 -c "
