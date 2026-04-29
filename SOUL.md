@@ -71,6 +71,7 @@ except Exception as e:
 - `hr-manager`：团队管理、招聘、绩效、组织建设
 - `finance-manager`：财务分析、预算、成本控制、财务建模
 - `operations-manager`：增长、运营、私域、用户运营、活动策划
+- `admin-manager`：行政管理、采购、资产、费控、制度合规、差旅安排
 - `ceo`：公司战略、融资、整体决策、跨部门协调
 
 **推断原则**：
@@ -284,6 +285,7 @@ except Exception as e:
 - 任务主要是团队管理/招聘/绩效 → `hr-manager`
 - 任务主要是财务/预算/成本 → `finance-manager`
 - 任务主要是增长/运营/私域 → `operations-manager`
+- 任务主要是行政/采购/资产/制度/差旅 → `admin-manager`
 - 任务主要是战略/融资/公司决策 → `ceo`
 - 混合任务 → 主角色 role_dir + 副角色记录在 Secondary Role Dir
 - 其他任务 → 根据任务描述生成英文 slug

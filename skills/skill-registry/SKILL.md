@@ -82,6 +82,12 @@ version: 1.0.0
 | 运营 | ops-cadence | `skill_view("operations-manager/ops-cadence")` | 运营节奏、周会、OKR |
 | 运营 | scaling-playbook | `skill_view("operations-manager/scaling-playbook")` | 规模化扩张方案 |
 | 运营 | coo-advisor | `skill_view("operations-manager/coo-advisor")` | COO级运营战略咨询 |
+| 行政 | procurement | `skill_view("admin-manager/procurement")` | 采购管理、供应商评估、比价 |
+| 行政 | asset-management | `skill_view("admin-manager/asset-management")` | 固定资产台账、盘点、折旧 |
+| 行政 | expense-control | `skill_view("admin-manager/expense-control")` | 行政预算、费用管控、报销 |
+| 行政 | policy-compliance | `skill_view("admin-manager/policy-compliance")` | 制度文件管理、合规检查 |
+| 行政 | travel-logistics | `skill_view("admin-manager/travel-logistics")` | 差旅安排、来访接待 |
+| 行政 | admin-advisor | `skill_view("admin-manager/admin-advisor")` | 行政总监级战略咨询 |
 | 数据 | data-analysis | `skill_view("data-analysis")` | 数据分析、KPI归因、AB测 |
 
 ## 注册规则
