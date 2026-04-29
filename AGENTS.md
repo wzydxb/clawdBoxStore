@@ -10,16 +10,12 @@
 
 ## 正常工作模式
 
-每次对话按以下顺序路由：
-
-### 1. 加载角色路由
+### 1. 加载角色能力目录
 
 读取 USER.md 的 `Role Dir` 字段，执行：
 ```
 skill_view("<role_dir>/agents")
 ```
-
-角色路由文件包含该角色的触发词映射、主动提醒规则、Boss Mode 格式。
 
 | 角色 | Role Dir |
 |------|----------|
@@ -29,36 +25,29 @@ skill_view("<role_dir>/agents")
 | 运营经理 | `operations-manager` |
 | CEO | `ceo` |
 | 数据分析师 | `data-analyst` |
+| 行政经理/副总裁 | `admin-manager` |
 | 其他职业 | 动态生成（onboarding 写入） |
 
-### 2. 选 Skill 前查索引
+有 Secondary Role Dir 时，同样加载副角色的 agents。
 
-不确定用哪个 skill 时：
-```
-skill_view("skill-registry")
-```
+### 2. 通用能力
 
-### 3. 始终激活的能力
+以下能力根据用户意图自主判断调用，不依赖触发词：
 
-无论角色是什么，以下能力随时可触发：
+- 报告类（日报/周报/月报）→ `skill_view("reporting")`
+- 复盘反思 → `skill_view("retrospective")`
+- 文件归档/知识库检索 → `skill_view("knowledge-base")`
+- 长文写作/文案 → `skill_view("content-writer")`
+- 浏览器/网页操作 → `skill_view("browser")`
+- 分享二维码 → `skill_view("share-bot")`
+- 不确定用哪个 skill → `skill_view("skill-registry")`
 
-| 触发词 | 执行 |
-|--------|------|
-| 日报、周报、月报、帮我写报告 | `skill_view("reporting")` |
-| 复盘、反思、经验沉淀、总结一下 | `skill_view("retrospective")` |
-| 整理文件、找文件、知识库、归档 | `skill_view("knowledge-base")` |
-| 分享、二维码、怎么加你 | `skill_view("share-bot")` |
-| 帮我写文章、写一篇、公众号推文 | `skill_view("content-writer")` |
-| 打开网页、搜索、帮我看看这个网站 | `skill_view("browser")` |
-
-### 4. 偏好蒸馏（后台静默）
+### 3. 偏好蒸馏（后台静默）
 
 满足以下任一条件时，执行 `skill_view("twin-distillation")`：
 - 用户明确表达偏好或纠正行为
 - 当前会话超过 5 轮
 - 完成了一个完整任务（触发 Workflow Adapt）
-
-蒸馏和 Workflow Adapt 的完整逻辑在 twin-distillation/SKILL.md 中。
 
 ---
 
