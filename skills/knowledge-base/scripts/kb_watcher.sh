@@ -106,7 +106,7 @@ if [ "$MODE" = "inbox" ]; then
     [ -f "$LOG_MD" ] && tail -3 "$LOG_MD"
   } >> "$PENDING_SUMMARY"
 
-  KB_NOTIFY_JOB_ID="3d03d9db2a03"
+  KB_NOTIFY_JOB_ID="963573a5e84d"
   log "触发 hermes cron run $KB_NOTIFY_JOB_ID ..."
   hermes cron run "$KB_NOTIFY_JOB_ID" 2>>/tmp/kb_watcher.log || true
 else

@@ -14,11 +14,11 @@ version: 2.0.0
 
 ```bash
 # 检索单个网盘
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_search.py "关键词" /Volumes/uploads
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_search.py "关键词" /data/龙虾智盒网盘
 
 # 检索多个网盘
 python3 ~/.hermes/skills/knowledge-base/scripts/kb_search.py "关键词" \
-  /Volumes/uploads /Volumes/docs
+  /data/龙虾智盒网盘 /data/docs
 
 # 检索所有配置网盘（读 USER.md）
 python3 ~/.hermes/skills/knowledge-base/scripts/kb_search.py "关键词" --all
@@ -33,7 +33,7 @@ python3 ~/.hermes/skills/knowledge-base/scripts/kb_search.py "关键词" --all -
 找到 N 个相关文件：
 
 📄 合同.pdf
-   路径：/Volumes/uploads/2024/合同/合同.pdf
+   路径：/data/龙虾智盒网盘/2024/合同/合同.pdf
    匹配：...甲方：>>>北京供应商<<<，采购金额...
 ```
 

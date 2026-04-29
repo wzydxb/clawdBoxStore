@@ -13,7 +13,7 @@ version: 1.0.0
 ├── _index.md       ← 所有文件的摘要目录
 ├── concepts/       ← 主题知识页（如「采购合同」「Q4报告」）
 ├── insights/       ← 问答结论沉淀
-└── log.md          ← 变更日志
+└── log.md          ← 更新记录
 ```
 
 ---
@@ -135,7 +135,7 @@ SCRIPT=~/.hermes/skills/knowledge-base/scripts/kb_entities.py
 # 1. 获取待提取文件列表（含内容）
 FILE_LIST=$(python3 $SCRIPT "$MOUNT" --list)
 
-# 2. LLM 提取实体（Agent 直接处理，不需要额外调用）
+# 2. LLM 提取实体（系统直接处理，不需要额外调用）
 # 使用下方 prompt 模板，对 FILE_LIST 里每个文件提取实体
 # 将结果合并为一个 JSON
 
@@ -176,3 +176,23 @@ python3 $SCRIPT "$MOUNT" --write '<LLM输出的JSON>'
 ```
 
 知识越问越厚，同类问题下次直接命中 Step 1。
+
+---
+
+## Wiki 格式校验（每次编译后必须执行）
+
+每次写入或更新 wiki 内容后，**必须**运行格式校验：
+
+```bash
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_wiki_check.py MOUNT_PATH
+```
+
+校验项目：
+1. _index.md 每个条目必须有路径/摘要/关联三个字段
+2. 摘要不能是占位符，必须是实际内容的一句话概括
+3. wiki link 必须双方括号闭合，不能写成单闭合
+4. _index.md 关联的 concept 页必须实际存在
+5. concept 页必须包含核心内容和相关文件章节
+6. concept 页的核心内容不能为空
+
+**校验失败时：根据输出逐一修复，再次运行直到通过。不得跳过。**

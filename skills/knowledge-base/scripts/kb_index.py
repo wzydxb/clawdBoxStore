@@ -131,20 +131,20 @@ def scan(mount: str):
             else:
                 added += 1
 
-    # 清理孤儿：meta 表里有、磁盘上已不存在的路径
+    # 清理失效记录：meta 表里有、磁盘上已不存在的路径
     all_indexed = {row[0] for row in db.execute("SELECT path FROM meta").fetchall()}
-    orphans = [p for p in all_indexed if not os.path.exists(p)]
-    for p in orphans:
+    stale_entries = [p for p in all_indexed if not os.path.exists(p)]
+    for p in stale_entries:
         db.execute("DELETE FROM files WHERE path=?", (p,))
         db.execute("DELETE FROM meta WHERE path=?", (p,))
-    if orphans:
-        print(f"清理孤儿：{len(orphans)} 条")
+    if stale_entries:
+        print(f"清理失效记录：{len(stale_entries)} 条")
 
     db.commit()
-    print(f"扫描完成：新增 {added} | 更新 {updated} | 跳过 {skipped} | 孤儿清理 {len(orphans)}")
+    print(f"扫描完成：新增 {added} | 更新 {updated} | 跳过 {skipped} | 失效清理 {len(stale_entries)}")
 
     # 更新 wiki log
-    _append_log(mount, f"增量扫描：新增 {added}，更新 {updated}，孤儿清理 {len(orphans)}")
+    _append_log(mount, f"增量扫描：新增 {added}，更新 {updated}，失效清理 {len(stale_entries)}")
 
 
 # ── 单文件更新 + diff ─────────────────────────────────────
@@ -182,7 +182,7 @@ def update_file(mount: str, file_path: str):
                 Path(file_path).suffix, datetime.now().isoformat()))
     db.commit()
 
-    # 5. 输出 diff 供 Agent 解读
+    # 5. 输出 diff 供系统解读
     print(f"\n📄 {fname} 索引已更新\n")
     if diff_lines:
         print("--- 变更明细 ---")
@@ -210,7 +210,7 @@ def _append_log(mount: str, message: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="知识库索引管理")
-    parser.add_argument("mount", help="网盘挂载路径，如 /Volumes/uploads")
+    parser.add_argument("mount", help="网盘挂载路径，如 /data/龙虾智盒网盘")
     parser.add_argument("--update", metavar="FILE", help="更新单个文件并输出 diff")
     parser.add_argument("--init", action="store_true", help="仅初始化数据库结构")
     args = parser.parse_args()

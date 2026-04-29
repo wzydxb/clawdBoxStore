@@ -20,10 +20,13 @@ version: 2.0.0
         ├── _index.md   ← 文件摘要目录
         ├── concepts/   ← 主题知识页
         ├── insights/   ← 问答结论沉淀
-        └── log.md      ← 变更日志
+        └── log.md      ← 更新记录
 ```
 
 - **FTS5**：找文件，1-5ms，关键词精准定位
+
+> **注意**：wiki server 读取 ，该目录是  的 symlink。
+> 首次使用前确认：lrwxrwxrwx 1 root root 27  4月 28 20:13 /root/.hermes-index -> /data/龙虾智盒网盘/.hermes-index 应指向 
 - **LLM Wiki**：沉淀知识，回答综合性问题，越用越厚
 
 多网盘：每个网盘各自维护 `.hermes-index/`，查询时并行搜索合并结果。
@@ -39,7 +42,7 @@ version: 2.0.0
 | 我更新了 / 改了文件 / 重新上传了 | `skill_view("knowledge-base/kb-index")` → 文件更新流程 |
 | 总结一下 / 提炼 / 上次那个 | `skill_view("knowledge-base/kb-wiki")` |
 | 整理文件 / 归档 / 文件太乱了 | `skill_view("knowledge-base/kb-organize")` |
-| kb_notify 推送 / 收到 inbox 文件通知 | `skill_view("knowledge-base/kb-inbox")` → 执行 ETL 流程 |
+| kb_notify 推送 / 收到上传原始资料文件通知 | `skill_view("knowledge-base/kb-inbox")` → 执行整理归档流程 |
 
 ---
 
@@ -48,9 +51,9 @@ version: 2.0.0
 ```yaml
 知识库:
   - 名称: uploads
-    挂载路径: /Volumes/uploads
+    挂载路径: /data/龙虾智盒网盘
   - 名称: docs
-    挂载路径: /Volumes/docs
+    挂载路径: /data/docs
 ```
 
 ---

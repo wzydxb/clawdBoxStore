@@ -2,8 +2,8 @@
 # kb_watch_daemon.sh — inotifywait 守护进程（由 kb-watcher.service 启动）
 #
 # 两个监听循环并行运行：
-#   inbox watcher：只监听 $MOUNT/inbox/，新文件触发整理归类 + 推送通知
-#   main watcher ：监听整个 $MOUNT/（排除 inbox 和 .hermes-index），静默更新索引
+#   上传监听：只监听 $MOUNT/上传原始资料/，新文件触发整理归类 + 推送通知
+#   主目录监听 ：监听整个 $MOUNT/（排除 上传原始资料 和 .hermes-index），静默更新索引
 
 set -euo pipefail
 
@@ -17,7 +17,7 @@ m = re.search(r'挂载路径:\s*(.+)', c)
 print(m.group(1).strip() if m else '/userdata/uploads')
 " 2>/dev/null || echo "/userdata/uploads")
 
-INBOX="$MOUNT/inbox"
+INBOX="$MOUNT/上传原始资料"
 mkdir -p "$MOUNT" "$INBOX"
 echo "[$(date '+%H:%M:%S')] kb_watch_daemon 启动，MOUNT=$MOUNT" >&2
 
@@ -28,7 +28,7 @@ INBOX_FILES="/tmp/kb_inbox_files"
 
 # ── inbox watcher：只标记，不直接触发 ───────────────────────
 inbox_watcher() {
-  # 只监听 inbox 根目录（不递归），避免解压/agent 在子目录操作时误触发
+  # 只监听 上传原始资料 根目录（不递归），避免解压/agent 在子目录操作时误触发
   inotifywait -m -e close_write,moved_to,create --format '%f' "$INBOX" \
     2>/dev/null | \
   while IFS= read -r FNAME; do
@@ -63,7 +63,7 @@ inbox_timer() {
 main_watcher() {
   local LAST_RUN=0
   inotifywait -m -r -e close_write,moved_to,moved_from,create,delete --format '%e %f' "$MOUNT" \
-    --exclude '(\.hermes-index|/inbox/)' 2>/dev/null | \
+    --exclude '(\.hermes-index|/上传原始资料/)' 2>/dev/null | \
   while IFS=' ' read -r EVENT FNAME; do
     case "$FNAME" in
       .DS_Store|._*|.Spotlight*|.Trashes*|*.tmp|~\$*) continue ;;

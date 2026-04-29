@@ -12,14 +12,14 @@ version: 2.0.0
 
 ```bash
 # 初始化（首次使用）
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_index.py /Volumes/uploads --init
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_index.py /data/龙虾智盒网盘 --init
 
 # 增量扫描（只处理新增/修改文件）
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_index.py /Volumes/uploads
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_index.py /data/龙虾智盒网盘
 
 # 单文件更新 + 输出 diff（用户说「我更新了某文件」时）
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_index.py /Volumes/uploads \
-  --update /Volumes/uploads/合同.pdf
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_index.py /data/龙虾智盒网盘 \
+  --update /data/龙虾智盒网盘/合同.pdf
 ```
 
 ## 支持的文件类型

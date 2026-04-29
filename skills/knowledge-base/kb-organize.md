@@ -14,15 +14,15 @@ version: 2.0.0
 
 ```bash
 # 预览归档建议（不移动文件）
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /Volumes/uploads
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /data/龙虾智盒网盘
 
 # 确认后执行归档
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /Volumes/uploads --execute
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /data/龙虾智盒网盘 --execute
 
 # 移动单个文件（手动指定目标路径）
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /Volumes/uploads \
-  --file /Volumes/uploads/合同.pdf \
-  --dest /Volumes/uploads/2024/合同/2024-01-15-北京供应商-采购合同.pdf
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /data/龙虾智盒网盘 \
+  --file /data/龙虾智盒网盘/合同.pdf \
+  --dest /data/龙虾智盒网盘/2024/合同/2024-01-15-北京供应商-采购合同.pdf
 ```
 
 ## 分类逻辑
@@ -55,11 +55,11 @@ python3 ~/.hermes/skills/knowledge-base/scripts/kb_organize.py /Volumes/uploads 
 ## 健康检查
 
 ```bash
-# 检查孤儿索引 + 重复文件
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_health.py /Volumes/uploads
+# 检查失效索引 + 重复文件
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_health.py /data/龙虾智盒网盘
 
-# 自动清理孤儿索引
-python3 ~/.hermes/skills/knowledge-base/scripts/kb_health.py /Volumes/uploads --fix
+# 自动清理失效索引
+python3 ~/.hermes/skills/knowledge-base/scripts/kb_health.py /data/龙虾智盒网盘 --fix
 
 # 检查所有配置网盘
 python3 ~/.hermes/skills/knowledge-base/scripts/kb_health.py --all

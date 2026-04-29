@@ -3,8 +3,8 @@
 kb_health.py - 索引健康检查
 
 用法：
-  python3 kb_health.py <mount_path>          # 检查孤儿索引 + 重复文件
-  python3 kb_health.py <mount_path> --fix    # 自动清理孤儿索引
+  python3 kb_health.py <mount_path>          # 检查失效索引 + 重复文件
+  python3 kb_health.py <mount_path> --fix    # 自动清理失效索引
   python3 kb_health.py --all                 # 读 USER.md 检查所有网盘
 """
 
@@ -25,7 +25,7 @@ def parse_mounts_from_user_md() -> list:
     return re.findall(r'挂载路径:\s*(.+)', content)
 
 
-# ── 孤儿索引检查 ──────────────────────────────────────────
+# ── 失效索引检查 ──────────────────────────────────────────
 
 def check_orphans(mount: str, fix: bool = False) -> int:
     db_path = os.path.join(mount, ".hermes-index", "index.db")
@@ -34,27 +34,27 @@ def check_orphans(mount: str, fix: bool = False) -> int:
         return 0
 
     db = sqlite3.connect(db_path)
-    orphans = []
+    stale_entries = []
     for (path,) in db.execute("SELECT path FROM meta"):
         if not os.path.exists(path):
-            orphans.append(path)
+            stale_entries.append(path)
 
-    if not orphans:
-        print(f"[{mount}] ✅ 无孤儿索引")
+    if not stale_entries:
+        print(f"[{mount}] ✅ 无失效索引")
         return 0
 
-    print(f"[{mount}] ⚠️  发现 {len(orphans)} 条孤儿索引：")
-    for p in orphans:
+    print(f"[{mount}] ⚠️  发现 {len(stale_entries)} 条失效索引：")
+    for p in stale_entries:
         print(f"   - {p}")
 
     if fix:
-        for p in orphans:
+        for p in stale_entries:
             db.execute("DELETE FROM files WHERE path=?", (p,))
             db.execute("DELETE FROM meta WHERE path=?", (p,))
         db.commit()
-        print(f"   已清理 {len(orphans)} 条。")
+        print(f"   已清理 {len(stale_entries)} 条。")
 
-    return len(orphans)
+    return len(stale_entries)
 
 
 # ── 重复文件检测 ──────────────────────────────────────────
@@ -118,7 +118,7 @@ def print_stats(mount: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="知识库索引健康检查")
     parser.add_argument("mount", nargs="?", help="网盘挂载路径")
-    parser.add_argument("--fix", action="store_true", help="自动清理孤儿索引")
+    parser.add_argument("--fix", action="store_true", help="自动清理失效索引")
     parser.add_argument("--all", action="store_true",
                         help="读取 USER.md 检查所有配置网盘")
     args = parser.parse_args()

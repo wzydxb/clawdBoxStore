@@ -3,7 +3,7 @@
 kb_search.py - 知识库全文检索
 
 用法：
-  python3 kb_search.py "关键词" /Volumes/uploads [/Volumes/docs ...]
+  python3 kb_search.py "关键词" /data/龙虾智盒网盘 [/data/docs ...]
   python3 kb_search.py "关键词" --all   # 读 USER.md 自动检索所有配置网盘
   python3 kb_search.py "关键词" --all --limit 20
 """
