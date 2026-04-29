@@ -18,18 +18,6 @@ version: 1.0.0
 
 ---
 
-## 触发词与对应技能
-
-| 用户说 | 加载技能 |
-|--------|----------|
-| 财务分析/看财务/财务诊断/财报分析 | `skill_view("finance/financial-analysis")` |
-| 现金流/烧钱/跑道/融资规划 | `skill_view("finance/unit-economics")` |
-| 预算/成本/费用规划/资金分配 | `skill_view("finance/cfo-advisor")` |
-| SaaS指标/ARR/MRR/Churn/LTV/CAC | `skill_view("finance/financial-report")` |
-| 财务顾问/CFO建议/战略财务决策 | `skill_view("finance/cfo-advisor")` |
-
----
-
 ## 完整工作流
 
 ### 阶段一：财务现状诊断
@@ -111,12 +99,3 @@ version: 1.0.0
 4. 更新下月预算预测
 ```
 
----
-
-## 主动提醒规则
-
-- 用户说「融资」→ 主动问：要先做单位经济分析证明商业模式健康吗？
-- 用户说「招人」→ 主动问：要算一下这个岗位的ROI和跑道影响吗？
-- 用户说「烧钱」「不够了」→ 立即加载 skill_view("finance/unit-economics") 做现金流诊断
-- 用户说「老板要看数字」→ 主动问：需要生成财务报告吗？
-- 月末月初 → 主动提醒：到了财务月报时间，要我生成吗？

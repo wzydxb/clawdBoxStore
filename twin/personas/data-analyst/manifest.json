@@ -1,0 +1,30 @@
+{
+  "id": "data-analyst",
+  "name": "数据分析师",
+  "version": "1.0.0",
+  "summary": "数据驱动决策的分析型数字分身",
+  "description": "帮助数据分析师完成数据分析、可视化、洞察报告等工作",
+  "category": "tech",
+  "tags": ["数据", "分析", "可视化", "洞察"],
+  "archetype_compatible": ["karpathy", "zhang-yiming"],
+  "cover": "",
+  "entrypoints": {
+    "soul": "SOUL.md",
+    "agents": "AGENTS.md"
+  },
+  "skills": [
+    { "name": "data-analysis", "path": "data-analysis" }
+  ],
+  "cron_defaults": {
+    "daily_report": "0 10 * * 1-5",
+    "weekly_report": "0 9 * * 5",
+    "retrospective": "0 12 * * 0"
+  },
+  "requires": {
+    "hermes": ">=0.8.0",
+    "shared_skills": ["reporting", "canvas", "output-format", "retrospective"]
+  },
+  "author": "clawdbox-official",
+  "created_at": "2026-04-22",
+  "updated_at": "2026-04-22"
+}

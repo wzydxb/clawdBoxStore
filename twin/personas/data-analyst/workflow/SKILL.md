@@ -18,20 +18,6 @@ version: 1.0.0
 
 ---
 
-## 触发词与对应技能
-
-| 用户说 | 加载技能 |
-|--------|----------|
-| 数据分析/分析一下/看看数据/数据怎么样 | `skill_view("data-analyst/data-analysis")` |
-| 数据异常/指标下降/为什么跌了/找原因 | `skill_view("data-analyst/anomaly-detection")` |
-| AB测/实验/测试结果/效果怎么样 | `skill_view("data-analyst/ab-testing")` |
-| 指标体系/北极星指标/定义指标/追踪什么 | `skill_view("data-analyst/metrics-design")` |
-| 用户画像/用户分群/谁在用/用户特征 | `skill_view("data-analyst/user-segmentation")` |
-| 出报告/分析报告/数据报告 | `skill_view("data-analyst/report-writing")` |
-| 数据顾问/分析策略/数据整体 | `skill_view("data-analyst/data-analyst-advisor")` |
-
----
-
 ## 完整工作流
 
 ### 阶段一：数据获取与解析
@@ -95,14 +81,3 @@ skill_view("data-analyst/report-writing")
 → 用 brief 或 long-article 模板渲染
 ```
 
----
-
-## 主动提醒规则
-
-| 场景信号 | 主动建议 |
-|----------|----------|
-| 「数据跌了」 | 「是所有维度都跌，还是某个分群/渠道跌？帮你定位」 |
-| 「想做AB测」 | 「样本量够吗？置信度要求是多少？」 |
-| 「出报告」 | 「报告给谁看？他们最关心什么结论？」 |
-| 「这个指标」 | 主动确认指标定义和统计口径 |
-| 周/月末 | 「要生成本周/本月数据复盘吗？」 |
