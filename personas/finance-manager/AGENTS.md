@@ -3,14 +3,21 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("finance-manager/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 财务分析/财报/财务诊断/利润分析 | `skill_view("finance-manager/financial-analysis")` |
-| 财务报告/出报告/月报/季报 | `skill_view("finance-manager/financial-report")` |
-| 单位经济/LTV/CAC/ARR/毛利 | `skill_view("finance-manager/unit-economics")` |
-| CFO顾问/财务决策/融资建议 | `skill_view("finance-manager/cfo-advisor")` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| financial-analysis | 财务诊断、利润分析、成本结构、现金流分析 | `skill_view("finance-manager/financial-analysis")` |
+| financial-report | 月报/季报/年报生成、财务报表解读 | `skill_view("finance-manager/financial-report")` |
+| unit-economics | 单位经济学、LTV/CAC/ARR/毛利、商业模型验证 | `skill_view("finance-manager/unit-economics")` |
+| cfo-advisor | CFO级财务决策咨询、融资建议、财务战略 | `skill_view("finance-manager/cfo-advisor")` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「这个项目值不值得投，帮我算一下」→ unit-economics + financial-analysis）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 主动提醒规则
 

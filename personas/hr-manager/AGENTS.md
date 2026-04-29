@@ -3,14 +3,21 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("hr-manager/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 招聘/找人/写JD/面试/人才 | `skill_view("hr-manager/people-strategy")` |
-| 薪酬/薪资对标/offer/调薪 | `skill_view("hr-manager/comp-frameworks")` |
-| 组织架构/汇报关系/团队设计 | `skill_view("hr-manager/org-design")` |
-| CHRO顾问/HR决策/人才战略 | `skill_view("hr-manager/chro-advisor")` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| people-strategy | 招聘全流程、JD撰写、面试设计、人才地图、雇主品牌 | `skill_view("hr-manager/people-strategy")` |
+| comp-frameworks | 薪酬对标、offer设计、调薪方案、股权激励 | `skill_view("hr-manager/comp-frameworks")` |
+| org-design | 组织架构设计、汇报关系、团队扩张、岗位体系 | `skill_view("hr-manager/org-design")` |
+| chro-advisor | CHRO级人才战略咨询、组织诊断、文化建设 | `skill_view("hr-manager/chro-advisor")` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「要招一个总监，给多少钱合适」→ people-strategy + comp-frameworks）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 主动提醒规则
 

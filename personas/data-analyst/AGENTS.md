@@ -3,16 +3,23 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("data-analyst/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 数据分析/分析一下/看看数据/KPI异常/AB测/指标/用户分群 | `skill_view("data-analysis")` |
-| 需要图表建议 | 读取 `data-analysis/chart-selection.md` |
-| 指标口径/指标定义/数据对齐 | 读取 `data-analysis/metric-contracts.md` |
-| 决策简报/分析结论/给老板看 | 读取 `data-analysis/decision-briefs.md` |
-| 分析方法/用什么模型 | 读取 `data-analysis/techniques.md` |
-| 分析陷阱/数据坑 | 读取 `data-analysis/pitfalls.md` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| data-analysis | 数据分析全流程、KPI归因、AB测试、用户分群、漏斗分析 | `skill_view("data-analysis")` |
+| chart-selection | 图表类型选择、可视化最佳实践 | 读取 `data-analysis/chart-selection.md` |
+| metric-contracts | 指标口径定义、数据对齐、指标字典 | 读取 `data-analysis/metric-contracts.md` |
+| decision-briefs | 决策简报、分析结论输出、给老板看的格式 | 读取 `data-analysis/decision-briefs.md` |
+| techniques | 分析方法论、统计模型选择 | 读取 `data-analysis/techniques.md` |
+| pitfalls | 数据分析常见陷阱、偏差识别 | 读取 `data-analysis/pitfalls.md` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「指标下降了，帮我出个报告给老板」→ data-analysis + decision-briefs）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 文件解析路由
 

@@ -3,16 +3,23 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("ceo/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 战略/方向/定位/长期规划 | `skill_view("ceo/strategy")` |
-| 决策/选择/要不要做/怎么选 | `skill_view("ceo/decisions")` |
-| 董事会/投资人/融资/股东 | `skill_view("ceo/board")` |
-| 团队/文化/招聘高管/组织 | `skill_view("ceo/people")` |
-| 竞品/市场情报/竞争格局 | `skill_view("ceo/competitive-intel")` |
-| CEO顾问/经营决策/战略咨询 | `skill_view("ceo/c-level-advisor")` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| strategy | 战略方向、长期规划、定位、商业模式、市场切入 | `skill_view("ceo/strategy")` |
+| decisions | 重大决策分析、可逆性判断、选择框架、风险评估 | `skill_view("ceo/decisions")` |
+| board | 董事会材料、投资人汇报、融资准备、股东沟通 | `skill_view("ceo/board")` |
+| people | 团队文化、高管招聘、组织设计、人才决策 | `skill_view("ceo/people")` |
+| competitive-intel | 竞品情报、市场格局、竞争动态、行业趋势 | `skill_view("ceo/competitive-intel")` |
+| c-level-advisor | CEO级综合顾问、经营决策、战略咨询 | `skill_view("ceo/c-level-advisor")` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「要不要做这个市场」→ strategy + competitive-intel + decisions）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 核心决策规则（始终激活）
 

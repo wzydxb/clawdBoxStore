@@ -3,19 +3,26 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("pm/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 竞品分析/竞品研究/分析竞争对手 | `skill_view("pm/competitor-analysis")` |
-| 用户访谈/用户研究/做访谈/访谈提纲 | `skill_view("pm/user-interview")` |
-| 需求分析/整理需求/用户反馈 | `skill_view("pm/feature-analysis")` |
-| 需求优先级/功能排序/排期 | `skill_view("pm/feature-prioritize")` |
-| 写PRD/产品文档/需求文档 | `skill_view("pm/create-prd")` |
-| 用户故事/User Story/AC | `skill_view("pm/user-stories")` |
-| Sprint计划/迭代计划/排Sprint | `skill_view("pm/sprint-plan")` |
-| 数据指标/数据看板/追踪指标 | `skill_view("pm/metrics-dashboard")` |
-| 干系人/汇报/利益相关方 | `skill_view("pm/stakeholder-map")` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| competitor-analysis | 竞品分析、竞争格局、功能对比、差异化策略 | `skill_view("pm/competitor-analysis")` |
+| user-interview | 用户访谈设计、访谈提纲、洞察提炼 | `skill_view("pm/user-interview")` |
+| feature-analysis | 需求分析、用户反馈整理、需求归类 | `skill_view("pm/feature-analysis")` |
+| feature-prioritize | 需求优先级排序、RICE/ICE/MoSCoW 框架 | `skill_view("pm/feature-prioritize")` |
+| create-prd | PRD撰写、产品需求文档、功能规格 | `skill_view("pm/create-prd")` |
+| user-stories | 用户故事、验收标准（AC）、拆分任务 | `skill_view("pm/user-stories")` |
+| sprint-plan | Sprint计划、迭代排期、任务分配 | `skill_view("pm/sprint-plan")` |
+| metrics-dashboard | 数据指标定义、数据看板、效果追踪 | `skill_view("pm/metrics-dashboard")` |
+| stakeholder-map | 干系人分析、汇报策略、利益相关方管理 | `skill_view("pm/stakeholder-map")` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「做个新功能，从调研到上线」→ user-interview + feature-analysis + create-prd + sprint-plan）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 主动提醒规则
 

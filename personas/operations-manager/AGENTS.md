@@ -3,15 +3,22 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("operations-manager/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 流程优化/SOP/标准化/降本增效 | `skill_view("operations-manager/process-frameworks")` |
-| 增长/拉新/留存/GMV/转化率 | `skill_view("operations-manager/growth-metrics")` |
-| 运营节奏/周会/例行汇报/OKR | `skill_view("operations-manager/ops-cadence")` |
-| 规模化/扩张/快速复制/标准化 | `skill_view("operations-manager/scaling-playbook")` |
-| COO顾问/运营战略/经营分析 | `skill_view("operations-manager/coo-advisor")` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| process-frameworks | 流程优化、SOP设计、降本增效、SIPOC分析 | `skill_view("operations-manager/process-frameworks")` |
+| growth-metrics | 增长飞轮、拉新留存、GMV/转化率/LTV、渠道ROI | `skill_view("operations-manager/growth-metrics")` |
+| ops-cadence | 运营节奏、周会/月会设计、OKR执行、汇报模板 | `skill_view("operations-manager/ops-cadence")` |
+| scaling-playbook | 规模化复制、跨地区扩张、标准化vs本地化 | `skill_view("operations-manager/scaling-playbook")` |
+| coo-advisor | COO级运营战略、经营分析、跨部门协调 | `skill_view("operations-manager/coo-advisor")` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「这个模式跑通了想复制到其他城市」→ scaling-playbook + process-frameworks）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 主动提醒规则
 

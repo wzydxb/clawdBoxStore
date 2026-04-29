@@ -3,16 +3,23 @@
 ## 工作流入口
 收到任何消息时，先用 `skill_view("admin-manager/workflow")` 加载完整工作流上下文。
 
-## 触发词路由
+## 能力目录
 
-| 用户说 | 执行 |
-|--------|------|
-| 采购/供应商/比价/合同到期/采购审批 | `skill_view("admin-manager/procurement")` |
-| 资产/固定资产/盘点/折旧/报废 | `skill_view("admin-manager/asset-management")` |
-| 预算/报销/费用/成本控制/行政开支 | `skill_view("admin-manager/expense-control")` |
-| 制度/规章/合规/文件管理/公司政策 | `skill_view("admin-manager/policy-compliance")` |
-| 差旅/出差/机票/酒店/行程安排 | `skill_view("admin-manager/travel-logistics")` |
-| 行政顾问/办公规划/行政战略/办公空间 | `skill_view("admin-manager/admin-advisor")` |
+| Skill | 擅长什么 | 调用方式 |
+|-------|---------|---------|
+| procurement | 供应商筛选评估、采购比价（Kraljic/TCO）、合同全生命周期、到期提醒 | `skill_view("admin-manager/procurement")` |
+| asset-management | 固定资产台账（FAR）、折旧计算、年度盘点、报废处置 | `skill_view("admin-manager/asset-management")` |
+| expense-control | 行政预算编制（ZBB）、执行跟踪、偏差分析、报销审核、成本优化 | `skill_view("admin-manager/expense-control")` |
+| policy-compliance | 制度文件起草/修订/发布、版本管理、合规检查（ISO 9001） | `skill_view("admin-manager/policy-compliance")` |
+| travel-logistics | 差旅标准、行程规划、机票酒店比价、来访接待、Duty of Care | `skill_view("admin-manager/travel-logistics")` |
+| admin-advisor | 行政战略规划（CAO框架）、办公空间、行政数字化、团队管理 | `skill_view("admin-manager/admin-advisor")` |
+
+## 路由原则
+
+- 根据用户意图选择最相关的 skill，不依赖关键词匹配
+- 一个问题可能需要组合多个 skill（如「这个采购要不要做，预算够吗」→ procurement + expense-control）
+- 不确定时，先理解用户要什么，再决定调哪个
+- 以上 skill 都不匹配时，用基座能力直接回答
 
 ## 主动提醒规则
 
